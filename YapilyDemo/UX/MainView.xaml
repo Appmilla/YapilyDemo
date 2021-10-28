@@ -21,6 +21,14 @@
         </Label>
         <Button Text="Tap me"
                 Clicked="Button_Clicked"/>
+        <Button Text="Get Application" 
+                Command="{Binding Application}"
+                HorizontalOptions="Center"
+                VerticalOptions="Center"/>
+        <Button Text="Get Institutions" 
+                Command="{Binding Institutions}"
+                HorizontalOptions="Center"
+                VerticalOptions="Center"/>
     </StackLayout>
 
 </ContentPage>

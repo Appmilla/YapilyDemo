@@ -1,9 +1,7 @@
-﻿using System.Threading.Tasks;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
+﻿using System.Collections.Generic;
 using Refit;
 
-namespace Cms
+namespace Appmilla.Yapily.Refit.Models
 {
     /// <summary>
     /// Payee
@@ -14,7 +12,7 @@ namespace Cms
         /// <summary>
         /// Name
         /// </summary> 
-        [Required(AllowEmptyStrings = true)]
+        //[Required(AllowEmptyStrings = true)]
 
         [AliasAs("name")]
         public string Name { get; set; }
@@ -31,7 +29,7 @@ namespace Cms
         /// <summary>
         /// AccountIdentifications
         /// </summary> 
-        [Required]
+        //[Required]
 
         [AliasAs("accountIdentifications")]
         public List<AccountIdentification> AccountIdentifications { get; set; } = new List<AccountIdentification>();

@@ -1,75 +1,140 @@
+using System;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.Reactive.Linq;
+using System.Threading.Tasks;
+using Akavache;
+using Appmilla.Xamarin.Infrastructure.Reactive;
+using Appmilla.Yapily.Refit.Apis;
+using Appmilla.Yapily.Refit.Http;
+using Appmilla.Yapily.Refit.Models;
+using ReactiveUI;
+using ReactiveUI.Fody.Helpers;
+using Refit;
+
 namespace Appmilla.Yapily.Refit.Queries
 {
-    public interface IInstituitionQuery
+    public interface IInstituitionsQuery
     {
         bool IsBusy { get; }
 
-        IObservable<ICollection<Institution>> GetInstitutions(string cacheKey);
+        IObservable<ApiListResponseOfInstitution> GetInstitutions(string cacheKey);
 
-        IObservable<ICollection<Institution>> RefreshInstitutions(string cacheKey);
+        IObservable<ApiListResponseOfInstitution> RefreshInstitutions(string cacheKey);
+        
+        IObservable<Institution> GetInstitution(string institutionId, string cacheKey);
+        
+        IObservable<Institution> RefreshInstitution(string institutionId, string cacheKey);
     }
 
-    public class InstituitionQuery : ReactiveObject, IInstituitionQuery
+    public class InstituitionsQuery : ReactiveObject, IInstituitionsQuery
     {
         readonly IBlobCache _blobCache;
         readonly IYapilyHttpClientFactory _httpClientFactory;
         readonly ISchedulerProvider _schedulerProvider;
+        readonly RefitSettings _refitSettings;
 
-        readonly TimeSpan _cacheLifetime = TimeSpan.FromHours(1);
+        //readonly TimeSpan _cacheLifetime = TimeSpan.FromHours(1);
+        readonly TimeSpan _cacheLifetime = TimeSpan.FromSeconds(10);
         
         [Reactive] public bool IsBusy { get; set; }
 
-        public AccountBalancesQuery(IBlobCache blobCache,
+        public InstituitionsQuery(IBlobCache blobCache,
             IYapilyHttpClientFactory httpClientFactory,
-            ISchedulerProvider schedulerProvider)
+            ISchedulerProvider schedulerProvider,
+            RefitSettings refitSettings)
         {
             _blobCache = blobCache;
             _httpClientFactory = httpClientFactory;
             _schedulerProvider = schedulerProvider;
+            _refitSettings = refitSettings;
         }
 
-        public IObservable<ICollection<Institution>> GetAccountBalances(string[] accountIds, string cacheKey)
+        public IObservable<ApiListResponseOfInstitution> GetInstitutions(string cacheKey)
         {
             DateTimeOffset? expiration = DateTimeOffset.Now + _cacheLifetime;
 
             return _blobCache.GetOrFetchObject(cacheKey,
-                () => FetchAccountBalances(accountIds),
+                () => FetchInstitutions(),
                 expiration);
         }
 
-        public IObservable<ICollection<Institution>> RefreshAccountBalances(string[] accountIds, string cacheKey)
+        public IObservable<ApiListResponseOfInstitution> RefreshInstitutions(string cacheKey)
         {
-            return Observable.Create<ICollection<Institution>>(async observer =>
+            return Observable.Create<ApiListResponseOfInstitution>(async observer =>
             {
                 
                 DateTimeOffset? expiration = DateTimeOffset.Now + _cacheLifetime;
 
-                var history = await FetchAccountBalances(accountIds).ConfigureAwait(false);
+                var institutions = await FetchInstitutions().ConfigureAwait(false);
 
-                await _blobCache.InsertObject(cacheKey, history, expiration);
+                await _blobCache.InsertObject(cacheKey, institutions, expiration);
 
-                observer.OnNext(history);
+                observer.OnNext(institutions);
 
             }).SubscribeOn(_schedulerProvider.ThreadPool);
         }
         
-        async Task<ICollection<Institution>> FetchAccountBalances(string[] accountIds)
+        async Task<ApiListResponseOfInstitution> FetchInstitutions()
         {
             IsBusy = true;
 
             try
             {
-                var requestId = Guid.NewGuid().ToString();
-
                 var httpClient = _httpClientFactory.CreateClient();
 
-                var customerInfoClient = new CustomerInfoClient(httpClient);
+                var institutionsApi = RestService.For<IInstitutions>(httpClient, _refitSettings);
+                var institutions = await institutionsApi.GetInstitutionsUsingGETAsync();
+                
+                return institutions;
+            }
+            finally
+            {
+                IsBusy = false;
+            }  
+        }
+        
+        public IObservable<Institution> GetInstitution(string institutionId, string cacheKey)
+        {
+            DateTimeOffset? expiration = DateTimeOffset.Now + _cacheLifetime;
 
-                var allAccountBalances = await customerInfoClient.BalanceAsync(accountIds, requestId).ConfigureAwait(false);
+            return _blobCache.GetOrFetchObject(cacheKey,
+                () => FetchInstitution(institutionId),
+                expiration);
+        }
 
-                return allAccountBalances
-                    .Where(x => x.ServiceType == ServiceType.Electricity ||
-                        x.ServiceType == ServiceType.Gas).ToList();
+        public IObservable<Institution> RefreshInstitution(string institutionId, string cacheKey)
+        {
+            return Observable.Create<Institution>(async observer =>
+            {
+                DateTimeOffset? expiration = DateTimeOffset.Now + _cacheLifetime;
+
+                var institution = await FetchInstitution(institutionId).ConfigureAwait(false);
+
+                await _blobCache.InsertObject(cacheKey, institution, expiration);
+
+                observer.OnNext(institution);
+
+            }).SubscribeOn(_schedulerProvider.ThreadPool);
+        }
+        
+        async Task<Institution> FetchInstitution(string institutionId)
+        {
+            IsBusy = true;
+
+            try
+            {
+                var httpClient = _httpClientFactory.CreateClient();
+
+                var institutionsApi = RestService.For<IInstitutions>(httpClient);
+                var institution = await institutionsApi.GetInstitutionUsingGETAsync(institutionId);
+
+                return institution;
+            }
+            catch (Exception exception)
+            {
+                Debug.WriteLine($"Error {exception.Message}");
+                throw;
             }
             finally
             {

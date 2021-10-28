@@ -1,8 +1,9 @@
-﻿using System.Threading.Tasks;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
+using Appmilla.Yapily.Refit.Models;
 using Refit;
 
-namespace Cms
+namespace Appmilla.Yapily.Refit.Apis
 {
     public interface IConsents
     {
@@ -11,8 +12,8 @@ namespace Cms
         /// </summary>
         /// <param name="consentByAuthCode">consentByAuthCode</param>
         /// <returns>OK</returns>
-        [Post("consent-auth-code")]
-        [Headers("x-yapily-api-version",)] 
+        [Post("/consent-auth-code")]
+        [Headers("x-yapily-api-version: 1.0", "Authorization: Basic")] 
         Task<Consent> CreateConsentWithCodeUsingPOSTAsync([Body][AliasAs("consentByAuthCode")] ConsentAuthCodeRequest consentByAuthCode);
 
         /// <summary>
@@ -20,8 +21,8 @@ namespace Cms
         /// </summary>
         /// <param name="oneTimeToken">oneTimeToken</param>
         /// <returns>OK</returns>
-        [Post("consent-one-time-token")]
-        [Headers("x-yapily-api-version",)] 
+        [Post("/consent-one-time-token")]
+        [Headers("x-yapily-api-version: 1.0", "Authorization: Basic")] 
         Task<Consent> GetConsentBySingleAccessConsentUsingPOSTAsync([Body][AliasAs("oneTimeToken")] OneTimeTokenRequest oneTimeToken);
 
         /// <summary>
@@ -36,8 +37,8 @@ namespace Cms
         /// <param name="limit">Use this parameter to limit consent results, max limit is 20</param>
         /// <param name="offset">__Optional__. The number of transaction records to be skipped. Used primarily with paginated results.</param>
         /// <returns>OK</returns>
-        [Get("consents")]
-        [Headers("x-yapily-api-version",)] 
+        [Get("/consents")]
+        [Headers("x-yapily-api-version: 1.0", "Authorization: Basic")] 
         Task<ApiListResponseOfConsent> GetConsentsUsingGETAsync([Query][AliasAs("filterapplicationUserId")] IEnumerable<string> filterapplicationUserId,[Query][AliasAs("filteruserUuid")] IEnumerable<string> filteruserUuid,[Query][AliasAs("filterinstitution")] IEnumerable<string> filterinstitution,[Query][AliasAs("filterstatus")] IEnumerable<string> filterstatus,[Query][AliasAs("from")] string from,[Query][AliasAs("before")] string before,[Query][AliasAs("limit")] int? limit,[Query][AliasAs("offset")] int offset);
 
         /// <summary>
@@ -45,8 +46,8 @@ namespace Cms
         /// </summary>
         /// <param name="consentId">__Mandatory__. The consent Id of the `Consent` to update.</param>
         /// <returns>OK</returns>
-        [Get("consents/{consentId}")]
-        [Headers("x-yapily-api-version",)] 
+        [Get("/consents/{consentId}")]
+        [Headers("x-yapily-api-version: 1.0", "Authorization: Basic")] 
         Task<ApiResponseOfConsent> GetConsentByIdUsingGETAsync([AliasAs("consentId")] string consentId);
 
         /// <summary>
@@ -55,8 +56,8 @@ namespace Cms
         /// <param name="consentId">__Mandatory__. The consent Id of the `Consent` to update.</param>
         /// <param name="forceDelete">__Optional__. Whether to force the deletion.</param>
         /// <returns>OK</returns>
-        [Delete("consents/{consentId}")]
-        [Headers("x-yapily-api-version",)] 
+        [Delete("/consents/{consentId}")]
+        [Headers("x-yapily-api-version: 1.0", "Authorization: Basic")] 
         Task<ApiResponseOfConsentDeleteResponse> DeleteUsingDELETEAsync([AliasAs("consentId")] string consentId,[Query][AliasAs("forceDelete")] bool forceDelete);
 
         /// <summary>
@@ -64,8 +65,8 @@ namespace Cms
         /// </summary>
         /// <param name="preAuthorisationRequest">preAuthorisationRequest</param>
         /// <returns>OK</returns>
-        [Post("pre-auth-requests")]
-        [Headers("x-yapily-api-version",)] 
+        [Post("/pre-auth-requests")]
+        [Headers("x-yapily-api-version: 1.0", "Authorization: Basic")] 
         Task<ApiResponseOfAuthorisationRequestResponse> CreatePreAuthorisationRequestUsingPOSTAsync([Body][AliasAs("preAuthorisationRequest")] PreAuthorisationRequest preAuthorisationRequest);
 
         /// <summary>
@@ -76,8 +77,8 @@ namespace Cms
         /// <param name="limit">Use this parameter to limit consent results, max limit is 20</param>
         /// <returns>OK</returns>
         [System.Obsolete]
-        [Get("users/{userUuid}/consents")]
-        [Headers("x-yapily-api-version",)] 
+        [Get("/users/{userUuid}/consents")]
+        [Headers("x-yapily-api-version: 1.0", "Authorization: Basic")] 
         Task<ICollection<Consent>> GetUserConsentsUsingGETAsync([AliasAs("userUuid")] string userUuid,[Query][AliasAs("institutionId")] string institutionId,[Query][AliasAs("limit")] int? limit);
 
         /// <summary>
@@ -86,8 +87,8 @@ namespace Cms
         /// <param name="userUuid">__Mandatory__. The Yapily generated UUID for the user.</param>
         /// <param name="createConsentAccessToken">createConsentAccessToken</param>
         /// <returns>OK</returns>
-        [Post("users/{userUuid}/consents")]
-        [Headers("x-yapily-api-version",)] 
+        [Post("/users/{userUuid}/consents")]
+        [Headers("x-yapily-api-version: 1.0", "Authorization: Basic")] 
         Task<Consent> AddConsentUsingPOSTAsync([AliasAs("userUuid")] string userUuid,[Body][AliasAs("createConsentAccessToken")] CreateConsentAccessToken createConsentAccessToken);
 
     }

@@ -1,10 +1,13 @@
-﻿[System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "10.1.26.0 (Newtonsoft.Json v9.0.0.0)")]
-public enum CreditInterestTierBandSetTierBandMethod
+﻿namespace Appmilla.Yapily.Refit.Models
 {
-    [System.Runtime.Serialization.EnumMember(Value = @"Tiered")]
-    Tiered = 0,
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "10.1.26.0 (Newtonsoft.Json v9.0.0.0)")]
+    public enum CreditInterestTierBandSetTierBandMethod
+    {
+        [System.Runtime.Serialization.EnumMember(Value = @"Tiered")]
+        Tiered = 0,
 
-    [System.Runtime.Serialization.EnumMember(Value = @"Whole")]
-    Whole = 1,
+        [System.Runtime.Serialization.EnumMember(Value = @"Whole")]
+        Whole = 1,
 
+    }
 }

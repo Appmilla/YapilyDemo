@@ -1,11 +1,46 @@
-﻿using System.Threading.Tasks;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
+using Appmilla.Yapily.Refit.Models;
 using Refit;
 
-namespace Cms
+namespace Appmilla.Yapily.Refit.Apis
 {
+    public class TransactionsQueryParams
+    {
+        [Query]
+        [AliasAs("with")]
+        public IEnumerable<string> With { get; set; }
+
+        [Query]
+        [AliasAs("from")]
+        public string From { get; set; }
+
+        [Query]
+        [AliasAs("before")]
+        public string Before { get; set; }
+
+        [Query]
+        [AliasAs("limit")]
+        public int? Limit { get; set; }
+
+        [Query]
+        [AliasAs("sort")]
+        public Sort2? Sort { get; set; }
+
+        [Query][AliasAs("offset")]
+        public int? Offset { get; set; }
+
+        [Query][AliasAs("cursor")]
+        public string Cursor { get; set; }
+    }
+
     public interface ITransactions
     {
+        [Get("/accounts/{accountId}/transactions")]
+        [Headers("x-yapily-api-version: 1.0", "Authorization: Basic", "consent", "psu-id", "psu-corporate-id", "psu-ip-address")]
+        Task<ApiListResponseOfTransaction> GetTransactionsUsingGETAsync([AliasAs("accountId")] string accountId, TransactionsQueryParams transactionsQueryParams = null);
+
+        /*
         /// <summary>
         /// Get account transactions
         /// </summary>
@@ -18,9 +53,9 @@ namespace Cms
         /// <param name="offset">__Optional__. The number of transaction records to be skipped. Used primarily with paginated results.</param>
         /// <param name="cursor">__Optional__. This property is not currently in use.</param>
         /// <returns>OK</returns>
-        [Get("accounts/{accountId}/transactions")]
-        [Headers("x-yapily-api-version","consent","psu-id","psu-corporate-id","psu-ip-address",)] 
+        [Get("/accounts/{accountId}/transactions")]
+        [Headers("x-yapily-api-version: 1.0", "Authorization: Basic", "consent","psu-id","psu-corporate-id","psu-ip-address")] 
         Task<ApiListResponseOfTransaction> GetTransactionsUsingGETAsync([AliasAs("accountId")] string accountId,[Query][AliasAs("with")] IEnumerable<string> with,[Query][AliasAs("from")] string from,[Query][AliasAs("before")] string before,[Query][AliasAs("limit")] int? limit,[Query][AliasAs("sort")] Sort2? sort,[Query][AliasAs("offset")] int? offset,[Query][AliasAs("cursor")] string cursor);
-
+        */
     }
 }

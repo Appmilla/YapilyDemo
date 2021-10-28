@@ -1,13 +1,71 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="YapilyDemo.UX.ChooseBankView">
-    <ContentPage.Content>
-        <StackLayout>
-            <Label Text="Hello, world!"
-                   VerticalOptions="CenterAndExpand"
-                   HorizontalOptions="CenterAndExpand" />
-        </StackLayout>
-    </ContentPage.Content>
-</ContentPage>
+<framework:BaseView xmlns="http://xamarin.com/schemas/2014/forms"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                    xmlns:framework="clr-namespace:Appmilla.Xamarin.Infrastructure.Framework;assembly=Appmilla.Xamarin.Infrastructure"
+                    xmlns:styles="clr-namespace:YapilyDemo.Styles;assembly=YapilyDemo"
+                    xmlns:local="clr-namespace:YapilyDemo.UX;assembly=YapilyDemo"
+                    x:Class="YapilyDemo.UX.ChooseBankView"
+                    Shell.PresentationMode="ModalAnimated">
+    <framework:BaseView.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <styles:SharedStyles />
+                                                
+            </ResourceDictionary.MergedDictionaries>
+            
+        </ResourceDictionary>
+    </framework:BaseView.Resources>
+ 
+    <StackLayout Orientation="Vertical"
+                 BackgroundColor="{StaticResource PaleBackColorPrimary}">
+        <Label Margin="20,20"
+               FontFamily="MediumFontFamily"
+               FontSize="28"
+               HorizontalOptions="Center"
+               Text="Select bank"/>
+        <CollectionView ItemsSource="{Binding Institutions}"
+                        Margin="5,5">
+            <CollectionView.ItemsLayout>
+                <GridItemsLayout Orientation="Vertical"
+                                 Span="2"
+                                 HorizontalItemSpacing="5"
+                                 VerticalItemSpacing="5"/>
+            </CollectionView.ItemsLayout>
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <Frame BackgroundColor="White"
+                           Padding="10"
+                           CornerRadius="6"
+                           HasShadow="False">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="130" />
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
+                        <Image Grid.Row = "0"
+                               HorizontalOptions="Center"
+                               Source="{Binding ImageUrl}"
+                               Aspect="AspectFit"
+                               HeightRequest="120"
+                               WidthRequest="120" />
+                        <Label Grid.Row="1"
+                               HorizontalOptions="Center"
+                               Text="{Binding Name}"
+                               FontFamily="RegularFontFamily"
+                               FontSize="14"
+                               HorizontalTextAlignment="Center"
+                               LineBreakMode="WordWrap" />
+                        <Grid.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type local:ChooseBankViewModel}}, Path=ConnectBank}"
+                                                  CommandParameter="{Binding}"/>
+                        </Grid.GestureRecognizers>
+                    </Grid>
+                        </Frame>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+    </StackLayout>
+    
+ 
+</framework:BaseView>

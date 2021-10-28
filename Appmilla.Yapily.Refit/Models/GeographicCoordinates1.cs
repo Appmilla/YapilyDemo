@@ -1,9 +1,6 @@
-﻿using System.Threading.Tasks;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using Refit;
+﻿using Refit;
 
-namespace Cms
+namespace Appmilla.Yapily.Refit.Models
 {
     /// <summary>
     /// Location on the earth specified by two numbers representing vertical and horizontal position.    /// </summary>    

@@ -1,9 +1,7 @@
-﻿using System.Threading.Tasks;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
+﻿using System.Collections.Generic;
 using Refit;
 
-namespace Cms
+namespace Appmilla.Yapily.Refit.Models
 {
     /// <summary>
     /// PreAuthorisationRequest
@@ -12,7 +10,7 @@ namespace Cms
     {
         /// <summary>
         /// Defines the scope of the pre-authorisation request.
-        /// </summary>        [Required(AllowEmptyStrings = true)]
+        /// </summary>        //[Required(AllowEmptyStrings = true)]
 
         [AliasAs("scope")]
         public string Scope { get; set; }
@@ -41,7 +39,7 @@ namespace Cms
         /// <summary>
         /// InstitutionId
         /// </summary> 
-        [Required(AllowEmptyStrings = true)]
+        //[Required(AllowEmptyStrings = true)]
 
         [AliasAs("institutionId")]
         public string InstitutionId { get; set; }
@@ -50,7 +48,7 @@ namespace Cms
         /// <summary>
         /// Callback
         /// </summary> 
-        [Required(AllowEmptyStrings = true)]
+        //[Required(AllowEmptyStrings = true)]
 
         [AliasAs("callback")]
         public string Callback { get; set; }

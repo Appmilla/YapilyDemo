@@ -1,14 +1,21 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
-        <TargetFramework>netstandard2.1</TargetFramework>
+        <TargetFramework>netstandard2.0</TargetFramework>
+        <LangVersion>8</LangVersion>
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="Xamarin.Forms" Version="5.0.0.2012" />
+        <PackageReference Include="akavache" Version="7.3.1" />
+        <PackageReference Include="ReactiveUI" Version="16.2.6" />
+        <PackageReference Include="ReactiveUI.Fody" Version="16.2.6" />
+        <PackageReference Include="Refit" Version="6.1.15" />
+        <PackageReference Include="Refit.Newtonsoft.Json" Version="6.1.15" />
+        <PackageReference Include="sqlite-net-pcl" Version="1.8.116" />
+        <PackageReference Include="Xamarin.Forms" Version="5.0.0.2196" />
     </ItemGroup>
 
     <ItemGroup>
-      <Folder Include="Apis" />
+      <ProjectReference Include="..\Appmilla.Xamarin.Infrastructure\Appmilla.Xamarin.Infrastructure.csproj" />
     </ItemGroup>
 </Project>

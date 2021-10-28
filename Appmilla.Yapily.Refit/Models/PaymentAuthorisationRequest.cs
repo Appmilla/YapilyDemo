@@ -1,9 +1,7 @@
-﻿using System.Threading.Tasks;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
+﻿using System.Collections.Generic;
 using Refit;
 
-namespace Cms
+namespace Appmilla.Yapily.Refit.Models
 {
     /// <summary>
     /// PaymentAuthorisationRequest
@@ -34,7 +32,7 @@ namespace Cms
         /// <summary>
         /// InstitutionId
         /// </summary> 
-        [Required(AllowEmptyStrings = true)]
+        //[Required(AllowEmptyStrings = true)]
 
         [AliasAs("institutionId")]
         public string InstitutionId { get; set; }
@@ -43,7 +41,7 @@ namespace Cms
         /// <summary>
         /// Callback
         /// </summary> 
-        [Required(AllowEmptyStrings = true)]
+        //[Required(AllowEmptyStrings = true)]
 
         [AliasAs("callback")]
         public string Callback { get; set; }
@@ -116,7 +114,7 @@ namespace Cms
         /// <summary>
         /// PaymentRequest
         /// </summary> 
-        [Required]
+        //[Required]
 
         [AliasAs("paymentRequest")]
         public PaymentRequest PaymentRequest { get; set; } = new PaymentRequest();

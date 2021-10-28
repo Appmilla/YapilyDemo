@@ -1,9 +1,6 @@
-﻿using System.Threading.Tasks;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using Refit;
+﻿using Refit;
 
-namespace Cms
+namespace Appmilla.Yapily.Refit.Models
 {
     /// <summary>
     /// SortCodePaymentRequest
@@ -22,7 +19,7 @@ namespace Cms
         /// <summary>
         /// Name
         /// </summary> 
-        [Required(AllowEmptyStrings = true)]
+        //[Required(AllowEmptyStrings = true)]
 
         [AliasAs("name")]
         public string Name { get; set; }
@@ -39,7 +36,7 @@ namespace Cms
         /// <summary>
         /// Currency
         /// </summary> 
-        [Required(AllowEmptyStrings = true)]
+        //[Required(AllowEmptyStrings = true)]
 
         [AliasAs("currency")]
         public string Currency { get; set; }
@@ -48,7 +45,7 @@ namespace Cms
         /// <summary>
         /// Reference
         /// </summary> 
-        [Required(AllowEmptyStrings = true)]
+        //[Required(AllowEmptyStrings = true)]
 
         [AliasAs("reference")]
         public string Reference { get; set; }
@@ -57,7 +54,7 @@ namespace Cms
         /// <summary>
         /// Country
         /// </summary> 
-        [Required(AllowEmptyStrings = true)]
+        //[Required(AllowEmptyStrings = true)]
 
         [AliasAs("country")]
         public string Country { get; set; }
@@ -74,7 +71,7 @@ namespace Cms
         /// <summary>
         /// AccountNumber
         /// </summary> 
-        [Required(AllowEmptyStrings = true)]
+        //[Required(AllowEmptyStrings = true)]
 
         [AliasAs("accountNumber")]
         public string AccountNumber { get; set; }
@@ -83,7 +80,7 @@ namespace Cms
         /// <summary>
         /// SortCode
         /// </summary> 
-        [Required(AllowEmptyStrings = true)]
+        //[Required(AllowEmptyStrings = true)]
 
         [AliasAs("sortCode")]
         public string SortCode { get; set; }

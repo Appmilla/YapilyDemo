@@ -1,10 +1,10 @@
 ﻿using System;
 namespace YapilyDemo.UX
 {
-    public class IconConstants
+    public static class IconConstants
     {
-        public IconConstants()
-        {
-        }
+        public const string Home = "\uf10b";
+        public const string Payments = "\uf10b";
+        public const string More = "\uf10b";
     }
 }

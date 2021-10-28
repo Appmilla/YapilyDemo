@@ -1,8 +1,8 @@
 ﻿using System.Threading.Tasks;
-using System.Collections.Generic;
+using Appmilla.Yapily.Refit.Models;
 using Refit;
 
-namespace Cms
+namespace Appmilla.Yapily.Refit.Apis
 {
     public interface IEmbedded_Payments
     {
@@ -11,8 +11,8 @@ namespace Cms
         /// </summary>
         /// <param name="bulkPaymentEmbeddedAuthorisationRequest">bulkPaymentEmbeddedAuthorisationRequest</param>
         /// <returns>OK</returns>
-        [Post("embedded-bulk-payment-auth-requests")]
-        [Headers("x-yapily-api-version","psu-id","psu-corporate-id","psu-ip-address",)] 
+        [Post("/embedded-bulk-payment-auth-requests")]
+        [Headers("x-yapily-api-version: 1.0", "Authorization: Basic", "psu-id","psu-corporate-id","psu-ip-address")] 
         Task<ApiResponseOfPaymentEmbeddedAuthorisationRequestResponse> CreateEmbeddedBulkPaymentAuthorisationUsingPOSTAsync([Body][AliasAs("bulkPaymentEmbeddedAuthorisationRequest")] BulkPaymentEmbeddedAuthorisationRequest bulkPaymentEmbeddedAuthorisationRequest);
 
         /// <summary>
@@ -21,8 +21,8 @@ namespace Cms
         /// <param name="consentId">__Mandatory__. The consent Id of the `Consent` to update.</param>
         /// <param name="bulkPaymentEmbeddedAuthorisationRequest">bulkPaymentEmbeddedAuthorisationRequest</param>
         /// <returns>OK</returns>
-        [Put("embedded-bulk-payment-auth-requests/{consentId}")]
-        [Headers("x-yapily-api-version","psu-id","psu-corporate-id","psu-ip-address",)] 
+        [Put("/embedded-bulk-payment-auth-requests/{consentId}")]
+        [Headers("x-yapily-api-version: 1.0", "Authorization: Basic", "psu-id","psu-corporate-id","psu-ip-address")] 
         Task<ApiResponseOfPaymentEmbeddedAuthorisationRequestResponse> UpdateEmbeddedBulkPaymentAuthorisationUsingPUTAsync([AliasAs("consentId")] string consentId,[Body][AliasAs("bulkPaymentEmbeddedAuthorisationRequest")] BulkPaymentEmbeddedAuthorisationRequest bulkPaymentEmbeddedAuthorisationRequest);
 
         /// <summary>
@@ -30,8 +30,8 @@ namespace Cms
         /// </summary>
         /// <param name="paymentAuthRequest">paymentAuthRequest</param>
         /// <returns>OK</returns>
-        [Post("embedded-payment-auth-requests")]
-        [Headers("x-yapily-api-version","psu-id","psu-corporate-id","psu-ip-address",)] 
+        [Post("/embedded-payment-auth-requests")]
+        [Headers("x-yapily-api-version: 1.0", "Authorization: Basic", "psu-id","psu-corporate-id","psu-ip-address")] 
         Task<ApiResponseOfPaymentEmbeddedAuthorisationRequestResponse> CreateEmbeddedPaymentAuthorisationUsingPOSTAsync([Body][AliasAs("paymentAuthRequest")] PaymentEmbeddedAuthorisationRequest paymentAuthRequest);
 
         /// <summary>
@@ -40,8 +40,8 @@ namespace Cms
         /// <param name="consentId">__Mandatory__. The consent Id of the `Consent` to update.</param>
         /// <param name="paymentAuthRequest">paymentAuthRequest</param>
         /// <returns>OK</returns>
-        [Put("embedded-payment-auth-requests/{consentId}")]
-        [Headers("x-yapily-api-version","psu-id","psu-corporate-id","psu-ip-address",)] 
+        [Put("/embedded-payment-auth-requests/{consentId}")]
+        [Headers("x-yapily-api-version: 1.0", "Authorization: Basic", "psu-id","psu-corporate-id","psu-ip-address")] 
         Task<ApiResponseOfPaymentEmbeddedAuthorisationRequestResponse> UpdateEmbeddedPaymentAuthorisationUsingPUTAsync([AliasAs("consentId")] string consentId,[Body][AliasAs("paymentAuthRequest")] PaymentEmbeddedAuthorisationRequest paymentAuthRequest);
 
     }

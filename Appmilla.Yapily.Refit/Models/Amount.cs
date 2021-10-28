@@ -1,9 +1,6 @@
-﻿using System.Threading.Tasks;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using Refit;
+﻿using Refit;
 
-namespace Cms
+namespace Appmilla.Yapily.Refit.Models
 {
     /// <summary>
     /// Amount
@@ -20,7 +17,7 @@ namespace Cms
 
         /// <summary>
         /// ISO 4217 currency code
-        /// </summary>        [Required(AllowEmptyStrings = true)]
+        /// </summary>        //[Required(AllowEmptyStrings = true)]
 
         [AliasAs("currency")]
         public string Currency { get; set; }

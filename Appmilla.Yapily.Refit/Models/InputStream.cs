@@ -1,9 +1,4 @@
-﻿using System.Threading.Tasks;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using Refit;
-
-namespace Cms
+﻿namespace Appmilla.Yapily.Refit.Models
 {
     /// <summary>
     /// InputStream

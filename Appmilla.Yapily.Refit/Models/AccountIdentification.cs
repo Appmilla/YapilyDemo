@@ -1,9 +1,6 @@
-﻿using System.Threading.Tasks;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using Refit;
+﻿using Refit;
 
-namespace Cms
+namespace Appmilla.Yapily.Refit.Models
 {
     /// <summary>
     /// AccountIdentification
@@ -14,7 +11,7 @@ namespace Cms
         /// <summary>
         /// Type
         /// </summary> 
-        [Required(AllowEmptyStrings = true)]
+        //[Required(AllowEmptyStrings = true)]
 
         [AliasAs("type")]
         public AccountIdentificationType Type { get; set; }
@@ -23,7 +20,7 @@ namespace Cms
         /// <summary>
         /// Identification
         /// </summary> 
-        [Required(AllowEmptyStrings = true)]
+        //[Required(AllowEmptyStrings = true)]
 
         [AliasAs("identification")]
         public string Identification { get; set; }

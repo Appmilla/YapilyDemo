@@ -1,8 +1,8 @@
 ﻿using System.Threading.Tasks;
-using System.Collections.Generic;
+using Appmilla.Yapily.Refit.Models;
 using Refit;
 
-namespace Cms
+namespace Appmilla.Yapily.Refit.Apis
 {
     public interface IIdentity
     {
@@ -10,8 +10,8 @@ namespace Cms
         /// Get identity
         /// </summary>
         /// <returns>OK</returns>
-        [Get("identity")]
-        [Headers("x-yapily-api-version","consent")] 
+        [Get("/identity")]
+        [Headers("x-yapily-api-version: 1.0", "Authorization: Basic", "consent")] 
         Task<ApiResponseOfIdentity> GetIdentityUsingGETAsync();
 
     }

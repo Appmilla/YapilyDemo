@@ -1,9 +1,7 @@
-﻿using System.Threading.Tasks;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
+﻿using System.Collections.Generic;
 using Refit;
 
-namespace Cms
+namespace Appmilla.Yapily.Refit.Models
 {
     /// <summary>
     /// BulkPaymentRequest
@@ -26,7 +24,7 @@ namespace Cms
         /// <summary>
         /// Payments
         /// </summary> 
-        [Required]
+        //[Required]
 
         [AliasAs("payments")]
         public List<PaymentRequest> Payments { get; set; } = new List<PaymentRequest>();

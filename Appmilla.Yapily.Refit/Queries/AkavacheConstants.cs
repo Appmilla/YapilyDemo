@@ -1,7 +1,7 @@
 namespace Appmilla.Yapily.Refit.Queries
 {
-    public class AkavacheConstants
+    public static class AkavacheConstants
     {
-        
+        public static string LocalMachine = "LocalMachine";
     }
 }

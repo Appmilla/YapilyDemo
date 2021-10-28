@@ -5,7 +5,7 @@ using Java.Net;
 
 namespace YapilyDemo.Droid.Services.Http
 {
-    public class AndroidClientHandler : DelegatingHandler
+    public class AndroidYapilyClientHandler : DelegatingHandler
     {
         protected override async Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)
         {

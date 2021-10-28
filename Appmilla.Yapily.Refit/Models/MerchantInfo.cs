@@ -1,9 +1,6 @@
-﻿using System.Threading.Tasks;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using Refit;
+﻿using Refit;
 
-namespace Cms
+namespace Appmilla.Yapily.Refit.Models
 {
     /// <summary>
     /// MerchantInfo
@@ -14,7 +11,7 @@ namespace Cms
         /// <summary>
         /// CategoryCode
         /// </summary> 
-        [Required(AllowEmptyStrings = true)]
+        //[Required(AllowEmptyStrings = true)]
 
         [AliasAs("categoryCode")]
         public string CategoryCode { get; set; }
@@ -23,7 +20,7 @@ namespace Cms
         /// <summary>
         /// CustomerId
         /// </summary> 
-        [Required(AllowEmptyStrings = true)]
+        //[Required(AllowEmptyStrings = true)]
 
         [AliasAs("customerId")]
         public string CustomerId { get; set; }
@@ -32,7 +29,7 @@ namespace Cms
         /// <summary>
         /// Address
         /// </summary> 
-        [Required]
+        //[Required]
 
         [AliasAs("address")]
         public Address Address { get; set; } = new Address();

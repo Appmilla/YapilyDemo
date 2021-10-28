@@ -1,11 +1,14 @@
-﻿/// <summary>__Optional__. Sort transaction records by date ascending with 'date' or descending with '-date'. The default sort order is descending</summary>
-[System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "10.1.26.0 (Newtonsoft.Json v9.0.0.0)")]
-public enum Sort
+﻿namespace Appmilla.Yapily.Refit.Models
 {
-    [System.Runtime.Serialization.EnumMember(Value = @"date")]
-    Date = 0,
+    /// <summary>__Optional__. Sort transaction records by date ascending with 'date' or descending with '-date'. The default sort order is descending</summary>
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "10.1.26.0 (Newtonsoft.Json v9.0.0.0)")]
+    public enum Sort
+    {
+        [System.Runtime.Serialization.EnumMember(Value = @"date")]
+        Date = 0,
 
-    [System.Runtime.Serialization.EnumMember(Value = @"-date")]
-    Minusdate = 1,
+        [System.Runtime.Serialization.EnumMember(Value = @"-date")]
+        Minusdate = 1,
 
+    }
 }

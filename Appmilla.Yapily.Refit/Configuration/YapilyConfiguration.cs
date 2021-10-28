@@ -13,10 +13,14 @@ namespace Appmilla.Yapily.Refit.Configuration
     {
         public string Username { get; set; }
         public string Password { get; set; }
-        
+
+        public YapilyConfiguration()
+        {
+
+        }
         public string GetAuthorization()
         {
-            return "Basic " + Base64Encode(Username + ":" + Password);
+            return Base64Encode(Username + ":" + Password);
         }
 
         public static string Base64Encode(string text)

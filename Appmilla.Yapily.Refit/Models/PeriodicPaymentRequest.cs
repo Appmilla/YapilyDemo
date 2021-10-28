@@ -1,9 +1,6 @@
-﻿using System.Threading.Tasks;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using Refit;
+﻿using Refit;
 
-namespace Cms
+namespace Appmilla.Yapily.Refit.Models
 {
     /// <summary>
     /// PeriodicPaymentRequest
@@ -14,7 +11,7 @@ namespace Cms
         /// <summary>
         /// Frequency
         /// </summary> 
-        [Required]
+        //[Required]
 
         [AliasAs("frequency")]
         public FrequencyRequest Frequency { get; set; } = new FrequencyRequest();

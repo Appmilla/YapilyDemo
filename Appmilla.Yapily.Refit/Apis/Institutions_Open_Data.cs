@@ -1,8 +1,8 @@
 ﻿using System.Threading.Tasks;
-using System.Collections.Generic;
+using Appmilla.Yapily.Refit.Models;
 using Refit;
 
-namespace Cms
+namespace Appmilla.Yapily.Refit.Apis
 {
     public interface IInstitutions_Open_Data
     {
@@ -11,7 +11,7 @@ namespace Cms
         /// </summary>
         /// <param name="institutionId">institutionId</param>
         /// <returns>OK</returns>
-        [Get("institutions/{institutionId}/atms")]
+        [Get("/institutions/{institutionId}/atms")]
         [Headers()] 
         Task<ApiResponseOfListOfATMOpenDataResponse> GetATMDataUsingGETAsync([AliasAs("institutionId")] string institutionId);
 
@@ -20,7 +20,7 @@ namespace Cms
         /// </summary>
         /// <param name="institutionId">institutionId</param>
         /// <returns>OK</returns>
-        [Get("institutions/{institutionId}/personal-current-accounts")]
+        [Get("/institutions/{institutionId}/personal-current-accounts")]
         [Headers()] 
         Task<ApiResponseOfListOfPersonalCurrentAccountData> GetPersonalCurrentAccountsUsingGETAsync([AliasAs("institutionId")] string institutionId);
 

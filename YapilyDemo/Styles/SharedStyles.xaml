@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<ResourceDictionary xmlns="http://xamarin.com/schemas/2014/forms"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                    x:Class="YapilyDemo.Styles.SharedStyles">
+    
+    <Color x:Key="AppBackground">#FFFFFF</Color>
+    <Color x:Key="AccentColor">#004687</Color>
+    <Color x:Key="DisabledColor">#E6DAB9</Color>
+    <Color x:Key="DisabledBackgroundColor">#BDBDBD</Color>
+    <Color x:Key="TitleTextColor">#004687</Color>
+    <Color x:Key="PaleBackColorPrimary">#F5F5F5</Color>
+    <Color x:Key="PaleBackColorSecondary">#F2EDDA</Color>
+    <Color x:Key="PlaceholderColor">#FFF5F5F5</Color>
+    <Color x:Key="DeepTextColor">#555555</Color>
+    <Color x:Key="NormalTextColor">#616161</Color>
+    <Color x:Key="PaleTextColor">#999999</Color>
+    <x:Double x:Key="BaseFontSize">12</x:Double>
+    <x:Double x:Key="BaseFontSize+">14</x:Double>
+    <x:Double x:Key="BaseFontSize++">17</x:Double>
+    <x:Double x:Key="BaseFontSize-">11</x:Double>
+    
+    <x:String x:Key="formattimewithoutseconds">{0:H:mm}</x:String>
+    <Color x:Key="TimelineColor">#FFBDBDBD</Color>
+    <Color x:Key="HeaderTextColor">#3C3C3C</Color>
+    <Color x:Key="BodyTextColor">#869EAC</Color>
+    <Color x:Key="TimeColor">#A64C79</Color>
+
+    <Color x:Key="MidGreen">#469638</Color>
+    <Color x:Key="Lipstick">#E62128</Color>
+    <Color x:Key="LipstickTwo">#DE1920</Color>
+    <Color x:Key="BrownishGrey">#616161</Color>
+    <Color x:Key="Bluish">#2B7BB9</Color>
+    <Color x:Key="BluishTwo">#2B7BB9</Color>
+    <Color x:Key="BluishThree">#2280BD</Color>
+    <Color x:Key="TrueGreen">#1A8208</Color>
+    <Color x:Key="SeparatorColor">#80BDBDBD</Color>
+    <Color x:Key="SolidSeparatorColor">#FFBDBDBD</Color>
+    <Color x:Key="TranslucentBlack">#bf000000</Color>
+    <Color x:Key="BlueAccent">#FF004687</Color>
+    <Color x:Key="Hyperlink">#2875b2</Color>
+    <Color x:Key="SegmentColor">#2875b2</Color>
+    <Color x:Key="White">#FFFFFFFF</Color>
+    <Color x:Key="DarkGreyColor">#222222</Color>
+    <Color x:Key="LightGreyColor">#E6DAB9</Color>
+    
+</ResourceDictionary>

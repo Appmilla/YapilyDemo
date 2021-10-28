@@ -3,12 +3,24 @@ using System.Diagnostics;
 using Appmilla.Yapily.Api;
 using Appmilla.Yapily.Client;
 using Appmilla.Yapily.Model;
+using CommonServiceLocator;
+using ReactiveUI;
 using Xamarin.Forms;
+using Xamarin.Forms.Xaml;
 
 namespace YapilyDemo.UX
 {
-    public partial class MainView : ContentPage
+    [XamlCompilation(XamlCompilationOptions.Compile)]
+    public partial class MainView  : IViewFor<MainViewModel>
     {
+        public MainViewModel ViewModel { get; set; } = ServiceLocator.Current.GetInstance<MainViewModel>();
+        
+        object IViewFor.ViewModel
+        {
+            get => ViewModel;
+            set => BindingContext = ViewModel = (MainViewModel)value;
+        }
+        
         public static string Base64Encode(string plainText)
         {
             var plainTextBytes = System.Text.Encoding.UTF8.GetBytes(plainText);
@@ -18,6 +30,8 @@ namespace YapilyDemo.UX
         public MainView()
         {
             InitializeComponent();
+            
+            BindingContext = ViewModel;
         }
 
         async void Button_Clicked(System.Object sender, System.EventArgs e)

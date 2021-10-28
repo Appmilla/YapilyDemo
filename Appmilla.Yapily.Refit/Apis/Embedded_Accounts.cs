@@ -1,8 +1,8 @@
 ﻿using System.Threading.Tasks;
-using System.Collections.Generic;
+using Appmilla.Yapily.Refit.Models;
 using Refit;
 
-namespace Cms
+namespace Appmilla.Yapily.Refit.Apis
 {
     public interface IEmbedded_Accounts
     {
@@ -11,8 +11,8 @@ namespace Cms
         /// </summary>
         /// <param name="accountAuthRequest">accountAuthRequest</param>
         /// <returns>OK</returns>
-        [Post("embedded-account-auth-requests")]
-        [Headers("x-yapily-api-version","psu-id","psu-corporate-id","psu-ip-address",)] 
+        [Post("/embedded-account-auth-requests")]
+        [Headers("x-yapily-api-version: 1.0", "Authorization: Basic", "psu-id","psu-corporate-id","psu-ip-address")] 
         Task<ApiResponseOfAuthorisationEmbeddedRequestResponse> InitiateEmbeddedAccountRequestUsingPOSTAsync([Body][AliasAs("accountAuthRequest")] AccountEmbeddedAuthorisationRequest accountAuthRequest);
 
         /// <summary>
@@ -21,8 +21,8 @@ namespace Cms
         /// <param name="consentId">__Mandatory__. The consent Id of the `Consent` to update.</param>
         /// <param name="accountAuthRequest">accountAuthRequest</param>
         /// <returns>OK</returns>
-        [Put("embedded-account-auth-requests/{consentId}")]
-        [Headers("x-yapily-api-version","psu-id","psu-corporate-id","psu-ip-address",)] 
+        [Put("/embedded-account-auth-requests/{consentId}")]
+        [Headers("x-yapily-api-version: 1.0", "Authorization: Basic", "psu-id","psu-corporate-id","psu-ip-address")] 
         Task<ApiResponseOfAuthorisationEmbeddedRequestResponse> UpdateEmbeddedAccountRequestUsingPUTAsync([AliasAs("consentId")] string consentId,[Body][AliasAs("accountAuthRequest")] AccountEmbeddedAuthorisationRequest accountAuthRequest);
 
     }

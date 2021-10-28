@@ -1,9 +1,6 @@
-﻿using System.Threading.Tasks;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using Refit;
+﻿using Refit;
 
-namespace Cms
+namespace Appmilla.Yapily.Refit.Models
 {
     /// <summary>
     /// CreateConsentAccessToken
@@ -14,7 +11,7 @@ namespace Cms
         /// <summary>
         /// AccessToken
         /// </summary> 
-        [Required(AllowEmptyStrings = true)]
+        //[Required(AllowEmptyStrings = true)]
 
         [AliasAs("accessToken")]
         public string AccessToken { get; set; }
@@ -31,7 +28,7 @@ namespace Cms
         /// <summary>
         /// InstitutionId
         /// </summary> 
-        [Required(AllowEmptyStrings = true)]
+        //[Required(AllowEmptyStrings = true)]
 
         [AliasAs("institutionId")]
         public string InstitutionId { get; set; }
