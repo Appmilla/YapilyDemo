@@ -3,11 +3,20 @@
 <Shell xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:ux="clr-namespace:YapilyDemo.UX;assembly=YapilyDemo"
-             x:Class="YapilyDemo.UX.AppShell">
+             xmlns:accountDetails="clr-namespace:YapilyDemo.UX.Features.AccountDetails;assembly=YapilyDemo"
+             xmlns:home="clr-namespace:YapilyDemo.UX.Features.Home;assembly=YapilyDemo"
+             xmlns:connectBank="clr-namespace:YapilyDemo.UX.Features.ConnectBank;assembly=YapilyDemo"
+             xmlns:more="clr-namespace:YapilyDemo.UX.Features.More;assembly=YapilyDemo"
+             xmlns:payments="clr-namespace:YapilyDemo.UX.Features.Payments;assembly=YapilyDemo"
+             x:Class="YapilyDemo.UX.Features.ApplicationShell.AppShell">
     <ShellItem Route="chooseBank">
-        <ShellContent ContentTemplate="{DataTemplate ux:ChooseBankView}" />
+        <ShellContent ContentTemplate="{DataTemplate connectBank:ChooseBankView}" />
     </ShellItem>
 
+    <ShellItem Route="accountDetails">
+        <ShellContent ContentTemplate="{DataTemplate accountDetails:AccountDetailsView}" />
+    </ShellItem>
+    
     <TabBar Route="main">
         <Tab Title="Home">
             <Tab.Icon>
@@ -16,7 +25,7 @@
                                  Size="24"
                                  Color="#616161" />
             </Tab.Icon>
-            <ShellContent ContentTemplate="{DataTemplate ux:HomeView}"/>
+            <ShellContent ContentTemplate="{DataTemplate home:HomeView}"/>
         </Tab>
         <Tab Title="Payments">
             <Tab.Icon>
@@ -25,7 +34,7 @@
                                  Size="24"
                                  Color="#616161" />
             </Tab.Icon>
-            <ShellContent ContentTemplate="{DataTemplate ux:PaymentsView}"/>
+            <ShellContent ContentTemplate="{DataTemplate payments:PaymentsView}"/>
         </Tab>
         <Tab Title="More">
             <Tab.Icon>
@@ -34,7 +43,7 @@
                                  Size="24"
                                  Color="#616161" />
             </Tab.Icon>
-            <ShellContent ContentTemplate="{DataTemplate ux:MoreView}"/>
+            <ShellContent ContentTemplate="{DataTemplate more:MoreView}"/>
         </Tab>
     </TabBar>
 </Shell>

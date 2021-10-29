@@ -1,11 +1,10 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using Appmilla.Yapily.Refit.Models;
 using ReactiveUI;
 using ReactiveUI.Fody.Helpers;
 
-namespace YapilyDemo.UX
+namespace YapilyDemo.UX.Features.Shared
 {
     public class InstitutionViewModel : ReactiveObject
     {
@@ -22,7 +21,7 @@ namespace YapilyDemo.UX
         public InstitutionEnvironmentType? EnvironmentType { get; set; }
         
         [Reactive]
-        public List<Features> Features { get; set; }
+        public List<Appmilla.Yapily.Refit.Models.Features> Features { get; set; }
         
         [Reactive]
         public string FullName { get; set; }

@@ -5,7 +5,8 @@
                     xmlns:framework="clr-namespace:Appmilla.Xamarin.Infrastructure.Framework;assembly=Appmilla.Xamarin.Infrastructure"
                     xmlns:styles="clr-namespace:YapilyDemo.Styles;assembly=YapilyDemo"
                     xmlns:local="clr-namespace:YapilyDemo.UX;assembly=YapilyDemo"
-                    x:Class="YapilyDemo.UX.ChooseBankView"
+                    xmlns:connectBank="clr-namespace:YapilyDemo.UX.Features.ConnectBank;assembly=YapilyDemo"
+                    x:Class="YapilyDemo.UX.Features.ConnectBank.ChooseBankView"
                     Shell.PresentationMode="ModalAnimated">
     <framework:BaseView.Resources>
         <ResourceDictionary>
@@ -57,7 +58,7 @@
                                HorizontalTextAlignment="Center"
                                LineBreakMode="WordWrap" />
                         <Grid.GestureRecognizers>
-                            <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type local:ChooseBankViewModel}}, Path=ConnectBank}"
+                            <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type connectBank:ChooseBankViewModel}}, Path=ConnectBank}"
                                                   CommandParameter="{Binding}"/>
                         </Grid.GestureRecognizers>
                     </Grid>

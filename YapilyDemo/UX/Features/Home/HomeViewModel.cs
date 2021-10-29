@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Linq;
@@ -20,7 +19,7 @@ using ReactiveUI.Fody.Helpers;
 using Xamarin.Essentials.Interfaces;
 using Xamarin.Forms;
 
-namespace YapilyDemo.UX
+namespace YapilyDemo.UX.Features.Home
 {
     public class HomeViewModel : ReactiveObject, INavigationAware
     {
@@ -28,7 +27,8 @@ namespace YapilyDemo.UX
         readonly IConnectedInstitutionsCache _connectedInstitutionsCache;
         readonly IAccountsQuery _accountsQuery;
         readonly ISecureStorage _secureStorage;
-
+        readonly ITransactionsQuery _transactionsQuery;
+        
         bool _hasLoaded;
         
         ReadOnlyObservableCollection<ConnectedInstitution> _connectedInstitutions;
@@ -66,12 +66,14 @@ namespace YapilyDemo.UX
             ISchedulerProvider schedulerProvider,
             IConnectedInstitutionsCache connectedInstitutionsCache,
             IAccountsQuery accountsQuery,
-            ISecureStorage secureStorage)
+            ISecureStorage secureStorage,
+            ITransactionsQuery transactionsQuery)
         {
             _schedulerProvider = schedulerProvider;            
             _connectedInstitutionsCache = connectedInstitutionsCache;
             _accountsQuery = accountsQuery;  
             _secureStorage = secureStorage;
+            _transactionsQuery = transactionsQuery;
             
             var institutionsSort = SortExpressionComparer<InstitutionSummaryViewModel>
                 .Ascending(i => i.Name);
@@ -117,7 +119,8 @@ namespace YapilyDemo.UX
             var results = _connectedInstitutions.Select(ci => new InstitutionSummaryViewModel(
                 _schedulerProvider,
                 _accountsQuery,
-                _secureStorage)
+                _secureStorage,
+                _transactionsQuery)
             {
                 InstitutionId = ci.InstitutionId,
                 Name = ci.Name,

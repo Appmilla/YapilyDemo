@@ -1,17 +1,16 @@
-﻿using System;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using Appmilla.Xamarin.Infrastructure.Framework;
 using ReactiveUI;
 using ReactiveUI.Fody.Helpers;
 
-namespace YapilyDemo.UX
+namespace YapilyDemo.UX.Features.Payments
 {    
-    public class MoreViewModel : ReactiveObject, INavigationAware
+    public class PaymentsViewModel : ReactiveObject, INavigationAware
     {
         [Reactive]
-        public string Title { get; private set; } = "More page";
+        public string Title { get; private set; } = "Payments page";
 
-        public MoreViewModel()
+        public PaymentsViewModel()
         {
         }
 

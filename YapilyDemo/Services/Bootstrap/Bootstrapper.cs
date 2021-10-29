@@ -16,6 +16,14 @@ using Refit;
 using Xamarin.Essentials.Interfaces;
 using Xamarin.Essentials.Implementation;
 using YapilyDemo.UX;
+using YapilyDemo.UX.Features.AccountDetails;
+using YapilyDemo.UX.Features.ApplicationShell;
+using YapilyDemo.UX.Features.AuthenticateLogin;
+using YapilyDemo.UX.Features.ConnectBank;
+using YapilyDemo.UX.Features.Home;
+using YapilyDemo.UX.Features.More;
+using YapilyDemo.UX.Features.Payments;
+using YapilyDemo.UX.Features.Shared;
 
 namespace YapilyDemo.Services.Bootstrap
 {
@@ -144,6 +152,9 @@ namespace YapilyDemo.Services.Bootstrap
             builder.RegisterType<MainViewModel>().AsSelf().SingleInstance();
             builder.RegisterType<PaymentsViewModel>().AsSelf().SingleInstance();
             builder.RegisterType<MoreViewModel>().AsSelf().SingleInstance();
+            builder.RegisterType<AccountViewModel>().AsSelf();
+            builder.RegisterType<InstitutionSummaryViewModel>().AsSelf();
+            builder.RegisterType<AccountDetailsViewModel>().AsSelf().SingleInstance();
         }
 
         public static void RegisterSplatAdapter(ContainerBuilder builder)

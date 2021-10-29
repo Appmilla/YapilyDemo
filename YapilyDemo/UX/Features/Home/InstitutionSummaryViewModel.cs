@@ -1,29 +1,31 @@
 using System;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
+using System.Linq;
 using System.Reactive;
+using System.Reactive.Concurrency;
 using System.Reactive.Linq;
+using System.Threading.Tasks;
+using Appmilla.Xamarin.Infrastructure.Extensions;
 using Appmilla.Xamarin.Infrastructure.Reactive;
+using Appmilla.Xamarin.Infrastructure.Utilities;
 using Appmilla.Yapily.Refit.Models;
 using Appmilla.Yapily.Refit.Queries;
 using DynamicData;
 using DynamicData.Binding;
 using ReactiveUI;
 using ReactiveUI.Fody.Helpers;
-using System.Diagnostics;
-using System.Linq;
-using System.Reactive.Concurrency;
-using System.Threading.Tasks;
-using Appmilla.Xamarin.Infrastructure.Extensions;
-using Appmilla.Xamarin.Infrastructure.Utilities;
 using Xamarin.Essentials.Interfaces;
+using YapilyDemo.UX.Features.Shared;
 
-namespace YapilyDemo.UX
+namespace YapilyDemo.UX.Features.Home
 {
     public class InstitutionSummaryViewModel : ReactiveObject
     {
         readonly ISchedulerProvider _schedulerProvider;
         readonly IAccountsQuery _accountsQuery;
         readonly ISecureStorage _secureStorage;
+        readonly ITransactionsQuery _transactionsQuery;
         
         ReadOnlyObservableCollection<AccountViewModel> _accounts;
         
@@ -63,11 +65,13 @@ namespace YapilyDemo.UX
         public InstitutionSummaryViewModel(
             ISchedulerProvider schedulerProvider,
             IAccountsQuery accountsQuery,
-            ISecureStorage secureStorage)
+            ISecureStorage secureStorage,
+            ITransactionsQuery transactionsQuery)
         {
             _schedulerProvider = schedulerProvider;            
             _accountsQuery = accountsQuery;  
             _secureStorage = secureStorage;
+            _transactionsQuery = transactionsQuery;
             
             this.WhenAnyValue(x => x._accountsQuery.IsBusy)
                 .ObserveOn(schedulerProvider.MainThread)
@@ -129,14 +133,19 @@ namespace YapilyDemo.UX
         
         public void Accounts_OnNext(ApiListResponseOfAccount accountsList)
         {
-            var results = accountsList.Data.Select(i => new AccountViewModel()
+            var results = accountsList.Data.Select(i => new AccountViewModel(
+                _schedulerProvider,
+                _transactionsQuery,
+                _secureStorage)
             {
                 CacheKey = GuidUtility.GetDeterministicGuid($"{i.Id}"),
                 Id = i.Id,
+                InstitutionId = InstitutionId,
                 Type = i.Type,
                 Description = i.Description,
                 Balance = i?.Balance,
                 Currency = i.Currency,
+                FormattedBalance = i?.Balance.ToFormattedCurrencyString(StringUtilities.GetCurrencySymbol(i.Currency)),
                 UsageType = i?.UsageType,
                 AccountType = i?.AccountType,
                 Nickname = i.Nickname,

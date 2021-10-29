@@ -1,13 +1,10 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using CommonServiceLocator;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
+using YapilyDemo.UX.Features.AccountDetails;
+using YapilyDemo.UX.Features.ConnectBank;
 
-namespace YapilyDemo.UX
+namespace YapilyDemo.UX.Features.ApplicationShell
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class AppShell : Shell
@@ -20,7 +17,8 @@ namespace YapilyDemo.UX
 
             BindingContext = ViewModel;
 
-            Routing.RegisterRoute("chooseBank", typeof(ChooseBankView));            
+            Routing.RegisterRoute("chooseBank", typeof(ChooseBankView));
+            Routing.RegisterRoute("accountDetails", typeof(AccountDetailsView));
         }
     }
 }

@@ -2,20 +2,20 @@
 using ReactiveUI;
 using Xamarin.Forms.Xaml;
 
-namespace YapilyDemo.UX
+namespace YapilyDemo.UX.Features.More
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class PaymentsView : IViewFor<PaymentsViewModel>
+    public partial class MoreView : IViewFor<MoreViewModel>
     {
-        public PaymentsViewModel ViewModel { get; set; } = ServiceLocator.Current.GetInstance<PaymentsViewModel>();
+        public MoreViewModel ViewModel { get; set; } = ServiceLocator.Current.GetInstance<MoreViewModel>();
 
         object IViewFor.ViewModel
         {
             get => ViewModel;
-            set => BindingContext = ViewModel = (PaymentsViewModel)value;
+            set => BindingContext = ViewModel = (MoreViewModel)value;
         }
 
-        public PaymentsView()
+        public MoreView()
         {
             InitializeComponent();
 

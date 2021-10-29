@@ -17,9 +17,9 @@ namespace Appmilla.Yapily.Refit.Queries
     {
         bool IsBusy { get; }
         
-        IObservable<ApiListResponseOfTransaction> GetTransactions(string accountId, string cacheKey);
+        IObservable<ApiListResponseOfTransaction> GetTransactions(string consentToken, string accountId, string cacheKey);
         
-        IObservable<ApiListResponseOfTransaction> RefreshTransactions(string accountId, string cacheKey);
+        IObservable<ApiListResponseOfTransaction> RefreshTransactions(string consentToken, string accountId, string cacheKey);
     }
 
     public class TransactionsQuery : ReactiveObject, ITransactionsQuery
@@ -46,22 +46,22 @@ namespace Appmilla.Yapily.Refit.Queries
         }
         
         
-        public IObservable<ApiListResponseOfTransaction> GetTransactions(string accountId, string cacheKey)
+        public IObservable<ApiListResponseOfTransaction> GetTransactions(string consentToken, string accountId, string cacheKey)
         {
             DateTimeOffset? expiration = DateTimeOffset.Now + _cacheLifetime;
 
             return _blobCache.GetOrFetchObject(cacheKey,
-                () => FetchTransactions(accountId),
+                () => FetchTransactions(consentToken, accountId),
                 expiration);
         }
 
-        public IObservable<ApiListResponseOfTransaction> RefreshTransactions(string accountId, string cacheKey)
+        public IObservable<ApiListResponseOfTransaction> RefreshTransactions(string consentToken, string accountId, string cacheKey)
         {
             return Observable.Create<ApiListResponseOfTransaction>(async observer =>
             {
                 DateTimeOffset? expiration = DateTimeOffset.Now + _cacheLifetime;
 
-                var institution = await FetchTransactions(accountId).ConfigureAwait(false);
+                var institution = await FetchTransactions(consentToken, accountId).ConfigureAwait(false);
 
                 await _blobCache.InsertObject(cacheKey, institution, expiration);
 
@@ -70,7 +70,7 @@ namespace Appmilla.Yapily.Refit.Queries
             }).SubscribeOn(_schedulerProvider.ThreadPool);
         }
         
-        async Task<ApiListResponseOfTransaction> FetchTransactions(string accountId)
+        async Task<ApiListResponseOfTransaction> FetchTransactions(string consentToken, string accountId)
         {
             IsBusy = true;
 
@@ -78,8 +78,8 @@ namespace Appmilla.Yapily.Refit.Queries
             {
                 var httpClient = _httpClientFactory.CreateClient();
 
-                var transactionsApi = RestService.For<ITransactions>(httpClient);
-                var transactions = await transactionsApi.GetTransactionsUsingGETAsync(accountId);
+                var transactionsApi = RestService.For<ITransactions>(httpClient, _refitSettings);
+                var transactions = await transactionsApi.GetTransactionsUsingGETAsync(consentToken, accountId);
 
                 return transactions;
             }

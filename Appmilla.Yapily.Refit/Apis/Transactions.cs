@@ -36,10 +36,16 @@ namespace Appmilla.Yapily.Refit.Apis
 
     public interface ITransactions
     {
+        /*
         [Get("/accounts/{accountId}/transactions")]
         [Headers("x-yapily-api-version: 1.0", "Authorization: Basic", "consent", "psu-id", "psu-corporate-id", "psu-ip-address")]
         Task<ApiListResponseOfTransaction> GetTransactionsUsingGETAsync([AliasAs("accountId")] string accountId, TransactionsQueryParams transactionsQueryParams = null);
-
+        */
+        
+        [Get("/accounts/{accountId}/transactions")]
+        [Headers("x-yapily-api-version: 1.0", "Authorization: Basic", "psu-id", "psu-corporate-id", "psu-ip-address")]
+        Task<ApiListResponseOfTransaction> GetTransactionsUsingGETAsync([Header("consent")] string consentToken, [AliasAs("accountId")] string accountId, TransactionsQueryParams transactionsQueryParams = null);
+        
         /*
         /// <summary>
         /// Get account transactions

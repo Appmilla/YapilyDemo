@@ -1,0 +1,265 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<framework:BaseView xmlns="http://xamarin.com/schemas/2014/forms"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                    xmlns:framework="clr-namespace:Appmilla.Xamarin.Infrastructure.Framework;assembly=Appmilla.Xamarin.Infrastructure"
+                    xmlns:styles="clr-namespace:YapilyDemo.Styles;assembly=YapilyDemo"
+                    xmlns:local="clr-namespace:YapilyDemo.UX;assembly=YapilyDemo"
+                    xmlns:converters="clr-namespace:Appmilla.Xamarin.Infrastructure.Converters;assembly=Appmilla.Xamarin.Infrastructure"
+                    xmlns:shared="clr-namespace:YapilyDemo.UX.Features.Shared;assembly=YapilyDemo"
+                    xmlns:models="clr-namespace:Appmilla.Yapily.Refit.Models;assembly=Appmilla.Yapily.Refit"
+                    x:Class="YapilyDemo.UX.Features.AccountDetails.AccountDetailsView"
+                    Shell.PresentationMode="ModalAnimated">
+    
+    <framework:BaseView.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <styles:SharedStyles />
+                
+            </ResourceDictionary.MergedDictionaries>
+            
+            <converters:BalanceDisplayConverter x:Key="balanceColorConverter"
+                                                Credit="{StaticResource MidGreen}"
+                                                Zero="{StaticResource MidGreen}"
+                                                Debit="{StaticResource Lipstick}"
+                                                None="{StaticResource BrownishGrey}"/>
+
+        </ResourceDictionary>
+    </framework:BaseView.Resources>
+    
+    <StackLayout BackgroundColor="{StaticResource PaleBackColorPrimary}"
+                 Padding="10,20,10,10">
+        <Frame BackgroundColor="White"
+               Padding="24"
+               CornerRadius="6"
+               HasShadow="False">
+            <Label Text="{Binding Title}"
+                   HorizontalTextAlignment="Center"
+                   FontSize="28"
+                   FontFamily="MediumFontFamily"/>
+        </Frame>  
+        <ScrollView>
+            <Grid ColumnSpacing="0"
+                  RowSpacing="0"
+                  Padding="10,10">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                <Frame Grid.Row="0"
+                       Margin="0,5,0,5"
+                       Padding="10,10"
+                       BackgroundColor="White"
+                       CornerRadius="6"
+                       HasShadow="false">
+                    <Grid ColumnSpacing="0"
+                          RowSpacing="0"
+                          Padding="0">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        <StackLayout Grid.Row="0"
+                                     Grid.Column="0"
+                                     Grid.ColumnSpan="3"
+                                     BackgroundColor="White"
+                                     Padding="0,0,0,0"
+                                     Margin="0,0,0,0"
+                                     BindableLayout.ItemsSource="{Binding Path=Account.AccountNames}"
+                                     Spacing="0" >
+                            <BindableLayout.ItemTemplate>
+                                <DataTemplate x:DataType="models:AccountName">
+                                    <Label Margin="0,0,0,0"
+                                           FontFamily="MediumFontFamily"
+                                           FontSize="18"
+                                           HorizontalOptions="Start"
+                                           HorizontalTextAlignment="Start"
+                                           TextColor="#FF004687"
+                                           VerticalTextAlignment="Center"
+                                           Text="{Binding Name}" />
+                                    </DataTemplate>
+                            </BindableLayout.ItemTemplate>
+                        </StackLayout>
+                        <Label Grid.Row="1"
+                               Grid.Column="1"
+                               Margin="0,0,0,0"
+                               FontFamily="MediumFontFamily"
+                               FontSize="18"
+                               HorizontalOptions="Start"
+                               HorizontalTextAlignment="Start"
+                               TextColor="#FF004687"
+                               VerticalTextAlignment="End"
+                               Text="{Binding Account.Type}" />
+                        <Label Grid.Row="1"
+                               Grid.Column="1"
+                               Grid.ColumnSpan="2"
+                               Margin="0,16,17,0"
+                               FontSize="18"
+                               HorizontalOptions="End"
+                               HorizontalTextAlignment="End"
+                               TextColor="{Binding Account.Balance, Converter={StaticResource balanceColorConverter}}"
+                               VerticalTextAlignment="End"
+                               Text="{Binding Account.FormattedBalance}" />
+                        <Label Grid.Row="2"
+                               Grid.Column="1"
+                               Margin="0,1,0,0"
+                               FontFamily="LightFontFamily"
+                               FontSize="12"
+                               HorizontalOptions="Start"
+                               HorizontalTextAlignment="Start"
+                               TextColor="{StaticResource BrownishGrey}"
+                               VerticalTextAlignment="Start"
+                               Text="{Binding Account.Id}" 
+                               AutomationProperties.IsInAccessibleTree="False"/>
+                        <Label Grid.Row="2"
+                               Grid.Column="2"
+                               Margin="0,0,17,13"
+                               FontSize="12"
+                               HorizontalOptions="End"
+                               HorizontalTextAlignment="End"
+                               TextColor="{StaticResource BrownishGrey}"
+                               VerticalTextAlignment="Center"
+                               VerticalOptions="Start"
+                               Text="{Binding Account.Currency}" 
+                               AutomationProperties.IsInAccessibleTree="False"/>
+                    </Grid>
+                </Frame>
+                <Frame Grid.Row="1"
+                       Margin="0,5,0,5"
+                       Padding="10,10"
+                       BackgroundColor="White"
+                       CornerRadius="6"
+                       HasShadow="false">
+                    <Grid ColumnSpacing="0"
+                          RowSpacing="0"
+                          Padding="0,0">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="1"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+                        <Label Grid.Row="0"
+                               Margin="0,0,0,10"
+                               HorizontalOptions="Center"
+                               VerticalOptions="Center"
+                               Text="Transactions"
+                               FontAttributes="Bold"
+                               FontSize="18"
+                               LineBreakMode="WordWrap" />
+                        <BoxView Grid.Row="1"
+                                 Margin="8,0,8,0"
+                                 HeightRequest="1"
+                                 Color="{StaticResource SeparatorColor}" />
+                        
+                        <StackLayout x:Name="accountTransactionsRepeaterView"
+                                     Grid.Row="2"
+                                     BackgroundColor="White"
+                                     Padding="0,0,0,0"
+                                     Margin="0,10,0,0"
+                                     BindableLayout.ItemsSource="{Binding Path=Transactions}"
+                                     Spacing="0" >
+                            <BindableLayout.ItemTemplate>
+                                <DataTemplate x:DataType="shared:TransactionViewModel">
+                                    <Grid RowSpacing="0"
+                                          ColumnSpacing="0"
+                                          Margin="0,0,0,0"
+                                          Padding="0,0,0,0">
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="1"/>
+                                            <RowDefinition Height="Auto"/>
+                                            <RowDefinition Height="Auto"/>
+                                        </Grid.RowDefinitions>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="Auto"/>
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="Auto"/>
+                                        </Grid.ColumnDefinitions>
+                                        <BoxView Grid.Row="0"
+                                                 Grid.Column="0"
+                                                 Grid.ColumnSpan="3"
+                                                 Margin="8,0,8,0"
+                                                 HeightRequest="1"
+                                                 Color="{StaticResource SeparatorColor}"
+                                                 IsVisible="{Binding .,Converter={converters:SeparatorVisibilityConverter}, ConverterParameter={x:Reference Name=accountTransactionsRepeaterView}}"/>
+                                        <Label Grid.Row="1"
+                                               Grid.Column="1"
+                                               Margin="0,0,0,0"
+                                               FontFamily="MediumFontFamily"
+                                               FontSize="18"
+                                               HorizontalOptions="Start"
+                                               HorizontalTextAlignment="Start"
+                                               TextColor="#FF004687"
+                                               VerticalTextAlignment="End"
+                                               Text="{Binding FormattedDate}" />
+                                        <Label Grid.Row="1"
+                                               Grid.Column="1"
+                                               Grid.ColumnSpan="2"
+                                               Margin="0,16,17,0"
+                                               FontSize="18"
+                                               HorizontalOptions="End"
+                                               HorizontalTextAlignment="End"
+                                               TextColor="{Binding TransactionAmount.Amount, Converter={StaticResource balanceColorConverter}}"
+                                               VerticalTextAlignment="End"
+                                               Text="{Binding FormattedAmount}" />
+                                        <Label Grid.Row="2"
+                                               Grid.Column="1"
+                                               Margin="0,1,0,0"
+                                               FontFamily="LightFontFamily"
+                                               FontSize="14"
+                                               HorizontalOptions="Start"
+                                               HorizontalTextAlignment="Start"
+                                               TextColor="{StaticResource BrownishGrey}"
+                                               VerticalTextAlignment="Start"
+                                               Text="{Binding Description}" 
+                                               AutomationProperties.IsInAccessibleTree="False"/>
+                                        <Label Grid.Row="2"
+                                               Grid.Column="2"
+                                               Margin="0,0,17,13"
+                                               FontSize="12"
+                                               HorizontalOptions="End"
+                                               HorizontalTextAlignment="End"
+                                               TextColor="{StaticResource BrownishGrey}"
+                                               VerticalTextAlignment="Center"
+                                               VerticalOptions="Start"
+                                               Text="{Binding TransactionAmount.Currency}" 
+                                               AutomationProperties.IsInAccessibleTree="False"/>
+                                    </Grid>
+                                </DataTemplate>
+                            </BindableLayout.ItemTemplate>
+                        </StackLayout>
+                    </Grid>
+                </Frame>
+                <Frame Grid.Row="2"
+                       Margin="0,5,0,5"
+                       BackgroundColor="White"
+                       Padding="10"
+                       CornerRadius="6"
+                       HasShadow="False">
+                    <Grid Padding="10">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
+                        
+                        <Label Grid.Row="0"
+                               HorizontalOptions="Center"
+                               VerticalOptions="Center"
+                               Text="Close"
+                               FontFamily="RegularFontFamily"
+                               FontSize="18"
+                               LineBreakMode="TailTruncation" />
+                        <Grid.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding Close}"/>
+                        </Grid.GestureRecognizers>
+                    </Grid>
+                </Frame>  
+            </Grid>
+        </ScrollView>
+    </StackLayout>
+</framework:BaseView>

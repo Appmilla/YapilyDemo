@@ -3,7 +3,7 @@
     xmlns="http://xamarin.com/schemas/2014/forms"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:framework="clr-namespace:Appmilla.Xamarin.Infrastructure.Framework;assembly=Appmilla.Xamarin.Infrastructure"
-    x:Class="YapilyDemo.UX.MoreView">
+    x:Class="YapilyDemo.UX.Features.More.MoreView">
     <StackLayout>
         <Frame BackgroundColor="#2196F3" Padding="24" CornerRadius="0">
             <Label Text="{Binding Title}" HorizontalTextAlignment="Center" TextColor="White" FontSize="36"/>

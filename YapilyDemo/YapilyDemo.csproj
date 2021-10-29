@@ -14,6 +14,7 @@
   <ItemGroup>
     <PackageReference Include="Autofac" Version="6.2.0" />
     <PackageReference Include="Autofac.Extras.CommonServiceLocator" Version="6.0.1" />
+    <PackageReference Include="Humanizer" Version="2.11.10" />
     <PackageReference Include="ReactiveUI" Version="16.2.6" />
     <PackageReference Include="ReactiveUI.Events.XamForms" Version="15.1.1" />
     <PackageReference Include="ReactiveUI.Fody" Version="16.2.6" />
@@ -31,6 +32,38 @@
   <ItemGroup>
     <Compile Update="UX\MainView.xaml.cs">
       <DependentUpon>MainView.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="UX\Features\AccountDetails\AccountDetailsView.xaml.cs">
+      <DependentUpon>AccountDetailsView.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="UX\Features\Home\AccountSummary.xaml.cs">
+      <DependentUpon>AccountSummary.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="UX\Features\Home\HomeView.xaml.cs">
+      <DependentUpon>HomeView.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="UX\Features\ConnectBank\ChooseBankView.xaml.cs">
+      <DependentUpon>ChooseBankView.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="UX\Features\More\MoreView.xaml.cs">
+      <DependentUpon>MoreView.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="UX\Features\Payments\PaymentsView.xaml.cs">
+      <DependentUpon>PaymentsView.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="UX\Features\ApplicationShell\AppShell.xaml.cs">
+      <DependentUpon>AppShell.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="UX\Features\AuthenticateLogin\WelcomeView.xaml.cs">
+      <DependentUpon>WelcomeView.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
   </ItemGroup>

@@ -15,6 +15,7 @@ using SQLite;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 using YapilyDemo.UX;
+using YapilyDemo.UX.Features.ApplicationShell;
 
 namespace YapilyDemo
 {

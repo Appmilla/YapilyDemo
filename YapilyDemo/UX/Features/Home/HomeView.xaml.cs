@@ -2,20 +2,20 @@
 using ReactiveUI;
 using Xamarin.Forms.Xaml;
 
-namespace YapilyDemo.UX
+namespace YapilyDemo.UX.Features.Home
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class MoreView : IViewFor<MoreViewModel>
+    public partial class HomeView : IViewFor<HomeViewModel>
     {
-        public MoreViewModel ViewModel { get; set; } = ServiceLocator.Current.GetInstance<MoreViewModel>();
+        public HomeViewModel ViewModel { get; set; } = ServiceLocator.Current.GetInstance<HomeViewModel>();
 
         object IViewFor.ViewModel
         {
             get => ViewModel;
-            set => BindingContext = ViewModel = (MoreViewModel)value;
+            set => BindingContext = ViewModel = (HomeViewModel)value;
         }
 
-        public MoreView()
+        public HomeView()
         {
             InitializeComponent();
 

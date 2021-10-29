@@ -22,8 +22,9 @@ using Xamarin.Essentials;
 using Xamarin.Essentials.Interfaces;
 using Xamarin.Forms;
 using YapilyDemo.Framework;
+using YapilyDemo.UX.Features.Shared;
 
-namespace YapilyDemo.UX
+namespace YapilyDemo.UX.Features.ConnectBank
 {
     public class ChooseBankViewModel : ReactiveObject, IViewModel, INavigationAware
     {
