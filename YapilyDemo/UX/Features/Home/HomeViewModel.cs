@@ -104,12 +104,12 @@ namespace YapilyDemo.UX.Features.Home
                 .DisposeMany()                              //automatic disposal
                 .Subscribe();
             
-            _connectedInstitutionsCache.ConnectedInstitutionsDataNotifications
+            _connectedInstitutionsCache.ConnectedInstitutionsRefreshedNotifications
                 .ObserveOn(_schedulerProvider.MainThread)        //ensure operation is on the UI thread;
-                .Subscribe(InstitutionsCache_OnData);
+                .Subscribe(InstitutionsCache_OnRefresh);
         }
 
-        void InstitutionsCache_OnData(ConnectedInstitutionsDataAvailable dataAvailable)
+        void InstitutionsCache_OnRefresh(ConnectedInstitutionsRefreshed dataRefreshed)
         {
             Observable.Return(Unit.Default).InvokeCommand(Refresh);
         }

@@ -14,7 +14,10 @@ using ReactiveUI.Fody.Helpers;
 
 namespace Appmilla.Yapily.Refit.Caches
 {
-    public class ConnectedInstitutionsDataAvailable
+    public class ConnectedInstitutionsRefreshed
+    { }
+    
+    public class ConnectedInstitutionsLoaded
     { }
     
     public class ConnectedInstitutionsDataError
@@ -30,19 +33,30 @@ namespace Appmilla.Yapily.Refit.Caches
         
         void Clear();
         
-        IObservable<ConnectedInstitutionsDataAvailable> ConnectedInstitutionsDataNotifications { get; }
+        IObservable<ConnectedInstitutionsLoaded> ConnectedInstitutionsLoadedNotifications { get; }
+        
+        IObservable<ConnectedInstitutionsRefreshed> ConnectedInstitutionsRefreshedNotifications { get; }
+        
         IObservable<ConnectedInstitutionsDataError> ConnectedInstitutionsDataErrorNotifications { get; }
     }
     
     public class ConnectedInstitutionsCache : ReactiveObject, IConnectedInstitutionsCache
     {
+        enum ActionType
+        {
+            Load,
+            Refresh
+        };
+
         readonly ISchedulerProvider _schedulerProvider;
         readonly IConnectedInstitutionsDb _connectedInstitutionsDb;
         
-        readonly Subject<ConnectedInstitutionsDataAvailable> _connectedInstitutionsDataNotifications;
+        readonly Subject<ConnectedInstitutionsLoaded> _connectedInstitutionsLoadedNotifications;
+        readonly Subject<ConnectedInstitutionsRefreshed> _connectedInstitutionsRefreshedNotifications;
         readonly Subject<ConnectedInstitutionsDataError> _connectedInstitutionsDataErrorNotifications;
 
-        public IObservable<ConnectedInstitutionsDataAvailable> ConnectedInstitutionsDataNotifications => _connectedInstitutionsDataNotifications;
+        public IObservable<ConnectedInstitutionsLoaded> ConnectedInstitutionsLoadedNotifications => _connectedInstitutionsLoadedNotifications;
+        public IObservable<ConnectedInstitutionsRefreshed> ConnectedInstitutionsRefreshedNotifications => _connectedInstitutionsRefreshedNotifications;
         public IObservable<ConnectedInstitutionsDataError> ConnectedInstitutionsDataErrorNotifications => _connectedInstitutionsDataErrorNotifications;
         
         private static readonly Func<ConnectedInstitution, string> KeySelector = connectedInstitution => connectedInstitution.InstitutionId;
@@ -63,7 +77,8 @@ namespace Appmilla.Yapily.Refit.Caches
             _schedulerProvider = schedulerProvider;
             _connectedInstitutionsDb = connectedInstitutionsDb;
             
-            _connectedInstitutionsDataNotifications = new Subject<ConnectedInstitutionsDataAvailable>();
+            _connectedInstitutionsLoadedNotifications = new Subject<ConnectedInstitutionsLoaded>();
+            _connectedInstitutionsRefreshedNotifications = new Subject<ConnectedInstitutionsRefreshed>();
             _connectedInstitutionsDataErrorNotifications = new Subject<ConnectedInstitutionsDataError>();
             
             Load = ReactiveCommand.CreateFromTask(
@@ -93,7 +108,7 @@ namespace Appmilla.Yapily.Refit.Caches
         {
             try
             {
-                Update(connectedInstitutions);
+                Update(connectedInstitutions, ActionType.Load);
             }
             catch(Exception exception)
             {
@@ -107,7 +122,7 @@ namespace Appmilla.Yapily.Refit.Caches
             {
                 Clear();
                 
-                Update(connectedInstitutions);
+                Update(connectedInstitutions, ActionType.Refresh);
             }
             catch(Exception exception)
             {
@@ -115,13 +130,20 @@ namespace Appmilla.Yapily.Refit.Caches
             }
         }
         
-        void Update(ICollection<ConnectedInstitution> connectedInstitutions)
+        void Update(ICollection<ConnectedInstitution> connectedInstitutions, ActionType actionType)
         {
             _schedulerProvider.MainThread.Schedule(() =>
             {
                 ConnectedInstitutions.UpdateCache(connectedInstitutions, KeySelector);
-                
-                _connectedInstitutionsDataNotifications.OnNext(new ConnectedInstitutionsDataAvailable());
+
+                if (actionType == ActionType.Load)
+                {
+                    _connectedInstitutionsLoadedNotifications.OnNext(new ConnectedInstitutionsLoaded());
+                }
+                else if (actionType == ActionType.Refresh)
+                {
+                    _connectedInstitutionsRefreshedNotifications.OnNext(new ConnectedInstitutionsRefreshed());
+                }
             });
         }
 
