@@ -27,8 +27,6 @@ namespace YapilyDemo.UX.Features.AccountDetails
         readonly ISchedulerProvider _schedulerProvider;
         readonly ISecureStorage _secureStorage;
         readonly ITransactionsQuery _transactionsQuery;
-
-        bool _hasLoaded;
         
         [Reactive]
         public AccountViewModel Account { get; set; }
@@ -90,18 +88,18 @@ namespace YapilyDemo.UX.Features.AccountDetails
         
         public Task OnViewAppearing()
         {
-            if (!_hasLoaded)
-            {
-                _hasLoaded = true;
-
-                Observable.Return(Unit.Default).InvokeCommand(LoadTransactions);
-            }
-
+            Observable.Return(Unit.Default).InvokeCommand(LoadTransactions);
+            
             return Task.CompletedTask;
         }
 
         public Task OnViewDisappearing()
         {
+            _schedulerProvider.MainThread.Schedule(_ =>
+            {
+                _transactionsCache.Clear();
+            });
+            
             return Task.CompletedTask;
         }
         

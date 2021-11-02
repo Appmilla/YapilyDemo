@@ -4,6 +4,7 @@ using SQLite;
 
 namespace Appmilla.Yapily.Refit.Database
 {
+    /*
     public interface IConnectedInstitutionsDb
     {
         bool IsInitialised { get; }
@@ -81,4 +82,5 @@ namespace Appmilla.Yapily.Refit.Database
             return Database.DeleteAsync(institution);
         }
     }
+    */
 }

@@ -2,6 +2,7 @@ using CommonServiceLocator;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 using YapilyDemo.UX.Features.AccountDetails;
+using YapilyDemo.UX.Features.AuthenticateLogin;
 using YapilyDemo.UX.Features.ConnectBank;
 
 namespace YapilyDemo.UX.Features.ApplicationShell
@@ -17,6 +18,7 @@ namespace YapilyDemo.UX.Features.ApplicationShell
 
             BindingContext = ViewModel;
 
+            Routing.RegisterRoute("welcome", typeof(WelcomeView));
             Routing.RegisterRoute("chooseBank", typeof(ChooseBankView));
             Routing.RegisterRoute("accountDetails", typeof(AccountDetailsView));
         }

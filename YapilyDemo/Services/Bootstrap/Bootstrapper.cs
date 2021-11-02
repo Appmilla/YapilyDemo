@@ -1,5 +1,6 @@
 using System.Reactive.Concurrency;
 using Akavache;
+using Appmilla.Xamarin.Infrastructure.Identity;
 using Appmilla.Xamarin.Infrastructure.Reactive;
 using Appmilla.Yapily.Refit.Caches;
 using Appmilla.Yapily.Refit.Configuration;
@@ -79,8 +80,17 @@ namespace YapilyDemo.Services.Bootstrap
             
             builder.RegisterType<YapilyHttpClientFactory>().As<IYapilyHttpClientFactory>().SingleInstance();
 
-            builder.RegisterType<ConnectedInstitutionsDb>().As<IConnectedInstitutionsDb>().SingleInstance();
+            //builder.RegisterType<ConnectedInstitutionsDb>().As<IConnectedInstitutionsDb>().SingleInstance();
             builder.RegisterType<ConnectedInstitutionsCache>().As<IConnectedInstitutionsCache>().SingleInstance();
+
+            var identityConfiguration = new IdentityConfiguration();
+            identityConfiguration.AuthorityUri = "https://demo.identityserver.io";
+            identityConfiguration.RedirectUri = "io.identitymodel.native://callback";
+            identityConfiguration.ApiUri = "https://demo.identityserver.io/api/";
+            identityConfiguration.ClientId = "interactive.public";
+            identityConfiguration.Scope = "openid profile email api offline_access";
+            builder.RegisterInstance(identityConfiguration).As<IIdentityConfiguration>().SingleInstance();
+            builder.RegisterType<IdentityService>().As<IIdentityService>().SingleInstance();
             
             builder.Register(c =>
                 {
@@ -93,6 +103,36 @@ namespace YapilyDemo.Services.Bootstrap
                         yapilyHttpClientFactory,
                         refitSettings);
                 }).As<IApplicationQuery>()
+                .SingleInstance();
+            
+            builder.Register(c =>
+                {
+                    var blobCache = c.ResolveKeyed<IBlobCache>(AkavacheConstants.LocalMachine);
+                    var yapilyHttpClientFactory = c.Resolve<IYapilyHttpClientFactory>();
+                    var schedulerProvider = c.Resolve<ISchedulerProvider>();
+                    var refitSettings = c.Resolve<RefitSettings>();
+                    
+                    return new UsersQuery(
+                        blobCache,
+                        yapilyHttpClientFactory,
+                        schedulerProvider,
+                        refitSettings);
+                }).As<IUsersQuery>()
+                .SingleInstance();
+            
+            builder.Register(c =>
+                {
+                    var blobCache = c.ResolveKeyed<IBlobCache>(AkavacheConstants.LocalMachine);
+                    var yapilyHttpClientFactory = c.Resolve<IYapilyHttpClientFactory>();
+                    var schedulerProvider = c.Resolve<ISchedulerProvider>();
+                    var refitSettings = c.Resolve<RefitSettings>();
+
+                    return new ConsentsQuery(
+                        blobCache,
+                        yapilyHttpClientFactory,
+                        schedulerProvider,
+                        refitSettings);
+                }).As<IConsentsQuery>()
                 .SingleInstance();
             
             builder.Register(c =>

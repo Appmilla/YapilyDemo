@@ -2,6 +2,7 @@ using System;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Linq;
+using System.Net;
 using System.Reactive;
 using System.Reactive.Concurrency;
 using System.Reactive.Linq;
@@ -15,7 +16,9 @@ using DynamicData;
 using DynamicData.Binding;
 using ReactiveUI;
 using ReactiveUI.Fody.Helpers;
+using Xamarin.Essentials;
 using Xamarin.Essentials.Interfaces;
+using Xamarin.Forms;
 using YapilyDemo.UX.Features.Shared;
 
 namespace YapilyDemo.UX.Features.Home
@@ -61,6 +64,8 @@ namespace YapilyDemo.UX.Features.Home
         public ReactiveCommand<Unit, Unit> CancelInFlightQueries { get; }
 
         public ReactiveCommand<Unit, Unit> ViewInstitutionDetails { get; }
+        
+        public ReactiveCommand<Unit, bool> ReauthoriseAccounts { get; protected set; }
         
         public InstitutionSummaryViewModel(
             ISchedulerProvider schedulerProvider,
@@ -116,6 +121,8 @@ namespace YapilyDemo.UX.Features.Home
                 .DisposeMany()                              //automatic disposal
                 .Subscribe();
             
+            ReauthoriseAccounts = ReactiveCommand.CreateFromTask<Unit, bool>(OnReauthoriseAccounts, outputScheduler: _schedulerProvider.MainThread);
+            ReauthoriseAccounts.ThrownExceptions.Subscribe(OnReauthoriseAccountsError);
         }
         
         private IObservable<ApiListResponseOfAccount> LoadQuery(Unit ignored)
@@ -164,6 +171,55 @@ namespace YapilyDemo.UX.Features.Home
         void Accounts_OnError(Exception exception)
         {
             Debug.WriteLine($"Error {exception.Message}");
+
+            if (exception is Refit.ApiException refitApiException)
+            {
+                if (refitApiException.StatusCode == HttpStatusCode.Forbidden)
+                {
+                    //re-auth
+                    Observable.Return(Unit.Default).InvokeCommand(ReauthoriseAccounts);
+                }
+            }
+        }
+
+        async Task<bool> OnReauthoriseAccounts(Unit ignored)
+        {
+            //getting this Refit.ApiException: Response status code does not indicate success: 415 (Unsupported Media Type).
+            
+            try
+            {
+                var consentTokenKey = $"{InstitutionId}-consent-token";
+                var consentToken = AsyncHelper.RunSync(() => _secureStorage.GetAsync(consentTokenKey));
+                
+                var authResponse = await _accountsQuery.ReauthoriseAccount(consentToken);
+
+                Debug.WriteLine(authResponse);
+
+                var callback = "com.appmilla.yapilydemo://callback";
+                var authResult = await WebAuthenticator.AuthenticateAsync(new Uri(authResponse.Data.AuthorisationUrl), new Uri(callback));
+                
+                Debug.WriteLine(authResult);
+
+                var consentTokenResult = authResult.GetConsentToken();
+                var result = !string.IsNullOrEmpty(consentTokenResult);
+
+                if (result)
+                {
+                    Observable.Return(Unit.Default).InvokeCommand(LoadAccounts);  
+                }
+                
+                return  result;
+            }
+            catch (Exception exception)
+            {
+                Debug.WriteLine($"Error {exception.Message}");
+                throw;
+            }
+        }
+
+        void OnReauthoriseAccountsError(Exception exception)
+        {
+            Debug.WriteLine($"Error {exception.Message}");   
         }
         
         async Task OnViewInstitutionDetails()

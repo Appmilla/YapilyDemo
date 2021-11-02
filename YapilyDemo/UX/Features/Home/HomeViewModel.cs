@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Linq;
@@ -18,6 +19,7 @@ using ReactiveUI;
 using ReactiveUI.Fody.Helpers;
 using Xamarin.Essentials.Interfaces;
 using Xamarin.Forms;
+using YapilyDemo.UX.Features.Shared;
 
 namespace YapilyDemo.UX.Features.Home
 {
@@ -25,6 +27,7 @@ namespace YapilyDemo.UX.Features.Home
     {
         readonly ISchedulerProvider _schedulerProvider;
         readonly IConnectedInstitutionsCache _connectedInstitutionsCache;
+        readonly IInstituitionsQuery _instituitionsQuery;
         readonly IAccountsQuery _accountsQuery;
         readonly ISecureStorage _secureStorage;
         readonly ITransactionsQuery _transactionsQuery;
@@ -65,12 +68,14 @@ namespace YapilyDemo.UX.Features.Home
         public HomeViewModel(
             ISchedulerProvider schedulerProvider,
             IConnectedInstitutionsCache connectedInstitutionsCache,
+            IInstituitionsQuery instituitionsQuery,
             IAccountsQuery accountsQuery,
             ISecureStorage secureStorage,
             ITransactionsQuery transactionsQuery)
         {
             _schedulerProvider = schedulerProvider;            
             _connectedInstitutionsCache = connectedInstitutionsCache;
+            _instituitionsQuery = instituitionsQuery;
             _accountsQuery = accountsQuery;  
             _secureStorage = secureStorage;
             _transactionsQuery = transactionsQuery;
@@ -105,15 +110,61 @@ namespace YapilyDemo.UX.Features.Home
                 .Subscribe();
             
             _connectedInstitutionsCache.ConnectedInstitutionsRefreshedNotifications
-                .ObserveOn(_schedulerProvider.MainThread)        //ensure operation is on the UI thread;
+                .ObserveOn(_schedulerProvider.ThreadPool)        //ensure operation is on the UI thread;
                 .Subscribe(InstitutionsCache_OnRefresh);
+            
+            _connectedInstitutionsCache.ConnectedInstitutionsLoadedNotifications
+                .ObserveOn(_schedulerProvider.ThreadPool)        //ensure operation is on the UI thread;
+                .Subscribe(InstitutionsCache_OnLoad);
         }
 
+        void InstitutionsCache_OnLoad(ConnectedInstitutionsLoaded dataLoaded)
+        {
+            Observable.Return(Unit.Default).InvokeCommand(Load);
+        }
+        
         void InstitutionsCache_OnRefresh(ConnectedInstitutionsRefreshed dataRefreshed)
         {
             Observable.Return(Unit.Default).InvokeCommand(Refresh);
         }
         
+        private async Task OnLoad(bool reset)
+        {
+            var institutionSummaryViewModels = new List<InstitutionSummaryViewModel>();
+            
+            foreach (var connectedInstitution in _connectedInstitutions)
+            {
+                var institution = await _instituitionsQuery.GetInstitution(connectedInstitution.InstitutionId, $"institution--{connectedInstitution.InstitutionId}").FirstAsync();
+                var institutionSummaryViewModel = new InstitutionSummaryViewModel(
+                    _schedulerProvider,
+                    _accountsQuery,
+                    _secureStorage,
+                    _transactionsQuery)
+                {
+                    InstitutionId = institution.Id,
+                    Name = institution.Name,
+                    ImageUrl = institution.Media.SingleOrDefault(m => m.Type == "logo")?.Source
+                };
+                
+                institutionSummaryViewModels.Add(institutionSummaryViewModel);
+            }
+            
+            foreach (var institutionSummary in institutionSummaryViewModels)
+            {
+                Observable.Return(Unit.Default).InvokeCommand(institutionSummary.LoadAccounts);
+            }
+            
+            _schedulerProvider.MainThread.Schedule(_ =>
+            {
+                if (reset)
+                {
+                    _institutionSummariesCache.Clear();
+                }
+                _institutionSummariesCache.UpdateCache(institutionSummaryViewModels, KeySelector);
+            });
+        }
+        
+        /*
         private Task OnLoad(bool reset)
         {
             var results = _connectedInstitutions.Select(ci => new InstitutionSummaryViewModel(
@@ -144,7 +195,8 @@ namespace YapilyDemo.UX.Features.Home
             
             return Task.CompletedTask;
         }
-
+        */
+        
         private async Task OnRefresh()
         {
             await OnLoad(true);
@@ -152,13 +204,15 @@ namespace YapilyDemo.UX.Features.Home
         
         public Task OnViewAppearing()
         {
+            /*
             if (!_hasLoaded)
             {
                 _hasLoaded = true;
 
                 Observable.Return(Unit.Default).InvokeCommand(Load);
             }
-
+            */
+            
             return Task.CompletedTask;
         }
 

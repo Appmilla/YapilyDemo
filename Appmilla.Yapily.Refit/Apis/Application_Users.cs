@@ -24,6 +24,7 @@ namespace Appmilla.Yapily.Refit.Apis
         [Headers()] 
         Task<ApiResponseOfBulkUserDeleteDetails> StartDeleteUsersJobUsingPOSTAsync([Body][AliasAs("userDeleteRequest")] UserDeleteRequest userDeleteRequest);
 
+        /*
         /// <summary>
         /// Get details of a user deletion job
         /// </summary>
@@ -32,7 +33,17 @@ namespace Appmilla.Yapily.Refit.Apis
         [Get("/delete-users/{job-id}")]
         [Headers()] 
         Task<ApiResponseOfBulkUserDeleteDetails> GetDeleteUsersJobUsingGETAsync([AliasAs("job_id")] string job_id);
-
+        */
+        
+        /// <summary>
+        /// Get details of a user deletion job
+        /// </summary>
+        /// <param name="job_id">job-id</param>
+        /// <returns>OK</returns>
+        [Get("/delete-users/{job_id}")]
+        [Headers()] 
+        Task<ApiResponseOfBulkUserDeleteDetails> GetDeleteUsersJobUsingGETAsync([AliasAs("job_id")] string job_id);
+        
         /// <summary>
         /// Get application users
         /// </summary>

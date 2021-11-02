@@ -8,7 +8,12 @@
              xmlns:connectBank="clr-namespace:YapilyDemo.UX.Features.ConnectBank;assembly=YapilyDemo"
              xmlns:more="clr-namespace:YapilyDemo.UX.Features.More;assembly=YapilyDemo"
              xmlns:payments="clr-namespace:YapilyDemo.UX.Features.Payments;assembly=YapilyDemo"
+             xmlns:authenticateLogin="clr-namespace:YapilyDemo.UX.Features.AuthenticateLogin;assembly=YapilyDemo"
              x:Class="YapilyDemo.UX.Features.ApplicationShell.AppShell">
+    <ShellItem Route="welcome">
+        <ShellContent ContentTemplate="{DataTemplate authenticateLogin:WelcomeView}" />
+    </ShellItem>
+    
     <ShellItem Route="chooseBank">
         <ShellContent ContentTemplate="{DataTemplate connectBank:ChooseBankView}" />
     </ShellItem>

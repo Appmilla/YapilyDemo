@@ -24,8 +24,8 @@ namespace Appmilla.Yapily.Refit.Queries
         readonly IYapilyHttpClientFactory _httpClientFactory;
         readonly RefitSettings _refitSettings;
         
-        //readonly TimeSpan _cacheLifetime = TimeSpan.FromDays(30);
-        readonly TimeSpan _cacheLifetime = TimeSpan.FromSeconds(10);
+        readonly TimeSpan _cacheLifetime = TimeSpan.FromDays(1);
+        //readonly TimeSpan _cacheLifetime = TimeSpan.FromSeconds(10);
         
         [Reactive] public bool IsBusy { get; set; }
 
@@ -41,7 +41,7 @@ namespace Appmilla.Yapily.Refit.Queries
         public async Task<Application> GetApplication(string cacheKey)
         {
             DateTimeOffset? expiration = DateTimeOffset.Now + _cacheLifetime;
-
+            
             return await _blobCache.GetOrFetchObject(cacheKey,
                 () => FetchApplication(),
                 expiration);

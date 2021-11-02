@@ -5,13 +5,16 @@ using System.Reactive.Concurrency;
 using System.Reactive.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Appmilla.Xamarin.Infrastructure.Identity;
 using Appmilla.Xamarin.Infrastructure.Reactive;
 using Appmilla.Xamarin.Infrastructure.Utilities;
 using Appmilla.Yapily.Refit.Caches;
 using Appmilla.Yapily.Refit.Database;
 using Autofac;
 using CommonServiceLocator;
+using ReactiveUI;
 using SQLite;
+using Xamarin.Essentials.Interfaces;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 using YapilyDemo.UX;
@@ -21,7 +24,7 @@ namespace YapilyDemo
 {
     public partial class App : Application
     {
-        IConnectedInstitutionsDb _connectedInstitutionsDb;
+        //IConnectedInstitutionsDb _connectedInstitutionsDb;
         public static IContainer Container { get; set; }
         
         public App()
@@ -30,22 +33,41 @@ namespace YapilyDemo
             
             MainPage = new AppShell();
             
-            var connectedInstitutions = AsyncHelper.RunSync(InitialiseDatabase);
-            if (connectedInstitutions.Count > 0)
+            //var connectedInstitutions = AsyncHelper.RunSync(InitialiseDatabase);
+
+            var secureStorage = ServiceLocator.Current.GetInstance<ISecureStorage>();
+            var idToken = AsyncHelper.RunSync(() => secureStorage.GetAsync(IdentityKeys.IdToken));
+            
+            //idToken = String.Empty; //TODO delete
+            if (string.IsNullOrEmpty(idToken))
             {
-                Shell.Current.GoToAsync("//main");
+                Shell.Current.GoToAsync("//welcome"); 
             }
             else
             {
-                Shell.Current.GoToAsync("//chooseBank");                
-            }                    
-            
+                var connectedInstitutionsCache = ServiceLocator.Current.GetInstance<IConnectedInstitutionsCache>();
+                Observable.Return(Unit.Default).InvokeCommand(connectedInstitutionsCache.Load);
+                
+                Shell.Current.GoToAsync("//main");
+                
+                /*
+                if (connectedInstitutions.Count > 0)
+                {
+                    Shell.Current.GoToAsync("//main");
+                }
+                else
+                {
+                    Shell.Current.GoToAsync("//chooseBank");                
+                }  
+                */ 
+            }
             
             //Shell.Current.GoToAsync("//chooseBank"); 
             
             //MainPage = new MainView();
         }
 
+        /*
         public Task<List<ConnectedInstitution>> InitialiseDatabase()
         {
             _connectedInstitutionsDb = ServiceLocator.Current.GetInstance<IConnectedInstitutionsDb>();
@@ -79,6 +101,7 @@ namespace YapilyDemo
 
             return tcs.Task;
         }
+        */
         
         protected override void OnStart()
         {

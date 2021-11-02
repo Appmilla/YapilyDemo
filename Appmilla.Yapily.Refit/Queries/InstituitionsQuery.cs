@@ -34,8 +34,8 @@ namespace Appmilla.Yapily.Refit.Queries
         readonly ISchedulerProvider _schedulerProvider;
         readonly RefitSettings _refitSettings;
 
-        //readonly TimeSpan _cacheLifetime = TimeSpan.FromHours(1);
-        readonly TimeSpan _cacheLifetime = TimeSpan.FromSeconds(10);
+        readonly TimeSpan _cacheLifetime = TimeSpan.FromDays(1);
+        //readonly TimeSpan _cacheLifetime = TimeSpan.FromSeconds(10);
         
         [Reactive] public bool IsBusy { get; set; }
 
@@ -54,9 +54,13 @@ namespace Appmilla.Yapily.Refit.Queries
         {
             DateTimeOffset? expiration = DateTimeOffset.Now + _cacheLifetime;
 
+            return _blobCache.GetAndFetchLatest(cacheKey, FetchInstitutions, null, expiration);
+            
+            /*
             return _blobCache.GetOrFetchObject(cacheKey,
                 () => FetchInstitutions(),
                 expiration);
+            */
         }
 
         public IObservable<ApiListResponseOfInstitution> RefreshInstitutions(string cacheKey)
@@ -98,9 +102,13 @@ namespace Appmilla.Yapily.Refit.Queries
         {
             DateTimeOffset? expiration = DateTimeOffset.Now + _cacheLifetime;
 
+            return _blobCache.GetAndFetchLatest(cacheKey, () => FetchInstitution(institutionId), null, expiration);
+            
+            /*
             return _blobCache.GetOrFetchObject(cacheKey,
                 () => FetchInstitution(institutionId),
                 expiration);
+            */
         }
 
         public IObservable<Institution> RefreshInstitution(string institutionId, string cacheKey)
@@ -126,7 +134,7 @@ namespace Appmilla.Yapily.Refit.Queries
             {
                 var httpClient = _httpClientFactory.CreateClient();
 
-                var institutionsApi = RestService.For<IInstitutions>(httpClient);
+                var institutionsApi = RestService.For<IInstitutions>(httpClient, _refitSettings);
                 var institution = await institutionsApi.GetInstitutionUsingGETAsync(institutionId);
 
                 return institution;

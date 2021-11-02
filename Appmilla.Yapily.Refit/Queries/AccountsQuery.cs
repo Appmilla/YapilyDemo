@@ -18,6 +18,8 @@ namespace Appmilla.Yapily.Refit.Queries
         
         Task<ApiResponseOfAuthorisationRequestResponse> InitiateAccountRequest(AccountAuthorisationRequest accountAuthRequest);
 
+        Task<ApiResponseOfAuthorisationRequestResponse> ReauthoriseAccount(string consentToken);
+        
         //Task<ApiListResponseOfAccount> GetAccounts();
 
         IObservable<ApiListResponseOfAccount> GetAccounts(string consentToken, string cacheKey);
@@ -32,8 +34,8 @@ namespace Appmilla.Yapily.Refit.Queries
         readonly ISchedulerProvider _schedulerProvider;
         readonly RefitSettings _refitSettings;
         
-        //readonly TimeSpan _cacheLifetime = TimeSpan.FromHours(1);
-        readonly TimeSpan _cacheLifetime = TimeSpan.FromSeconds(10);
+        readonly TimeSpan _cacheLifetime = TimeSpan.FromDays(1);
+        //readonly TimeSpan _cacheLifetime = TimeSpan.FromSeconds(10);
         
         [Reactive] public bool IsBusy { get; set; }
 
@@ -67,6 +69,25 @@ namespace Appmilla.Yapily.Refit.Queries
             }  
         }
 
+        public async Task<ApiResponseOfAuthorisationRequestResponse> ReauthoriseAccount(string consentToken)
+        {
+            IsBusy = true;
+
+            try
+            {
+                var httpClient = _httpClientFactory.CreateClient();
+
+                var accountsApi = RestService.For<IAccounts>(httpClient, _refitSettings);
+                var accountAuthorisationResponse = await accountsApi.ReAuthoriseAccountUsingPATCHAsync(consentToken);
+                
+                return accountAuthorisationResponse;
+            }
+            finally
+            {
+                IsBusy = false;
+            }  
+        }
+        
         /*
         public async Task<ApiListResponseOfAccount> GetAccounts()
         {
@@ -92,9 +113,13 @@ namespace Appmilla.Yapily.Refit.Queries
         {
             DateTimeOffset? expiration = DateTimeOffset.Now + _cacheLifetime;
 
+            return _blobCache.GetAndFetchLatest(cacheKey, () => FetchAccounts(consentToken), null, expiration);
+            
+            /*
             return _blobCache.GetOrFetchObject(cacheKey,
                 () => FetchAccounts(consentToken),
                 expiration);
+            */
         }
 
         public IObservable<ApiListResponseOfAccount> RefreshAccounts(string consentToken, string cacheKey)

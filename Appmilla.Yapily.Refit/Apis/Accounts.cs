@@ -29,9 +29,15 @@ namespace Appmilla.Yapily.Refit.Apis
         /// </summary>
         /// <returns>OK</returns>
 
+        /*
         [Headers("x-yapily-api-version: 1.0", "Authorization: Basic", "consent","psu-id","psu-corporate-id","psu-ip-address")] 
         Task<ApiResponseOfAuthorisationRequestResponse> ReAuthoriseAccountUsingPATCHAsync();
-
+        */
+        
+        [Patch("/account-auth-requests")]
+        [Headers("x-yapily-api-version: 1.0", "Content-Type: application/json", "Authorization: Basic", "psu-id","psu-corporate-id","psu-ip-address")] 
+        Task<ApiResponseOfAuthorisationRequestResponse> ReAuthoriseAccountUsingPATCHAsync([Header("consent")] string consentToken);
+        
         /// <summary>
         /// Get accounts
         /// </summary>

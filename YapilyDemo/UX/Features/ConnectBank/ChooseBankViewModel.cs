@@ -32,7 +32,7 @@ namespace YapilyDemo.UX.Features.ConnectBank
         readonly IInstituitionsQuery _instituitionsQuery;
         readonly IAccountsQuery _accountsQuery;
         readonly ITransactionsQuery _transactionsQuery;
-        readonly IConnectedInstitutionsDb _connectedInstitutionsDb;
+        //readonly IConnectedInstitutionsDb _connectedInstitutionsDb;
         readonly ISecureStorage _secureStorage;
         readonly IConnectedInstitutionsCache _connectedInstitutionsCache;
         
@@ -67,7 +67,7 @@ namespace YapilyDemo.UX.Features.ConnectBank
             IInstituitionsQuery instituitionsQuery,
             IAccountsQuery accountsQuery,
             ITransactionsQuery transactionsQuery,
-            IConnectedInstitutionsDb connectedInstitutionsDb,
+            //IConnectedInstitutionsDb connectedInstitutionsDb,
             ISecureStorage secureStorage,
             IConnectedInstitutionsCache connectedInstitutionsCache)
         {
@@ -75,7 +75,7 @@ namespace YapilyDemo.UX.Features.ConnectBank
             _instituitionsQuery = instituitionsQuery;
             _accountsQuery = accountsQuery;
             _transactionsQuery = transactionsQuery;
-            _connectedInstitutionsDb = connectedInstitutionsDb;
+            //_connectedInstitutionsDb = connectedInstitutionsDb;
             _secureStorage = secureStorage;
             _connectedInstitutionsCache = connectedInstitutionsCache;
             
@@ -119,6 +119,18 @@ namespace YapilyDemo.UX.Features.ConnectBank
         {
             try
             {
+                var applicationUserId = await _secureStorage.GetAsync(StorageKeys.ApplicationUserId);
+                var userUuid = await _secureStorage.GetAsync(StorageKeys.UserUuid);
+               
+                var authRequest = new AccountAuthorisationRequest()
+                {
+                    UserUuid = userUuid,
+                    ApplicationUserId = applicationUserId,
+                    InstitutionId = institutionViewModel.Id,
+                    Callback = "com.appmilla.yapilydemo://callback"
+                };
+                
+                /*
                 var authRequest = new AccountAuthorisationRequest()
                 {
                     UserUuid = "f9817f34-6a2e-4186-ba6b-41c71ba0d123",
@@ -127,7 +139,8 @@ namespace YapilyDemo.UX.Features.ConnectBank
                     //Callback = "https://display-parameters.com/"
                     Callback = "com.appmilla.yapilydemo://callback"
                 };
-            
+                */
+                
                 var authResponse = await _accountsQuery.InitiateAccountRequest(authRequest);
 
                 Debug.WriteLine(authResponse);
@@ -141,9 +154,9 @@ namespace YapilyDemo.UX.Features.ConnectBank
                     string consentToken;
                     if (authResult.Properties.TryGetValue("consent", out consentToken))
                     {
-                        await SaveInstitutionConnection(consentToken, institutionViewModel);
+                        //await _secureStorage.SetAsync($"{institutionViewModel.Id}-consent-token", consentToken);
+                        //await SaveInstitutionConnection(consentToken, institutionViewModel);
                         
-                        //Observable.Return(Unit.Default).InvokeCommand(_connectedInstitutionsCache.Refresh);
                         await _connectedInstitutionsCache.Refresh.Execute();
                         
                         await Shell.Current.GoToAsync("//main");
@@ -159,7 +172,7 @@ namespace YapilyDemo.UX.Features.ConnectBank
             return true;
         }
         
-        
+        /*
         private async Task SaveInstitutionConnection(string consentToken, InstitutionViewModel institutionViewModel)
         {
             var saved = await _connectedInstitutionsDb.SaveInstitutionAsync(new ConnectedInstitution
@@ -191,6 +204,7 @@ namespace YapilyDemo.UX.Features.ConnectBank
                 throw;
             }
         }
+        */
         
         /*
         private async Task<bool> OnConnectBank(InstitutionViewModel institutionViewModel)

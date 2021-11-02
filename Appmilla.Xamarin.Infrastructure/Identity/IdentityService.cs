@@ -1,4 +1,5 @@
 using System;
+using System.Diagnostics;
 using System.Threading.Tasks;
 using IdentityModel.OidcClient;
 using Xamarin.Essentials.Interfaces;
@@ -21,10 +22,8 @@ namespace Appmilla.Xamarin.Infrastructure.Identity
             _secureStorage = secureStorage;
         }
         
-        public async Task<bool> Login()
+        public async Task<LoginResult> Login()
         {
-            var result = false;
-            
             var options = new OidcClientOptions
             {
                 Authority = _identityConfiguration.AuthorityUri,
@@ -49,15 +48,13 @@ namespace Appmilla.Xamarin.Infrastructure.Identity
                     await _secureStorage.SetAsync(IdentityKeys.TokenType, _loginResult.TokenResponse.TokenType);
                     await _secureStorage.SetAsync(IdentityKeys.IdToken, _loginResult.IdentityToken);
                 }
-                catch (Exception ex)
+                catch (Exception exception)
                 {
-                    //_errorReporter.TrackError(ex);
+                    Debug.WriteLine($"Error {exception.Message}");
                 }
             }
-
-            result = !_loginResult.IsError;
             
-            return result;
+            return _loginResult;
         }
         
         public void ClearStore()

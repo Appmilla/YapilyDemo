@@ -5,6 +5,56 @@ using Refit;
 
 namespace Appmilla.Yapily.Refit.Apis
 {
+    //[Query][AliasAs("filterapplicationUserId")] IEnumerable<string> filterapplicationUserId
+    
+    //[Query][AliasAs("filteruserUuid")] IEnumerable<string> filteruserUuid
+    
+    ///[Query][AliasAs("filterinstitution")] IEnumerable<string> filterinstitution
+    
+    //[Query][AliasAs("filterstatus")] IEnumerable<string> filterstatus
+    
+    //[Query][AliasAs("from")] string from
+    
+    //[Query][AliasAs("before")] string before
+    
+    //[Query][AliasAs("limit")] int? limit
+    
+    //[Query][AliasAs("offset")] int offset)
+    
+    public class ConsentsQueryParams
+    {
+        [Query]
+        [AliasAs("filterapplicationUserId")]
+        public IEnumerable<string> FilterapplicationUserId { get; set; }
+        
+        [Query]
+        [AliasAs("filteruserUuid")]
+        public IEnumerable<string> FilteruserUuid { get; set; }
+        
+        [Query]
+        [AliasAs("filterinstitution")]
+        public IEnumerable<string> Filterinstitution { get; set; }
+        
+        [Query]
+        [AliasAs("filterstatus")]
+        public IEnumerable<string> Filterstatus { get; set; }
+
+        [Query]
+        [AliasAs("from")]
+        public string From { get; set; }
+
+        [Query]
+        [AliasAs("before")]
+        public string Before { get; set; }
+
+        [Query]
+        [AliasAs("limit")]
+        public int? Limit { get; set; }
+
+        [Query][AliasAs("offset")]
+        public int? Offset { get; set; }
+    }
+    
     public interface IConsents
     {
         /// <summary>
@@ -37,10 +87,17 @@ namespace Appmilla.Yapily.Refit.Apis
         /// <param name="limit">Use this parameter to limit consent results, max limit is 20</param>
         /// <param name="offset">__Optional__. The number of transaction records to be skipped. Used primarily with paginated results.</param>
         /// <returns>OK</returns>
+        /*
         [Get("/consents")]
         [Headers("x-yapily-api-version: 1.0", "Authorization: Basic")] 
         Task<ApiListResponseOfConsent> GetConsentsUsingGETAsync([Query][AliasAs("filterapplicationUserId")] IEnumerable<string> filterapplicationUserId,[Query][AliasAs("filteruserUuid")] IEnumerable<string> filteruserUuid,[Query][AliasAs("filterinstitution")] IEnumerable<string> filterinstitution,[Query][AliasAs("filterstatus")] IEnumerable<string> filterstatus,[Query][AliasAs("from")] string from,[Query][AliasAs("before")] string before,[Query][AliasAs("limit")] int? limit,[Query][AliasAs("offset")] int offset);
+        */
+        
+        [Get("/consents")]
+        [Headers("x-yapily-api-version: 1.0", "Authorization: Basic")] 
+        Task<ApiListResponseOfConsent> GetConsentsUsingGETAsync(ConsentsQueryParams consentsQueryParams = null);
 
+        
         /// <summary>
         /// Get consent
         /// </summary>
