@@ -9,6 +9,8 @@
                     xmlns:shared="clr-namespace:YapilyDemo.UX.Features.Shared;assembly=YapilyDemo"
                     xmlns:models="clr-namespace:Appmilla.Yapily.Refit.Models;assembly=Appmilla.Yapily.Refit"
                     xmlns:xct="http://xamarin.com/schemas/2020/toolkit"
+                    xmlns:ios="clr-namespace:Xamarin.Forms.PlatformConfiguration.iOSSpecific;assembly=Xamarin.Forms.Core"
+                    ios:Page.UseSafeArea="true"
                     x:Class="YapilyDemo.UX.Features.AccountDetails.AccountDetailsView"
                     Shell.PresentationMode="ModalAnimated">
     

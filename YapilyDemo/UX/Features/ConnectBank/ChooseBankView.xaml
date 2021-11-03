@@ -7,6 +7,8 @@
                     xmlns:local="clr-namespace:YapilyDemo.UX;assembly=YapilyDemo"
                     xmlns:connectBank="clr-namespace:YapilyDemo.UX.Features.ConnectBank;assembly=YapilyDemo"
                     xmlns:xct="http://xamarin.com/schemas/2020/toolkit"
+                    xmlns:ios="clr-namespace:Xamarin.Forms.PlatformConfiguration.iOSSpecific;assembly=Xamarin.Forms.Core"
+                    ios:Page.UseSafeArea="true"
                     x:Class="YapilyDemo.UX.Features.ConnectBank.ChooseBankView"
                     Shell.PresentationMode="ModalAnimated">
     <framework:BaseView.Resources>
@@ -65,6 +67,27 @@
                 </DataTemplate>
             </CollectionView.ItemTemplate>
         </CollectionView>
+        <Frame Margin="5,5,5,5"
+               BackgroundColor="White"
+               Padding="10"
+               CornerRadius="6"
+               HasShadow="False">
+            <Grid Padding="10"
+                  xct:TouchEffect.NativeAnimation="True"
+                  xct:TouchEffect.Command="{Binding Close}">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+                        
+                <Label Grid.Row="0"
+                       HorizontalOptions="Center"
+                       VerticalOptions="Center"
+                       Text="Close"
+                       FontFamily="RegularFontFamily"
+                       FontSize="18"
+                       LineBreakMode="TailTruncation" />
+            </Grid>
+        </Frame>  
     </StackLayout>
     
  

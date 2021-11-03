@@ -60,6 +60,8 @@ namespace YapilyDemo.UX.Features.ConnectBank
         public ReactiveCommand<Unit, Unit> CancelInFlightQueries { get; }
 
         public ReactiveCommand<InstitutionViewModel, bool> ConnectBank { get; protected set; }
+        
+        public ReactiveCommand<Unit, Unit> Close { get; }
 
         public ChooseBankViewModel(
             ISchedulerProvider schedulerProvider,
@@ -113,6 +115,9 @@ namespace YapilyDemo.UX.Features.ConnectBank
 
             ConnectBank = ReactiveCommand.CreateFromTask<InstitutionViewModel, bool>(OnConnectBank, outputScheduler: _schedulerProvider.MainThread);
             ConnectBank.ThrownExceptions.Subscribe(OnError);
+            
+            Close = ReactiveCommand.CreateFromTask(OnClose, outputScheduler: _schedulerProvider.MainThread);
+            Close.ThrownExceptions.Subscribe(OnError);
         }
         
         private async Task<bool> OnConnectBank(InstitutionViewModel institutionViewModel)
@@ -301,6 +306,11 @@ namespace YapilyDemo.UX.Features.ConnectBank
         public Task OnViewDisappearing()
         {
             return Task.CompletedTask;
+        }
+        
+        async Task OnClose()
+        {
+            await Shell.Current.GoToAsync("..");
         }
         
         void OnError(Exception exception)
