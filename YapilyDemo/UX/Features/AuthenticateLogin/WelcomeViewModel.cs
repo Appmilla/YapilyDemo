@@ -175,7 +175,7 @@ namespace YapilyDemo.UX.Features.AuthenticateLogin
         }
         void OnLoginError(Exception exception)
         {
-            Debug.WriteLine("Login Error {exception.Message}");
+            Debug.WriteLine($"Login Error {exception.Message}");
         }
     }
 }
