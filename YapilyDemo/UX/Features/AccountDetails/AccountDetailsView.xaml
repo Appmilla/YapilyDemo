@@ -8,6 +8,7 @@
                     xmlns:converters="clr-namespace:Appmilla.Xamarin.Infrastructure.Converters;assembly=Appmilla.Xamarin.Infrastructure"
                     xmlns:shared="clr-namespace:YapilyDemo.UX.Features.Shared;assembly=YapilyDemo"
                     xmlns:models="clr-namespace:Appmilla.Yapily.Refit.Models;assembly=Appmilla.Yapily.Refit"
+                    xmlns:xct="http://xamarin.com/schemas/2020/toolkit"
                     x:Class="YapilyDemo.UX.Features.AccountDetails.AccountDetailsView"
                     Shell.PresentationMode="ModalAnimated">
     
@@ -242,7 +243,9 @@
                        Padding="10"
                        CornerRadius="6"
                        HasShadow="False">
-                    <Grid Padding="10">
+                    <Grid Padding="10"
+                          xct:TouchEffect.NativeAnimation="True"
+                          xct:TouchEffect.Command="{Binding Close}">
                         <Grid.RowDefinitions>
                             <RowDefinition Height="Auto" />
                         </Grid.RowDefinitions>
@@ -254,9 +257,6 @@
                                FontFamily="RegularFontFamily"
                                FontSize="18"
                                LineBreakMode="TailTruncation" />
-                        <Grid.GestureRecognizers>
-                            <TapGestureRecognizer Command="{Binding Close}"/>
-                        </Grid.GestureRecognizers>
                     </Grid>
                 </Frame>  
             </Grid>

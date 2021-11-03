@@ -6,6 +6,7 @@
                     xmlns:styles="clr-namespace:YapilyDemo.Styles;assembly=YapilyDemo"
                     xmlns:local="clr-namespace:YapilyDemo.UX;assembly=YapilyDemo"
                     xmlns:connectBank="clr-namespace:YapilyDemo.UX.Features.ConnectBank;assembly=YapilyDemo"
+                    xmlns:xct="http://xamarin.com/schemas/2020/toolkit"
                     x:Class="YapilyDemo.UX.Features.ConnectBank.ChooseBankView"
                     Shell.PresentationMode="ModalAnimated">
     <framework:BaseView.Resources>
@@ -39,7 +40,9 @@
                            Padding="10"
                            CornerRadius="6"
                            HasShadow="False">
-                    <Grid>
+                    <Grid xct:TouchEffect.NativeAnimation="True"
+                          xct:TouchEffect.Command="{Binding Source={RelativeSource AncestorType={x:Type connectBank:ChooseBankViewModel}}, Path=ConnectBank}"
+                          xct:TouchEffect.CommandParameter="{Binding}">
                         <Grid.RowDefinitions>
                             <RowDefinition Height="130" />
                             <RowDefinition Height="Auto" />
@@ -57,10 +60,6 @@
                                FontSize="14"
                                HorizontalTextAlignment="Center"
                                LineBreakMode="WordWrap" />
-                        <Grid.GestureRecognizers>
-                            <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type connectBank:ChooseBankViewModel}}, Path=ConnectBank}"
-                                                  CommandParameter="{Binding}"/>
-                        </Grid.GestureRecognizers>
                     </Grid>
                         </Frame>
                 </DataTemplate>

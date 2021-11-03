@@ -9,6 +9,7 @@
     xmlns:home="clr-namespace:YapilyDemo.UX.Features.Home;assembly=YapilyDemo"
     xmlns:shared="clr-namespace:YapilyDemo.UX.Features.Shared;assembly=YapilyDemo"
     xmlns:models="clr-namespace:Appmilla.Yapily.Refit.Models;assembly=Appmilla.Yapily.Refit"
+    xmlns:xct="http://xamarin.com/schemas/2020/toolkit"
     x:Class="YapilyDemo.UX.Features.Home.HomeView">
     <framework:BaseView.Resources>
         <ResourceDictionary>
@@ -54,7 +55,9 @@
                                         <RowDefinition Height="1"/>
                                         <RowDefinition Height="Auto"/>
                                     </Grid.RowDefinitions>
-                                    <Grid Grid.Row="0">
+                                    <Grid Grid.Row="0"
+                                          xct:TouchEffect.NativeAnimation="True"
+                                          xct:TouchEffect.Command="{Binding ViewInstitutionDetails}">
                                         <Grid.RowDefinitions>
                                             <RowDefinition Height="100" />
                                         </Grid.RowDefinitions>
@@ -77,9 +80,6 @@
                                                FontAttributes="Bold"
                                                FontSize="18"
                                                LineBreakMode="WordWrap" />
-                                        <Grid.GestureRecognizers>
-                                            <TapGestureRecognizer Command="{Binding ViewInstitutionDetails}"/>
-                                        </Grid.GestureRecognizers>
                                     </Grid>
                                     <BoxView Grid.Row="1"
                                              Margin="8,0,8,0"
@@ -96,7 +96,9 @@
                                                 <Grid RowSpacing="0"
                                                       ColumnSpacing="0"
                                                       Margin="0,0,0,0"
-                                                      Padding="0,0,0,0">
+                                                      Padding="0,0,0,0"
+                                                      xct:TouchEffect.NativeAnimation="True"
+                                                      xct:TouchEffect.Command="{Binding ViewAccountDetails}">
                                                     <Grid.RowDefinitions>
                                                         <RowDefinition Height="1"/>
                                                         <RowDefinition Height="Auto"/>
@@ -136,17 +138,6 @@
                                                             </DataTemplate>
                                                         </BindableLayout.ItemTemplate>
                                                     </StackLayout>
-                                                    <!--<Image Grid.Row="0"
-                                                    Grid.RowSpan="2"
-                                                           Grid.Column="0"
-                                                           Margin="18,20,8,21"
-                                                           VerticalOptions="Center"
-                                                           HorizontalOptions="Center"
-                                                           BackgroundColor="Transparent"
-                                                           Source="{Binding Icon}"
-                                                           WidthRequest="30"
-                                                           HeightRequest="30"
-                                                           AutomationProperties.IsInAccessibleTree="False"/>-->
                                                     <Label Grid.Row="2"
                                                            Grid.Column="1"
                                                            Margin="0,0,0,0"
@@ -157,19 +148,6 @@
                                                            TextColor="#FF004687"
                                                            VerticalTextAlignment="End"
                                                            Text="{Binding Type}" />
-                                                
-                                                <!--
-                                                <Label Grid.Row="1"
-                                                       Grid.Column="1"
-                                                       Grid.ColumnSpan="2"
-                                                       Margin="0,16,17,0"
-                                                       FontFamily="{Binding BalanceSummaryDisplayType, Converter={StaticResource balanceFontConverter}}"
-                                                       FontSize="{Binding BalanceSummaryDisplayType, Converter={StaticResource balanceFontSizeConverter}}"
-                                                       HorizontalOptions="End"
-                                                       HorizontalTextAlignment="End"
-                                                       TextColor="{Binding BalanceSummaryDisplayType, Converter={StaticResource balanceColorConverter}}"
-                                                       VerticalTextAlignment="End"
-                                                       Text="{Binding Balance}" />-->
                                                     <Label Grid.Row="2"
                                                            Grid.Column="1"
                                                            Grid.ColumnSpan="2"
@@ -191,19 +169,6 @@
                                                            VerticalTextAlignment="Start"
                                                            Text="{Binding Id}" 
                                                            AutomationProperties.IsInAccessibleTree="False"/>
-                                                <!--
-                                                <Label Grid.Row="2"
-                                                       Grid.Column="2"
-                                                       Margin="0,0,17,13"
-                                                       FontFamily="{StaticResource LightFontFamily}"
-                                                       FontSize="12"
-                                                       HorizontalOptions="End"
-                                                       HorizontalTextAlignment="End"
-                                                       TextColor="{Binding BalanceSummaryDisplayType, Converter={StaticResource balanceColorConverter}}"
-                                                       VerticalTextAlignment="Center"
-                                                       VerticalOptions="Start"
-                                                       Text="{Binding BalanceSummaryDisplayType, Converter={StaticResource balanceDescriptionConverter}}"
-                                                       AutomationProperties.IsInAccessibleTree="False"/>-->
                                                     <Label Grid.Row="3"
                                                            Grid.Column="2"
                                                            Margin="0,0,17,13"
@@ -215,18 +180,6 @@
                                                            VerticalOptions="Start"
                                                            Text="{Binding Currency}" 
                                                            AutomationProperties.IsInAccessibleTree="False"/>
-                                                <!--
-                                                <StackLayout Grid.Row="0"
-                                                             Grid.RowSpan="3"
-                                                             Grid.Column="0"
-                                                             Grid.ColumnSpan="3">
-                                                             <StackLayout.GestureRecognizers>
-                                                                <TapGestureRecognizer Command="{Binding ViewActionSheet}"/>
-                                                                </StackLayout.GestureRecognizers>
-                                                                </StackLayout>-->
-                                                    <Grid.GestureRecognizers>
-                                                        <TapGestureRecognizer Command="{Binding ViewAccountDetails}"/>
-                                                    </Grid.GestureRecognizers>
                                                 </Grid>
                                             </DataTemplate>
                                         </BindableLayout.ItemTemplate>
@@ -240,7 +193,9 @@
                        Padding="10"
                        CornerRadius="6"
                        HasShadow="False">
-                    <Grid Padding="10">
+                    <Grid Padding="10"
+                          xct:TouchEffect.NativeAnimation="True"
+                          xct:TouchEffect.Command="{Binding ChooseBank}">
                         <Grid.RowDefinitions>
                             <RowDefinition Height="50" />
                         </Grid.RowDefinitions>
@@ -283,11 +238,7 @@
                                                  Color="#616161" />
                             </Image.Source>
                         </Image>
-                        <Grid.GestureRecognizers>
-                            <TapGestureRecognizer Command="{Binding ChooseBank}"/>
-                        </Grid.GestureRecognizers>
                     </Grid>
-                    
                     
                 </Frame>  
             </StackLayout>

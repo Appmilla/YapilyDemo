@@ -16,31 +16,6 @@
 
             </ResourceDictionary.MergedDictionaries>
 
-            <!--
-            <converters:BalanceDisplayConverter x:Key="balanceColorConverter"
-                                              Credit="{StaticResource MidGreen}"
-                                              Zero="{StaticResource MidGreen}"
-                                              Debit="{StaticResource Lipstick}"
-                                              None="{StaticResource BrownishGrey}"/>
-
-            <converters:BalanceDisplayConverter x:Key="balanceFontSizeConverter"
-                                                    Credit="18"
-                                                    Zero="18"
-                                                    Debit="18"
-                                                    None="15" />
-
-            <converters:BalanceDisplayConverter x:Key="balanceDescriptionConverter"
-                                                    Debit="Debit"
-                                                    Credit="Credit"
-                                                    Zero=""
-                                                    None="" />
-
-            <converters:BalanceFontConverter x:Key="balanceFontConverter"
-                                              LightFont="{StaticResource LightFontFamily}"
-                                              MediumFont="{StaticResource MediumFontFamily}" />
-
-            <converters:BalanceTypeVisibilityConverter x:Key="balanceTypeVisibilityConverter" />-->
-
         </ResourceDictionary>
     </Grid.Resources>
 
@@ -55,24 +30,11 @@
         <ColumnDefinition Width="*"/>
         <ColumnDefinition Width="Auto"/>
     </Grid.ColumnDefinitions>
-
-    <!--<Image Grid.Row="0"
-           Grid.RowSpan="2"
-           Grid.Column="0"
-           Margin="18,20,8,21"
-           VerticalOptions="Center"
-           HorizontalOptions="Center"
-           BackgroundColor="Transparent"
-           Source="{Binding Icon}"
-           WidthRequest="30"
-           HeightRequest="30"
-           AutomationProperties.IsInAccessibleTree="False"/>-->
-
-    <!--FontFamily="{StaticResource MediumFontFamily}"-->
+    
     <Label Grid.Row="0"
            Grid.Column="1"
            Margin="0,0,0,0"
-           
+           FontFamily="MediumFontFamily"
            FontSize="18"
            HorizontalOptions="Start"
            HorizontalTextAlignment="Start"
@@ -102,11 +64,10 @@
            TextColor="{StaticResource BrownishGrey}"
            VerticalTextAlignment="End"
            Text="{Binding FormattedBalance}" />
-    <!--FontFamily="{StaticResource LightFontFamily}"-->
     <Label Grid.Row="1"
            Grid.Column="1"
            Margin="0,1,0,0"
-           
+           FontFamily="LightFontFamily"
            FontSize="12"
            HorizontalOptions="Start"
            HorizontalTextAlignment="Start"
@@ -132,6 +93,7 @@
            Grid.Column="2"
            Margin="0,0,17,13"
            FontSize="12"
+           FontFamily="LightFontFamily"
            HorizontalOptions="End"
            HorizontalTextAlignment="End"
            TextColor="{StaticResource BrownishGrey}"
@@ -139,18 +101,6 @@
            VerticalOptions="Start"
            Text="{Binding Currency}" 
            AutomationProperties.IsInAccessibleTree="False"/>
-           <!--
-    <StackLayout Grid.Row="0"
-                 Grid.RowSpan="3"
-                 Grid.Column="0"
-                 Grid.ColumnSpan="3">
-                 <StackLayout.GestureRecognizers>
-                     <TapGestureRecognizer Command="{Binding ViewActionSheet}"/>
-                 </StackLayout.GestureRecognizers>
-    </StackLayout>
-    -->
-    
-    <!--IsVisible="{Binding .,Converter={converters:SeparatorVisibilityConverter}, ConverterParameter={x:Reference Name=accountSummariesRepeaterView}}"-->
     <BoxView Grid.Row="2"
              Grid.Column="0"
              Grid.ColumnSpan="3"
