@@ -237,6 +237,89 @@
                                 </DataTemplate>
                             </BindableLayout.ItemTemplate>
                         </StackLayout>
+                        
+                        <!--
+                        <CollectionView x:Name="accountTransactionsRepeaterView"
+                                        Grid.Row="2"
+                                        BackgroundColor="White"
+                                        Margin="0,10,0,0"
+                                        ItemsSource="{Binding Transactions}">
+                            <CollectionView.ItemsLayout>
+                                <GridItemsLayout Orientation="Vertical"
+                                                 Span="1"
+                                                 HorizontalItemSpacing="5"
+                                                 VerticalItemSpacing="5"/>
+                            </CollectionView.ItemsLayout>
+                            <CollectionView.ItemTemplate>
+                                <DataTemplate x:DataType="shared:TransactionViewModel">
+                                    <Grid RowSpacing="0"
+                                          ColumnSpacing="0"
+                                          Margin="0,0,0,0"
+                                          Padding="0,0,0,0">
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="1"/>
+                                            <RowDefinition Height="Auto"/>
+                                            <RowDefinition Height="Auto"/>
+                                        </Grid.RowDefinitions>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="Auto"/>
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="Auto"/>
+                                        </Grid.ColumnDefinitions>
+                                        <BoxView Grid.Row="0"
+                                                 Grid.Column="0"
+                                                 Grid.ColumnSpan="3"
+                                                 Margin="8,0,8,0"
+                                                 HeightRequest="1"
+                                                 Color="{StaticResource SeparatorColor}"
+                                                 IsVisible="{Binding .,Converter={converters:SeparatorVisibilityConverter}, ConverterParameter={x:Reference Name=accountTransactionsRepeaterView}}"/>
+                                        <Label Grid.Row="1"
+                                               Grid.Column="1"
+                                               Margin="0,0,0,0"
+                                               FontFamily="MediumFontFamily"
+                                               FontSize="18"
+                                               HorizontalOptions="Start"
+                                               HorizontalTextAlignment="Start"
+                                               TextColor="#FF004687"
+                                               VerticalTextAlignment="End"
+                                               Text="{Binding FormattedDate}" />
+                                        <Label Grid.Row="1"
+                                               Grid.Column="1"
+                                               Grid.ColumnSpan="2"
+                                               Margin="0,16,17,0"
+                                               FontSize="18"
+                                               HorizontalOptions="End"
+                                               HorizontalTextAlignment="End"
+                                               TextColor="{Binding TransactionAmount.Amount, Converter={StaticResource balanceColorConverter}}"
+                                               VerticalTextAlignment="End"
+                                               Text="{Binding FormattedAmount}" />
+                                        <Label Grid.Row="2"
+                                               Grid.Column="1"
+                                               Margin="0,1,0,0"
+                                               FontFamily="LightFontFamily"
+                                               FontSize="14"
+                                               HorizontalOptions="Start"
+                                               HorizontalTextAlignment="Start"
+                                               TextColor="{StaticResource BrownishGrey}"
+                                               VerticalTextAlignment="Start"
+                                               Text="{Binding Description}" 
+                                               AutomationProperties.IsInAccessibleTree="False"/>
+                                        <Label Grid.Row="2"
+                                               Grid.Column="2"
+                                               Margin="0,0,17,13"
+                                               FontSize="12"
+                                               HorizontalOptions="End"
+                                               HorizontalTextAlignment="End"
+                                               TextColor="{StaticResource BrownishGrey}"
+                                               VerticalTextAlignment="Center"
+                                               VerticalOptions="Start"
+                                               Text="{Binding TransactionAmount.Currency}" 
+                                               AutomationProperties.IsInAccessibleTree="False"/>
+                                    </Grid>
+                                </DataTemplate>
+                            </CollectionView.ItemTemplate>
+                        </CollectionView>
+                        -->
                     </Grid>
                 </Frame>
                 <Frame Grid.Row="2"
