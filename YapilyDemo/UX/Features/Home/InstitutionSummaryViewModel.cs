@@ -66,6 +66,19 @@ namespace YapilyDemo.UX.Features.Home
         public ReactiveCommand<Unit, Unit> ViewInstitutionDetails { get; }
         
         public ReactiveCommand<Unit, bool> ReauthoriseAccounts { get; protected set; }
+
+        [Reactive] public bool ShowLoading { get; set; }
+
+        [ObservableAsProperty]
+        // ReSharper disable once UnassignedGetOnlyAutoProperty
+        public bool ShowAccounts { get; }
+        
+        //[ObservableAsProperty]
+        // ReSharper disable once UnassignedGetOnlyAutoProperty
+        //public bool ShowAccountsError { get; }
+        
+        [Reactive]
+        public bool IsAccountsInError { get; set; }
         
         public InstitutionSummaryViewModel(
             ISchedulerProvider schedulerProvider,
@@ -81,13 +94,9 @@ namespace YapilyDemo.UX.Features.Home
             this.WhenAnyValue(x => x._accountsQuery.IsBusy)
                 .ObserveOn(schedulerProvider.MainThread)
                 .ToPropertyEx(this, x => x.IsBusy, scheduler: _schedulerProvider.MainThread);
-            
-            /*
-            LoadAccounts = ReactiveCommand.CreateFromObservable(
-                () => _accountsQuery.GetAccounts(AsyncHelper.RunSync(_secureStorage.GetAsync($"{InstitutionId}-consent-token")), GetCacheKey()).TakeUntil(CancelInFlightQueries),
-                this.WhenAnyValue(x => x.IsBusy).Select(x => !x),
-                outputScheduler: _schedulerProvider.ThreadPool);
-            */
+                                   
+            this.WhenAnyValue(x => x.Accounts.Count, y => y.IsAccountsInError, (x,y) => x > 0 && !y)
+                .ToPropertyEx(this, x => x.ShowAccounts, scheduler: schedulerProvider.MainThread);                       
             
             LoadAccounts = ReactiveCommand.CreateFromObservable<Unit, ApiListResponseOfAccount>(
                 LoadQuery,
@@ -127,8 +136,12 @@ namespace YapilyDemo.UX.Features.Home
         
         private IObservable<ApiListResponseOfAccount> LoadQuery(Unit ignored)
         {
+            ShowLoading = true;
+
             var consentTokenKey = $"{InstitutionId}-consent-token";
             var consentToken = AsyncHelper.RunSync(() => _secureStorage.GetAsync(consentTokenKey));
+
+            IsAccountsInError = false;
             
             return _accountsQuery.GetAccounts(consentToken, GetCacheKey()).TakeUntil(CancelInFlightQueries);
         }
@@ -160,18 +173,26 @@ namespace YapilyDemo.UX.Features.Home
                 AccountNames = i.AccountNames,
                 AccountIdentifications = i.AccountIdentifications,
                 AccountBalances = i.AccountBalances
-            });
+            }).ToList();
+            
+            IsAccountsInError = false;
             
             _schedulerProvider.MainThread.Schedule(_ =>
             {
                 _accountCache.UpdateCache(results, KeySelector);
+
+                ShowLoading = false;
             });
         }
         
         void Accounts_OnError(Exception exception)
         {
+            ShowLoading = false;
+
             Debug.WriteLine($"Error {exception.Message}");
 
+            IsAccountsInError = true;
+            
             if (exception is Refit.ApiException refitApiException)
             {
                 if (refitApiException.StatusCode == HttpStatusCode.Forbidden)
@@ -195,7 +216,7 @@ namespace YapilyDemo.UX.Features.Home
 
                 Debug.WriteLine(authResponse);
 
-                var callback = "com.appmilla.yapilydemo://callback";
+                var callback = "com.intuitive.yapilydemo://callback";
                 var authResult = await WebAuthenticator.AuthenticateAsync(new Uri(authResponse.Data.AuthorisationUrl), new Uri(callback));
                 
                 Debug.WriteLine(authResult);

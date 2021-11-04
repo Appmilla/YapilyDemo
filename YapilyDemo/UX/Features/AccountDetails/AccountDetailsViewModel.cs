@@ -48,10 +48,14 @@ namespace YapilyDemo.UX.Features.AccountDetails
 
         public ReactiveCommand<Unit, ApiListResponseOfTransaction> LoadTransactions { get; }
         
+        public ReactiveCommand<Unit, Unit> CancelInFlightQueries { get; }
+        
         public ReactiveCommand<Unit, Unit> Close { get; }
         
         [Reactive]
-        public string Title { get; private set; } = "Account details";
+        public string Title { get; private set; } = "Account details";        
+         
+        [Reactive] public bool ShowLoading { get; set; }
         
         public AccountDetailsViewModel(
             ISchedulerProvider schedulerProvider,
@@ -71,6 +75,11 @@ namespace YapilyDemo.UX.Features.AccountDetails
                 outputScheduler: _schedulerProvider.ThreadPool);
             LoadTransactions.ThrownExceptions.Subscribe(OnError);
             LoadTransactions.Subscribe(Transactions_OnNext);
+            
+            CancelInFlightQueries = ReactiveCommand.Create(
+                () => { },
+                this.WhenAnyObservable(x => x.LoadTransactions.IsExecuting));
+
             
             var transactionsSort = SortExpressionComparer<TransactionViewModel>
                 .Descending(t => t.Date);
@@ -105,10 +114,12 @@ namespace YapilyDemo.UX.Features.AccountDetails
         
         private IObservable<ApiListResponseOfTransaction> LoadQuery(Unit ignored)
         {
+            ShowLoading = true;
+            
             var consentTokenKey = $"{Account.InstitutionId}-consent-token";
             var consentToken = AsyncHelper.RunSync(() => _secureStorage.GetAsync(consentTokenKey));
 
-            return _transactionsQuery.GetTransactions(consentToken, Account.Id, GetCacheKey());
+            return _transactionsQuery.GetTransactions(consentToken, Account.Id, GetCacheKey()).TakeUntil(CancelInFlightQueries);
         }
         
         string GetCacheKey()
@@ -146,21 +157,27 @@ namespace YapilyDemo.UX.Features.AccountDetails
                 Enrichment = t.Enrichment,
                 SupplementaryData = t.SupplementaryData,
                 FormattedAmount = t.TransactionAmount.Amount.ToFormattedCurrencyString(StringUtilities.GetCurrencySymbol(t.TransactionAmount.Currency))
-            });
+            }).ToList();
             
             _schedulerProvider.MainThread.Schedule(_ =>
             {
                 _transactionsCache.UpdateCache(results, KeySelector);
+
+                ShowLoading = false;
             });
         }
         
         void OnError(Exception exception)
         {
+            ShowLoading = false;
+            
             Debug.WriteLine($"Error {exception.Message}");
         }
 
         async Task OnClose()
         {
+            Observable.Return(Unit.Default).InvokeCommand(CancelInFlightQueries);
+            
             await Shell.Current.GoToAsync("..");
         }
     }

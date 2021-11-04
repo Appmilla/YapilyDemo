@@ -65,6 +65,8 @@ namespace YapilyDemo.UX.Features.Home
         [Reactive]
         public string Title { get; private set; } = "Your accounts";
         
+        [Reactive] public bool ShowLoading { get; set; }
+        
         public HomeViewModel(
             ISchedulerProvider schedulerProvider,
             IConnectedInstitutionsCache connectedInstitutionsCache,
@@ -130,6 +132,8 @@ namespace YapilyDemo.UX.Features.Home
         
         private async Task OnLoad(bool reset)
         {
+            ShowLoading = true;
+            
             var institutionSummaryViewModels = new List<InstitutionSummaryViewModel>();
             
             foreach (var connectedInstitution in _connectedInstitutions)
@@ -161,6 +165,8 @@ namespace YapilyDemo.UX.Features.Home
                     _institutionSummariesCache.Clear();
                 }
                 _institutionSummariesCache.UpdateCache(institutionSummaryViewModels, KeySelector);
+
+                ShowLoading = false;
             });
         }
         
@@ -223,6 +229,8 @@ namespace YapilyDemo.UX.Features.Home
         
         void OnError(Exception exception)
         {
+            ShowLoading = false;
+            
             Debug.WriteLine($"Error {exception.Message}");
         }
         

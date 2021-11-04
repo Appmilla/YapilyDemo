@@ -8,7 +8,7 @@ namespace YapilyDemo.Droid
     [Activity(NoHistory = true, LaunchMode = LaunchMode.SingleTop)]
     [IntentFilter(new[] { Intent.ActionView },
         Categories = new[] { Intent.CategoryDefault, Intent.CategoryBrowsable },
-        DataScheme = "com.appmilla.yapilydemo")]
+        DataScheme = "com.intuitive.yapilydemo")]
     [IntentFilter(new[] { Intent.ActionView },
         Categories = new[] { Intent.CategoryDefault, Intent.CategoryBrowsable },
         DataScheme = "io.identitymodel.native",

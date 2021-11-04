@@ -46,8 +46,8 @@
                           xct:TouchEffect.Command="{Binding Source={RelativeSource AncestorType={x:Type connectBank:ChooseBankViewModel}}, Path=ConnectBank}"
                           xct:TouchEffect.CommandParameter="{Binding}">
                         <Grid.RowDefinitions>
-                            <RowDefinition Height="130" />
-                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="120" />
+                            <RowDefinition Height="40" />
                         </Grid.RowDefinitions>
                         <Image Grid.Row = "0"
                                HorizontalOptions="Center"

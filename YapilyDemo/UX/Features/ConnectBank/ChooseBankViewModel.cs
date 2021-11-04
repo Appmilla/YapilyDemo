@@ -132,7 +132,7 @@ namespace YapilyDemo.UX.Features.ConnectBank
                     UserUuid = userUuid,
                     ApplicationUserId = applicationUserId,
                     InstitutionId = institutionViewModel.Id,
-                    Callback = "com.appmilla.yapilydemo://callback"
+                    Callback = "com.intuitive.yapilydemo://callback"
                 };
                 
                 /*

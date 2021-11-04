@@ -38,8 +38,31 @@
                    FontFamily="MediumFontFamily"/>
         </Frame>  
         <ScrollView>
-            <StackLayout>
-                <StackLayout Padding="0,10,0,10"
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                <StackLayout Grid.Row="0"
+                             IsVisible="{Binding ShowLoading}"
+                             Padding="18, 18"
+                             Spacing="0">
+                    <ActivityIndicator HorizontalOptions="Center"
+                                       IsRunning="true" />
+                    <Label Margin="0"
+                           FontFamily="MediumFontFamily"
+                           FontSize="15"
+                           LineHeight="1.2"
+                           CharacterSpacing="0.0"
+                           HorizontalTextAlignment="Center"
+                           HorizontalOptions="Fill"
+                           Text="Fetching your banks"
+                           TextColor="{StaticResource NormalTextColor}"
+                           VerticalTextAlignment="Center" />
+                </StackLayout>
+
+                <StackLayout Grid.Row="0"
+                             Padding="0,10,0,10"
                              Margin="0,0,0,0"
                              BindableLayout.ItemsSource="{Binding Path=InstitutionSummaries}"
                              Spacing="20">
@@ -85,8 +108,30 @@
                                              Margin="8,0,8,0"
                                              HeightRequest="1"
                                              Color="{StaticResource SeparatorColor}" />
+                                    
+                                    <StackLayout Grid.Row="2"
+                                                 IsVisible="{Binding ShowLoading}"
+                                                 Padding="18, 18"
+                                                 Spacing="0">
+                                        <ActivityIndicator HorizontalOptions="Center"
+                                                           IsRunning="true" />
+                                        <Label
+                                            Margin="0"
+                                            FontFamily="MediumFontFamily"
+                                            FontSize="15"
+                                            LineHeight="1.2"
+                                            CharacterSpacing="0.0"
+                                            HorizontalTextAlignment="Center"
+                                            HorizontalOptions="Fill"
+                                            Text="Fetching your accounts"
+                                            TextColor="{StaticResource NormalTextColor}"
+                                            VerticalTextAlignment="Center" />
+                                        
+                                    </StackLayout>
+                                    <!--IsVisible="{Binding ShowAccounts}"-->
                                     <StackLayout x:Name="accountSummariesRepeaterView"
                                                  Grid.Row="2"
+                                                 IsVisible="{Binding ShowLoading, Converter={converters:NotBooleanConverter}}"                                    
                                                  Padding="0,0,0,0"
                                                  Margin="0,0,0,0"
                                                  BindableLayout.ItemsSource="{Binding Path=Accounts}"
@@ -184,12 +229,63 @@
                                             </DataTemplate>
                                         </BindableLayout.ItemTemplate>
                                     </StackLayout>
+                                    
+                                    <!--
+                                    <StackLayout Grid.Row="2"
+                                                 IsVisible="{Binding ShowAccountsError}"
+                                                 Padding="18, 0"
+                                                 Spacing="0">
+                                        
+                                        <Image Margin="0,43,0,19"
+                                               VerticalOptions="Center"
+                                               HorizontalOptions="Center"
+                                               Aspect="AspectFit"
+                                               HeightRequest="44"
+                                               WidthRequest="44">
+                                            <Image.Source>
+                                                <FontImageSource FontFamily="FontAwesome"
+                                                                 Glyph="&#xf05a;"
+                                                                 Size="44"
+                                                                 Color="#616161" />
+                                            </Image.Source>
+                                        </Image>
+                                        <Label
+                                            Margin="0"
+                                            FontFamily="MediumFontFamily"
+                                            FontSize="15"
+                                            LineHeight="1.2"
+                                            CharacterSpacing="0.0"
+                                            HorizontalTextAlignment="Center"
+                                            HorizontalOptions="Fill"
+                                            Text="Accounts aren't available right now"
+                                            TextColor="{StaticResource NormalTextColor}"
+                                            VerticalTextAlignment="Center" />
+                                        <Label
+                                            FontFamily="LightFontFamily"
+                                            FontSize="15"
+                                            LineHeight="1.2"
+                                            CharacterSpacing="0.0"
+                                            HorizontalTextAlignment="Center"
+                                            HorizontalOptions="Fill"
+                                            Text="There’s nothing you need to do. Why not check back later?"
+                                            TextColor="{StaticResource NormalTextColor}"
+                                            VerticalTextAlignment="Center">
+                                            <Label.Margin>
+                                                <OnPlatform x:TypeArguments="Thickness">
+                                                    <On Platform="iOS">0,0,0,36</On>
+                                                    <On Platform="Android">0,4,0,36</On>
+                                                </OnPlatform>
+                                            </Label.Margin> 
+                                        </Label>
+                                    </StackLayout>
+                                    -->
                                 </Grid>
                             </Frame>
                         </DataTemplate>
                     </BindableLayout.ItemTemplate>
                 </StackLayout>
-                <Frame BackgroundColor="White"
+                <Frame Grid.Row="1"
+                       BackgroundColor="White"
                        Padding="10"
                        CornerRadius="6"
                        HasShadow="False">
@@ -241,7 +337,7 @@
                     </Grid>
                     
                 </Frame>  
-            </StackLayout>
+            </Grid>
             
         </ScrollView>
     </StackLayout>

@@ -25,7 +25,7 @@
 	<key>CFBundleDisplayName</key>
 	<string>YapilyDemo</string>
 	<key>CFBundleIdentifier</key>
-	<string>com.appmilla.yapilydemo</string>
+	<string>com.intuitive.yapilydemo</string>
 	<key>CFBundleVersion</key>
 	<string>1.0</string>
 	<key>UILaunchStoryboardName</key>
@@ -38,7 +38,7 @@
 	<array>
 		<dict>
 			<key>CFBundleURLName</key>
-			<string>app.walldo.com</string>
+			<string>com.intuitive.yapilydemo</string>
 			<key>CFBundleURLTypes</key>
 			<string>Viewer</string>
 		</dict>
