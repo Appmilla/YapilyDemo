@@ -198,7 +198,11 @@ namespace YapilyDemo.UX.Features.Home
                 if (refitApiException.StatusCode == HttpStatusCode.Forbidden)
                 {
                     //re-auth
-                    Observable.Return(Unit.Default).InvokeCommand(ReauthoriseAccounts);
+                    
+                    _schedulerProvider.MainThread.Schedule(_ =>
+                    {
+                        Observable.Return(Unit.Default).InvokeCommand(ReauthoriseAccounts);
+                    });
                 }
             }
         }

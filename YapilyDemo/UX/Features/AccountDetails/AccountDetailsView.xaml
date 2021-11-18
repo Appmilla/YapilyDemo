@@ -197,7 +197,7 @@
                                 CharacterSpacing="0.0"
                                 HorizontalTextAlignment="Center"
                                 HorizontalOptions="Fill"
-                                Text="Fetching your accounts"
+                                Text="Fetching your transactions"
                                 TextColor="{StaticResource NormalTextColor}"
                                 VerticalTextAlignment="Center" />
                                         
