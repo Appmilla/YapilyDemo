@@ -180,6 +180,18 @@ namespace YapilyDemo.Services.Bootstrap
                 }).As<ITransactionsQuery>()
                 .SingleInstance();
             
+            builder.Register(c =>
+                {
+                    var yapilyHttpClientFactory = c.Resolve<IYapilyHttpClientFactory>();
+                    var schedulerProvider = c.Resolve<ISchedulerProvider>();
+                    var refitSettings = c.Resolve<RefitSettings>();
+
+                    return new SinglePaymentQuery(
+                        yapilyHttpClientFactory,
+                        schedulerProvider,
+                        refitSettings);
+                }).As<ISinglePaymentQuery>()
+                .SingleInstance();
             
         }
 
@@ -195,6 +207,7 @@ namespace YapilyDemo.Services.Bootstrap
             builder.RegisterType<AccountViewModel>().AsSelf();
             builder.RegisterType<InstitutionSummaryViewModel>().AsSelf();
             builder.RegisterType<AccountDetailsViewModel>().AsSelf().SingleInstance();
+            builder.RegisterType<CreatePaymentViewModel>().AsSelf().SingleInstance();
         }
 
         public static void RegisterSplatAdapter(ContainerBuilder builder)

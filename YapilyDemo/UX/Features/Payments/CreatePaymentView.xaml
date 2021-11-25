@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<framework:BaseView xmlns="http://xamarin.com/schemas/2014/forms"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                    xmlns:framework="clr-namespace:Appmilla.Xamarin.Infrastructure.Framework;assembly=Appmilla.Xamarin.Infrastructure"
+                    xmlns:styles="clr-namespace:YapilyDemo.Styles;assembly=YapilyDemo"
+                    xmlns:local="clr-namespace:YapilyDemo.UX;assembly=YapilyDemo"
+                    x:Class="YapilyDemo.UX.Features.Payments.CreatePaymentView"
+                    xmlns:xct="http://xamarin.com/schemas/2020/toolkit"
+                    xmlns:ios="clr-namespace:Xamarin.Forms.PlatformConfiguration.iOSSpecific;assembly=Xamarin.Forms.Core"
+                    ios:Page.UseSafeArea="true">
+    <framework:BaseView.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <styles:SharedStyles />
+                                                
+            </ResourceDictionary.MergedDictionaries>
+            
+        </ResourceDictionary>
+    </framework:BaseView.Resources>
+    
+    <StackLayout>
+        <Label Text="Create Payment"
+               VerticalOptions="CenterAndExpand"
+               HorizontalOptions="CenterAndExpand" />
+    </StackLayout>
+    
+</framework:BaseView>

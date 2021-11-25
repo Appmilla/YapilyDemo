@@ -4,6 +4,7 @@ using Xamarin.Forms.Xaml;
 using YapilyDemo.UX.Features.AccountDetails;
 using YapilyDemo.UX.Features.AuthenticateLogin;
 using YapilyDemo.UX.Features.ConnectBank;
+using YapilyDemo.UX.Features.Payments;
 
 namespace YapilyDemo.UX.Features.ApplicationShell
 {
@@ -21,6 +22,7 @@ namespace YapilyDemo.UX.Features.ApplicationShell
             Routing.RegisterRoute("welcome", typeof(WelcomeView));
             Routing.RegisterRoute("chooseBank", typeof(ChooseBankView));
             Routing.RegisterRoute("accountDetails", typeof(AccountDetailsView));
+            Routing.RegisterRoute("createPayment", typeof(CreatePaymentView));
         }
     }
 }

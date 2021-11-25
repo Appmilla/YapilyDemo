@@ -22,6 +22,10 @@
         <ShellContent ContentTemplate="{DataTemplate accountDetails:AccountDetailsView}" />
     </ShellItem>
     
+    <ShellItem Route="createPayment">
+        <ShellContent ContentTemplate="{DataTemplate payments:CreatePaymentView}" />
+    </ShellItem>
+    
     <TabBar Route="main">
         <Tab Title="Home">
             <Tab.Icon>

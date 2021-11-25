@@ -25,6 +25,7 @@ namespace YapilyDemo.iOS
         {
             iOSBootstrapper.Bootstrap();
             
+            FFImageLoading.Forms.Platform.CachedImageRenderer.Init();
             global::Xamarin.Forms.Forms.Init();
             LoadApplication(new App());
 

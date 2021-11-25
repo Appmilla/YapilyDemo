@@ -12,7 +12,8 @@
                     xmlns:ios="clr-namespace:Xamarin.Forms.PlatformConfiguration.iOSSpecific;assembly=Xamarin.Forms.Core"
                     ios:Page.UseSafeArea="true"
                     x:Class="YapilyDemo.UX.Features.AccountDetails.AccountDetailsView"
-                    Shell.PresentationMode="ModalAnimated">
+                    >
+    <!--Shell.PresentationMode="ModalAnimated"-->
     
     <framework:BaseView.Resources>
         <ResourceDictionary>
