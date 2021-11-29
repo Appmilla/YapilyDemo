@@ -1,4 +1,5 @@
-﻿using Refit;
+﻿using Newtonsoft.Json;
+using Refit;
 
 namespace Appmilla.Yapily.Refit.Models
 {
@@ -13,6 +14,7 @@ namespace Appmilla.Yapily.Refit.Models
         /// </summary> 
 
         [AliasAs("amount")]
+        [JsonProperty(PropertyName="amount")]
         public double Amount1 { get; set; }
 
         /// <summary>

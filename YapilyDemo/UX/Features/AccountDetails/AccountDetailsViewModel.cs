@@ -12,12 +12,14 @@ using Appmilla.Xamarin.Infrastructure.Reactive;
 using Appmilla.Xamarin.Infrastructure.Utilities;
 using Appmilla.Yapily.Refit.Models;
 using Appmilla.Yapily.Refit.Queries;
+using CommonServiceLocator;
 using DynamicData;
 using DynamicData.Binding;
 using ReactiveUI;
 using ReactiveUI.Fody.Helpers;
 using Xamarin.Essentials.Interfaces;
 using Xamarin.Forms;
+using YapilyDemo.UX.Features.Payments;
 using YapilyDemo.UX.Features.Shared;
 
 namespace YapilyDemo.UX.Features.AccountDetails
@@ -51,6 +53,8 @@ namespace YapilyDemo.UX.Features.AccountDetails
         public ReactiveCommand<Unit, Unit> CancelInFlightQueries { get; }
         
         public ReactiveCommand<Unit, Unit> Close { get; }
+        
+        public ReactiveCommand<Unit, Unit> CreatePayment { get; }
         
         [Reactive]
         public string Title { get; private set; } = "Account details";        
@@ -93,6 +97,9 @@ namespace YapilyDemo.UX.Features.AccountDetails
             
             Close = ReactiveCommand.CreateFromTask(OnClose, outputScheduler: _schedulerProvider.MainThread);
             Close.ThrownExceptions.Subscribe(OnError);
+            
+            CreatePayment = ReactiveCommand.CreateFromTask(OnCreatePayment, outputScheduler: _schedulerProvider.MainThread);
+            CreatePayment.ThrownExceptions.Subscribe(CreatePayment_OnError);
         }
         
         public Task OnViewAppearing()
@@ -179,6 +186,19 @@ namespace YapilyDemo.UX.Features.AccountDetails
             Observable.Return(Unit.Default).InvokeCommand(CancelInFlightQueries);
             
             await Shell.Current.GoToAsync("..");
+        }
+        
+        async Task OnCreatePayment()
+        {
+            var createPaymentViewModel = ServiceLocator.Current.GetInstance<CreatePaymentViewModel>();
+            createPaymentViewModel.PayerAccount = Account;
+            
+            await Shell.Current.GoToAsync("createPayment");   
+        }
+
+        void CreatePayment_OnError(Exception exception)
+        {
+            Debug.WriteLine($"Error {exception.Message}");
         }
     }
 }

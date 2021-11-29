@@ -171,6 +171,7 @@ namespace YapilyDemo.UX.Features.Home
                 Nickname = i.Nickname,
                 Details = i.Details,
                 AccountNames = i.AccountNames,
+                Name = string.Join(" ", i.AccountNames.Select(n => n.Name)),
                 AccountIdentifications = i.AccountIdentifications,
                 AccountBalances = i.AccountBalances
             }).ToList();

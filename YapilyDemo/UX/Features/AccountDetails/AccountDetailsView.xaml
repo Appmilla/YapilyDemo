@@ -136,6 +136,61 @@
                                AutomationProperties.IsInAccessibleTree="False"/>
                     </Grid>
                 </Frame>
+                
+                <Frame Grid.Row="1"
+                       BackgroundColor="White"
+                       Padding="10"
+                       CornerRadius="6"
+                       HasShadow="False">
+                    <Grid Padding="10"
+                          xct:TouchEffect.NativeAnimation="True"
+                          xct:TouchEffect.Command="{Binding CreatePayment}">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="50" />
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="60"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="60"/>
+                        </Grid.ColumnDefinitions>
+                        <Image Grid.Row="0"
+                               Grid.Column="0"
+                               HorizontalOptions="Center"
+                               Aspect="AspectFit"
+                               HeightRequest="44"
+                               WidthRequest="44">
+                            <Image.Source>
+                                <FontImageSource FontFamily="FontAwesome"
+                                                 Glyph="&#xf09d;"
+                                                 Size="44"
+                                                 Color="#616161" />
+                            </Image.Source>
+                        </Image>
+                        <Label Grid.Row="0"
+                               Grid.Column="1"
+                               HorizontalOptions="Center"
+                               VerticalOptions="Center"
+                               Text="Create Payment"
+                               FontFamily="RegularFontFamily"
+                               FontSize="18"
+                               LineBreakMode="TailTruncation" />
+                        <Image Grid.Row="0"
+                               Grid.Column="2"
+                               HorizontalOptions="End"
+                               Aspect="AspectFit"
+                               HeightRequest="44"
+                               WidthRequest="44">
+                            <Image.Source>
+                                <FontImageSource FontFamily="FontAwesome"
+                                                 Glyph="&#xf105;"
+                                                 Size="44"
+                                                 Color="#616161" />
+                            </Image.Source>
+                        </Image>
+                    </Grid>
+                    
+                </Frame>  
+                <!--
                 <Frame Grid.Row="1"
                        Margin="0,5,0,5"
                        BackgroundColor="White"
@@ -157,7 +212,8 @@
                                FontSize="18"
                                LineBreakMode="TailTruncation" />
                     </Grid>
-                </Frame>  
+                </Frame> 
+                -->
                 <Frame Grid.Row="2"
                        Margin="0,5,0,5"
                        Padding="10,10"

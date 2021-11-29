@@ -13,7 +13,12 @@ namespace Appmilla.Yapily.Refit.Queries
     {
         Task<ApiResponseOfPaymentAuthorisationRequestResponse> CreatePaymentAuthorisationRequest(
             PaymentAuthorisationRequest paymentAuthRequest);
-        
+
+        Task<ApiResponseOfPaymentResponse> CreatePaymentRequest(string consentToken,
+            PaymentRequest paymentRequest);
+
+        Task<ApiResponseOfPaymentResponse> GetPaymentStatus(string consentToken, string paymentId);
+
     }
     
     public class SinglePaymentQuery : ReactiveObject, ISinglePaymentQuery
@@ -51,5 +56,46 @@ namespace Appmilla.Yapily.Refit.Queries
                 IsBusy = false;
             }  
         }
+        
+        public async Task<ApiResponseOfPaymentResponse> CreatePaymentRequest(string consentToken, PaymentRequest paymentRequest)
+        {
+            IsBusy = true;
+
+            try
+            {
+                var httpClient = _httpClientFactory.CreateClient();
+
+                var paymentsApi = RestService.For<IPayments>(httpClient, _refitSettings);
+                var paymentResponse = await paymentsApi.CreatePaymentUsingPOSTAsync(consentToken, paymentRequest);
+                
+                return paymentResponse;
+            }
+            finally
+            {
+                IsBusy = false;
+            }  
+        }
+        
+        public async Task<ApiResponseOfPaymentResponse> GetPaymentStatus(string consentToken, string paymentId)
+        {
+            IsBusy = true;
+
+            try
+            {
+                var httpClient = _httpClientFactory.CreateClient();
+
+                var paymentsApi = RestService.For<IPayments>(httpClient, _refitSettings);
+                var paymentResponse = await paymentsApi.GetPaymentStatusUsingGETAsync(consentToken, paymentId);
+                
+                return paymentResponse;
+            }
+            finally
+            {
+                IsBusy = false;
+            }  
+        }
+        
+        //Task<ApiResponseOfPaymentResponse> CreatePaymentUsingPOSTAsync([Body][AliasAs("paymentRequest")] PaymentRequest paymentRequest);
+
     }
 }

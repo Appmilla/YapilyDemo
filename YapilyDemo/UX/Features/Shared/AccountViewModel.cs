@@ -52,6 +52,9 @@ namespace YapilyDemo.UX.Features.Shared
         public AccountType? AccountType { get; set; }
 
         [Reactive]
+        public string Name { get; set; }
+        
+        [Reactive]
         public string Nickname { get; set; }
 
         [Reactive]

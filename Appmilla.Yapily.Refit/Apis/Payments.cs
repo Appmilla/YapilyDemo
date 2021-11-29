@@ -67,27 +67,44 @@ namespace Appmilla.Yapily.Refit.Apis
         /// </summary>
         /// <param name="paymentRequest">paymentRequest</param>
         /// <returns>OK</returns>
+        /*
         [Post("/payments")]
         [Headers("x-yapily-api-version: 1.0", "Authorization: Basic", "consent","psu-id","psu-corporate-id","psu-ip-address")] 
         Task<ApiResponseOfPaymentResponse> CreatePaymentUsingPOSTAsync([Body][AliasAs("paymentRequest")] PaymentRequest paymentRequest);
+        */
+        [Post("/payments")]
+        [Headers("x-yapily-api-version: 1.0", "Authorization: Basic","psu-id","psu-corporate-id","psu-ip-address")] 
+        Task<ApiResponseOfPaymentResponse> CreatePaymentUsingPOSTAsync([Header("consent")] string consentToken, [Body][AliasAs("paymentRequest")] PaymentRequest paymentRequest);
 
+        
         /// <summary>
         /// Get status of a payment
         /// </summary>
         /// <param name="paymentId">__Mandatory__. The payment Id of the payment.</param>
         /// <returns>OK</returns>
+        /*
         [Get("/payments/{paymentId}")]
         [Headers("x-yapily-api-version: 1.0", "Authorization: Basic", "consent","psu-id","psu-corporate-id","psu-ip-address")] 
         Task<ApiResponseOfPaymentResponse> GetPaymentStatusUsingGETAsync([AliasAs("paymentId")] string paymentId);
+        */
+        [Get("/payments/{paymentId}")]
+        [Headers("x-yapily-api-version: 1.0", "Authorization: Basic","psu-id","psu-corporate-id","psu-ip-address")] 
+        Task<ApiResponseOfPaymentResponse> GetPaymentStatusUsingGETAsync([Header("consent")] string consentToken, [AliasAs("paymentId")] string paymentId);
 
+        
         /// <summary>
         /// Get payments details
         /// </summary>
         /// <param name="paymentId">__Mandatory__. The payment Id of the payment.</param>
         /// <returns>OK</returns>
+        /*
         [Get("/payments/{paymentId}/details")]
         [Headers("x-yapily-api-version: 1.0", "Authorization: Basic", "consent","psu-id","psu-corporate-id","psu-ip-address")] 
         Task<ApiResponseOfPaymentResponses> GetPaymentsUsingGETAsync([AliasAs("paymentId")] string paymentId);
+        */
+        [Get("/payments/{paymentId}/details")]
+        [Headers("x-yapily-api-version: 1.0", "Authorization: Basic","psu-id","psu-corporate-id","psu-ip-address")] 
+        Task<ApiResponseOfPaymentResponses> GetPaymentsUsingGETAsync([Header("consent")] string consentToken, [AliasAs("paymentId")] string paymentId);
 
     }
 }

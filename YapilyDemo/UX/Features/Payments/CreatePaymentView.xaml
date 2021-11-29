@@ -19,10 +19,194 @@
         </ResourceDictionary>
     </framework:BaseView.Resources>
     
-    <StackLayout>
-        <Label Text="Create Payment"
-               VerticalOptions="CenterAndExpand"
-               HorizontalOptions="CenterAndExpand" />
+    <StackLayout BackgroundColor="{StaticResource PaleBackColorPrimary}"
+                 Padding="10,10,10,10">
+        <Frame BackgroundColor="White"
+               Padding="24"
+               CornerRadius="6">
+            <Label Text="{Binding Title}"
+                   HorizontalTextAlignment="Center" 
+                   FontSize="18"
+                   FontFamily="MediumFontFamily"/>
+        </Frame>  
+        <ScrollView>
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="1"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="1"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="1"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="1"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="1"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="1"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Label Grid.Row="0"
+                       Grid.Column="0"
+                       HorizontalOptions="Start"
+                       VerticalOptions="Center"
+                       Text="Amount"
+                       FontAttributes="Bold"
+                       FontSize="18"
+                       LineBreakMode="WordWrap" />
+                <Entry Grid.Row="0"
+                       Grid.Column="1"
+                       WidthRequest="250"
+                       HorizontalOptions="End"
+                       VerticalOptions="Center"
+                       Text="{Binding Amount}"
+                       FontAttributes="Bold"
+                       FontSize="18" />
+                <BoxView Grid.Column="0"
+                         Grid.ColumnSpan="2"
+                         Grid.Row="1"
+                         Margin="8,0,8,0"
+                         HeightRequest="1"
+                         Color="{StaticResource SeparatorColor}" />
+                <Label Grid.Row="2"
+                       Grid.Column="0"
+                       HorizontalOptions="Start"
+                       VerticalOptions="Center"
+                       Text="Currency"
+                       FontAttributes="Bold"
+                       FontSize="18"
+                       LineBreakMode="WordWrap" />
+                <Entry Grid.Row="2"
+                       Grid.Column="1"
+                       WidthRequest="250"
+                       HorizontalOptions="End"
+                       VerticalOptions="Center"
+                       Text="{Binding Currency}"
+                       FontAttributes="Bold"
+                       FontSize="18" />
+                <BoxView Grid.Column="0"
+                         Grid.ColumnSpan="2"
+                         Grid.Row="3"
+                         Margin="8,0,8,0"
+                         HeightRequest="1"
+                         Color="{StaticResource SeparatorColor}" />
+                <Label Grid.Row="4"
+                       Grid.Column="0"
+                       HorizontalOptions="Start"
+                       VerticalOptions="Center"
+                       Text="Recipient"
+                       FontAttributes="Bold"
+                       FontSize="18"
+                       LineBreakMode="WordWrap" />
+                <Entry Grid.Row="4"
+                       Grid.Column="1"
+                       WidthRequest="250"
+                       HorizontalOptions="End"
+                       VerticalOptions="Center"
+                       Text="{Binding Recipient}"
+                       FontAttributes="Bold"
+                       FontSize="18" />
+                <BoxView Grid.Column="0"
+                         Grid.ColumnSpan="2"
+                         Grid.Row="5"
+                         Margin="8,0,8,0"
+                         HeightRequest="1"
+                         Color="{StaticResource SeparatorColor}" />
+                <Label Grid.Row="6"
+                       Grid.Column="0"
+                       HorizontalOptions="Start"
+                       VerticalOptions="Center"
+                       Text="Sort Code"
+                       FontAttributes="Bold"
+                       FontSize="18"
+                       LineBreakMode="WordWrap" />
+                <Entry Grid.Row="6"
+                       Grid.Column="1"
+                       WidthRequest="250"
+                       HorizontalOptions="End"
+                       VerticalOptions="Center"
+                       Text="{Binding SortCode}"
+                       FontAttributes="Bold"
+                       FontSize="18" />
+                <BoxView Grid.Column="0"
+                         Grid.ColumnSpan="2"
+                         Grid.Row="7"
+                         Margin="8,0,8,0"
+                         HeightRequest="1"
+                         Color="{StaticResource SeparatorColor}" />
+                <Label Grid.Row="8"
+                       Grid.Column="0"
+                       HorizontalOptions="Start"
+                       VerticalOptions="Center"
+                       Text="Account Number"
+                       FontAttributes="Bold"
+                       FontSize="18"
+                       LineBreakMode="WordWrap" />
+                <Entry Grid.Row="8"
+                       Grid.Column="1"
+                       WidthRequest="250"
+                       HorizontalOptions="End"
+                       VerticalOptions="Center"
+                       Text="{Binding AccountNumber}"
+                       FontAttributes="Bold"
+                       FontSize="18" />
+                <BoxView Grid.Column="0"
+                         Grid.ColumnSpan="2"
+                         Grid.Row="9"
+                         Margin="8,0,8,0"
+                         HeightRequest="1"
+                         Color="{StaticResource SeparatorColor}" />
+                <Label Grid.Row="10"
+                       Grid.Column="0"
+                       HorizontalOptions="Start"
+                       VerticalOptions="Center"
+                       Text="Reference"
+                       FontAttributes="Bold"
+                       FontSize="18"
+                       LineBreakMode="WordWrap" />
+                <Entry Grid.Row="10"
+                       Grid.Column="1"
+                       WidthRequest="250"
+                       HorizontalOptions="End"
+                       VerticalOptions="Center"
+                       Text="{Binding Reference}"
+                       FontAttributes="Bold"
+                       FontSize="18" />
+                <BoxView Grid.Column="0"
+                         Grid.ColumnSpan="2"
+                         Grid.Row="11"
+                         Margin="8,0,8,0"
+                         HeightRequest="1"
+                         Color="{StaticResource SeparatorColor}" />
+                
+                <Button Grid.Row="12"
+                        Grid.Column="0"
+                        Margin="10,20,10,20"
+                        WidthRequest="145"
+                        BackgroundColor="{StaticResource BlueAccent}"
+                        TextColor="White"
+                        Text="Cancel" 
+                        Command="{Binding Cancel}"
+                        HorizontalOptions="Center"
+                        VerticalOptions="Center"/>
+                
+                <Button Grid.Row="12"
+                        Grid.Column="1"
+                        Margin="10,20,10,20"
+                        WidthRequest="145"
+                        BackgroundColor="{StaticResource BlueAccent}"
+                        TextColor="White"
+                        Text="Continue" 
+                        Command="{Binding Continue}"
+                        HorizontalOptions="Center"
+                        VerticalOptions="Center"/>
+            </Grid>
+        </ScrollView>
     </StackLayout>
     
 </framework:BaseView>
