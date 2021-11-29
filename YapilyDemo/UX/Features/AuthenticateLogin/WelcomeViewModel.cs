@@ -11,6 +11,7 @@ using Appmilla.Xamarin.Infrastructure.Reactive;
 using Appmilla.Yapily.Refit.Caches;
 using Appmilla.Yapily.Refit.Models;
 using Appmilla.Yapily.Refit.Queries;
+using Appmilla.Yapily.Refit.Storage;
 using DynamicData;
 using DynamicData.Binding;
 using ReactiveUI;

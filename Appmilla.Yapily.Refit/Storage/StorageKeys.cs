@@ -1,4 +1,4 @@
-namespace YapilyDemo.UX.Features.Shared
+namespace Appmilla.Yapily.Refit.Storage
 {
     public static class StorageKeys
     {

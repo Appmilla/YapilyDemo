@@ -13,6 +13,7 @@ using Appmilla.Xamarin.Infrastructure.Reactive;
 using Appmilla.Yapily.Refit.Caches;
 using Appmilla.Yapily.Refit.Database;
 using Appmilla.Yapily.Refit.Queries;
+using Appmilla.Yapily.Refit.UseCases.Institutions;
 using DynamicData;
 using DynamicData.Binding;
 using ReactiveUI;
@@ -31,6 +32,7 @@ namespace YapilyDemo.UX.Features.Home
         readonly IAccountsQuery _accountsQuery;
         readonly ISecureStorage _secureStorage;
         readonly ITransactionsQuery _transactionsQuery;
+        readonly IConnectInstitution _connectInstitution;
         
         bool _hasLoaded;
         
@@ -73,7 +75,8 @@ namespace YapilyDemo.UX.Features.Home
             IInstituitionsQuery instituitionsQuery,
             IAccountsQuery accountsQuery,
             ISecureStorage secureStorage,
-            ITransactionsQuery transactionsQuery)
+            ITransactionsQuery transactionsQuery,
+            IConnectInstitution connectInstitution)
         {
             _schedulerProvider = schedulerProvider;            
             _connectedInstitutionsCache = connectedInstitutionsCache;
@@ -81,6 +84,7 @@ namespace YapilyDemo.UX.Features.Home
             _accountsQuery = accountsQuery;  
             _secureStorage = secureStorage;
             _transactionsQuery = transactionsQuery;
+            _connectInstitution = connectInstitution;
             
             var institutionsSort = SortExpressionComparer<InstitutionSummaryViewModel>
                 .Ascending(i => i.Name);
@@ -143,7 +147,8 @@ namespace YapilyDemo.UX.Features.Home
                     _schedulerProvider,
                     _accountsQuery,
                     _secureStorage,
-                    _transactionsQuery)
+                    _transactionsQuery,
+                    _connectInstitution)
                 {
                     InstitutionId = institution.Id,
                     Name = institution.Name,
