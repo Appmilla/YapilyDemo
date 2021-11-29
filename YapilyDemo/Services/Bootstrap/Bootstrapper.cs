@@ -7,6 +7,7 @@ using Appmilla.Yapily.Refit.Configuration;
 using Appmilla.Yapily.Refit.Database;
 using Appmilla.Yapily.Refit.Http;
 using Appmilla.Yapily.Refit.Queries;
+using Appmilla.Yapily.Refit.UseCases.Institutions;
 using ReactiveUI;
 using Splat.Autofac;
 using Autofac;
@@ -91,6 +92,7 @@ namespace YapilyDemo.Services.Bootstrap
             identityConfiguration.Scope = "openid profile email api offline_access";
             builder.RegisterInstance(identityConfiguration).As<IIdentityConfiguration>().SingleInstance();
             builder.RegisterType<IdentityService>().As<IIdentityService>().SingleInstance();
+            builder.RegisterType<ConnectInstitution>().As<IConnectInstitution>().SingleInstance();
             
             builder.Register(c =>
                 {

@@ -12,6 +12,7 @@ using Appmilla.Xamarin.Infrastructure.Reactive;
 using Appmilla.Xamarin.Infrastructure.Utilities;
 using Appmilla.Yapily.Refit.Models;
 using Appmilla.Yapily.Refit.Queries;
+using Appmilla.Yapily.Refit.UseCases.Institutions;
 using DynamicData;
 using DynamicData.Binding;
 using ReactiveUI;
@@ -29,6 +30,7 @@ namespace YapilyDemo.UX.Features.Home
         readonly IAccountsQuery _accountsQuery;
         readonly ISecureStorage _secureStorage;
         readonly ITransactionsQuery _transactionsQuery;
+        readonly IConnectInstitution _connectInstitution;
         
         ReadOnlyObservableCollection<AccountViewModel> _accounts;
         
@@ -84,12 +86,14 @@ namespace YapilyDemo.UX.Features.Home
             ISchedulerProvider schedulerProvider,
             IAccountsQuery accountsQuery,
             ISecureStorage secureStorage,
-            ITransactionsQuery transactionsQuery)
+            ITransactionsQuery transactionsQuery,
+            IConnectInstitution connectInstitution)
         {
             _schedulerProvider = schedulerProvider;            
             _accountsQuery = accountsQuery;  
             _secureStorage = secureStorage;
             _transactionsQuery = transactionsQuery;
+            _connectInstitution = connectInstitution;
             
             this.WhenAnyValue(x => x._accountsQuery.IsBusy)
                 .ObserveOn(schedulerProvider.MainThread)
@@ -211,6 +215,8 @@ namespace YapilyDemo.UX.Features.Home
         async Task<bool> OnReauthoriseAccounts(Unit ignored)
         {
             //getting this Refit.ApiException: Response status code does not indicate success: 415 (Unsupported Media Type).
+
+            bool result = false;
             
             try
             {
@@ -227,22 +233,48 @@ namespace YapilyDemo.UX.Features.Home
                 Debug.WriteLine(authResult);
 
                 var consentTokenResult = authResult.GetConsentToken();
-                var result = !string.IsNullOrEmpty(consentTokenResult);
+                result = !string.IsNullOrEmpty(consentTokenResult);
 
                 if (result)
                 {
                     Observable.Return(Unit.Default).InvokeCommand(LoadAccounts);  
                 }
-                
-                return  result;
             }
             catch (Exception exception)
             {
                 Debug.WriteLine($"Error {exception.Message}");
-                throw;
+                if (exception is Refit.ApiException refitApiException)
+                {
+                    if (refitApiException.StatusCode == HttpStatusCode.NotAcceptable)
+                    {
+                        //re-connect
+                    
+                        _schedulerProvider.MainThread.Schedule(async _ =>
+                        {
+                            result = await ConnectBank();
+                            if (result)
+                            {
+                                Observable.Return(Unit.Default).InvokeCommand(LoadAccounts);  
+                            }
+                        });
+                    }
+                }
             }
+            
+            return  result;
         }
 
+        private async Task<bool> ConnectBank()
+        {
+            bool connected = await _connectInstitution.ConnectBank(InstitutionId);
+            if (connected)
+            {
+                await Shell.Current.GoToAsync("//main");
+            }
+
+            return connected;
+        }
+        
         void OnReauthoriseAccountsError(Exception exception)
         {
             Debug.WriteLine($"Error {exception.Message}");   
