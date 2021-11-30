@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Reactive;
+using System.Reactive.Concurrency;
 using System.Threading.Tasks;
 using Appmilla.Xamarin.Infrastructure.Framework;
 using Appmilla.Xamarin.Infrastructure.Reactive;
@@ -47,6 +48,12 @@ namespace YapilyDemo.UX.Features.Payments
         [Reactive]
         public AccountViewModel PayerAccount { get; set; }
         
+        [Reactive]
+        public string Status { get; private set; }
+        
+        [Reactive]
+        public bool ShowStatus { get; private set; }
+        
         public ReactiveCommand<Unit, Unit> Continue { get; }
         
         public ReactiveCommand<Unit, Unit> Cancel { get; }
@@ -76,6 +83,10 @@ namespace YapilyDemo.UX.Features.Payments
 
         public Task OnViewDisappearing()
         {
+            Status = String.Empty;
+
+            ShowStatus = false;
+            
             return Task.CompletedTask;
         }
         
@@ -166,19 +177,21 @@ namespace YapilyDemo.UX.Features.Payments
                     {
                         var paymentResponse =
                             await _singlePaymentQuery.CreatePaymentRequest(consentToken, paymentRequest);
-                        //await _connectedInstitutionsCache.Refresh.Execute();
                         
-                        //await Shell.Current.GoToAsync("//main");
+                        _schedulerProvider.MainThread.Schedule(() =>
+                        {
+                            Status = paymentResponse.Data.Status.ToString();
+
+                            ShowStatus = true;
+                        });
                     }
                 }
-
             }
             catch (Exception exception)
             {
                 Debug.WriteLine($"Error {exception.Message}");
                 throw;
             }
-            
         }
         
         void Continue_OnError(Exception exception)

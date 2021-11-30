@@ -14,6 +14,7 @@ using Appmilla.Xamarin.Infrastructure.Utilities;
 using Appmilla.Yapily.Refit.Database;
 using Appmilla.Yapily.Refit.Models;
 using Appmilla.Yapily.Refit.Queries;
+using Appmilla.Yapily.Refit.Storage;
 using DynamicData;
 using ReactiveUI;
 using ReactiveUI.Fody.Helpers;
@@ -130,9 +131,7 @@ namespace Appmilla.Yapily.Refit.Caches
         
         private async Task<ApiListResponseOfConsent> OnLoad()
         {
-            // TODO use shared definition
-            //var userUuid = await _secureStorage.GetAsync(StorageKeys.UserUuid);
-            var userUuid = await _secureStorage.GetAsync("UserUuid");
+            var userUuid = await _secureStorage.GetAsync(StorageKeys.UserUuid);
             
             var consents = await _consentsQuery.GetConsents(new string[] { userUuid}, GetCacheKey(userUuid));
             
@@ -141,9 +140,7 @@ namespace Appmilla.Yapily.Refit.Caches
         
         private async Task<ApiListResponseOfConsent> OnRefresh()
         {
-            // TODO use shared definition
-            //var userUuid = await _secureStorage.GetAsync(StorageKeys.UserUuid);
-            var userUuid = await _secureStorage.GetAsync("UserUuid");
+            var userUuid = await _secureStorage.GetAsync(StorageKeys.UserUuid);
             
             var consents = await _consentsQuery.RefreshConsents(new string[] { userUuid}, GetCacheKey(userUuid));
 
@@ -192,7 +189,7 @@ namespace Appmilla.Yapily.Refit.Caches
         {
             var userUuid = AsyncHelper.RunSync(() => _secureStorage.GetAsync("UserUuid"));
             
-            // filtering doesn't seem to be working in the Api call
+            // filtering doesn't seem to be working in the Api call??
             var filteredConsents = consentList.Data.Where(c => c.UserUuid == userUuid && c.Status == ConsentStatus.AUTHORIZED);
             
             var results = new List<ConnectedInstitution>();
@@ -225,47 +222,7 @@ namespace Appmilla.Yapily.Refit.Caches
                 ConnectedInstitutions.UpdateCache(results, KeySelector);
             });
         }
-        
-        /*
-        void Load_OnNext(ICollection<ConnectedInstitution> connectedInstitutions)
-        {
-            try
-            {
-                Update(connectedInstitutions);
-                
-                _connectedInstitutionsLoadedNotifications.OnNext(new ConnectedInstitutionsLoaded());
-            }
-            catch(Exception exception)
-            {
-                OnError(exception);
-            }
-        }
 
-        void Refresh_OnNext(ICollection<ConnectedInstitution> connectedInstitutions)
-        {
-            try
-            {
-                Clear();
-                
-                Update(connectedInstitutions);
-                
-                _connectedInstitutionsRefreshedNotifications.OnNext(new ConnectedInstitutionsRefreshed());
-            }
-            catch(Exception exception)
-            {
-                OnError(exception);
-            }
-        }
-        
-        void Update(ICollection<ConnectedInstitution> connectedInstitutions)
-        {
-            _schedulerProvider.MainThread.Schedule(() =>
-            {
-                ConnectedInstitutions.UpdateCache(connectedInstitutions, KeySelector);
-            });
-        }
-        */
-        
         void OnError(Exception exception)
         {
             Debug.WriteLine($"Error {exception.Message}");

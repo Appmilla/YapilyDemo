@@ -5,6 +5,7 @@ using System.Linq;
 using System.Net;
 using System.Reactive;
 using System.Reactive.Concurrency;
+using System.Reactive.Disposables;
 using System.Reactive.Linq;
 using System.Threading.Tasks;
 using Appmilla.Xamarin.Infrastructure.Extensions;
@@ -218,47 +219,52 @@ namespace YapilyDemo.UX.Features.Home
 
             bool result = false;
             
-            try
+            var consentTokenKey = $"{InstitutionId}-consent-token";
+            var consentToken = await _secureStorage.GetAsync(consentTokenKey);
+
+            if (string.IsNullOrEmpty(consentToken))
             {
-                var consentTokenKey = $"{InstitutionId}-consent-token";
-                var consentToken = AsyncHelper.RunSync(() => _secureStorage.GetAsync(consentTokenKey));
-                
-                var authResponse = await _accountsQuery.ReauthoriseAccount(consentToken);
-
-                Debug.WriteLine(authResponse);
-
-                var callback = "com.intuitive.yapilydemo://callback";
-                var authResult = await WebAuthenticator.AuthenticateAsync(new Uri(authResponse.Data.AuthorisationUrl), new Uri(callback));
-                
-                Debug.WriteLine(authResult);
-
-                var consentTokenResult = authResult.GetConsentToken();
-                result = !string.IsNullOrEmpty(consentTokenResult);
-
-                if (result)
+                try
                 {
-                    Observable.Return(Unit.Default).InvokeCommand(LoadAccounts);  
-                }
-            }
-            catch (Exception exception)
-            {
-                Debug.WriteLine($"Error {exception.Message}");
-                if (exception is Refit.ApiException refitApiException)
-                {
-                    if (refitApiException.StatusCode == HttpStatusCode.NotAcceptable)
+                    var authResponse = await _accountsQuery.ReauthoriseAccount(consentToken);
+
+                    Debug.WriteLine(authResponse);
+
+                    var callback = "com.intuitive.yapilydemo://callback";
+                    var authResult = await WebAuthenticator.AuthenticateAsync(new Uri(authResponse.Data.AuthorisationUrl), new Uri(callback));
+                
+                    Debug.WriteLine(authResult);
+
+                    var consentTokenResult = authResult.GetConsentToken();
+                    result = !string.IsNullOrEmpty(consentTokenResult);
+
+                    if (result)
                     {
-                        //re-connect
-                    
-                        _schedulerProvider.MainThread.Schedule(async _ =>
-                        {
-                            result = await ConnectBank();
-                            if (result)
-                            {
-                                Observable.Return(Unit.Default).InvokeCommand(LoadAccounts);  
-                            }
-                        });
+                        Observable.Return(Unit.Default).InvokeCommand(LoadAccounts);  
                     }
                 }
+                catch (Exception exception)
+                {
+                    Debug.WriteLine($"Error {exception.Message}");
+                    if (exception is Refit.ApiException refitApiException)
+                    {
+                        if (refitApiException.StatusCode == HttpStatusCode.NotAcceptable)
+                        {
+                            //re-connect
+                    
+                            _schedulerProvider.MainThread.ScheduleAsync(async (ctrl, ct) =>
+                            {
+                                await ConnectBank();
+                           
+                                return Disposable.Empty;
+                            });
+                        }
+                    }
+                }
+            }
+            else
+            {
+                await ConnectBank();
             }
             
             return  result;
@@ -269,7 +275,9 @@ namespace YapilyDemo.UX.Features.Home
             bool connected = await _connectInstitution.ConnectBank(InstitutionId);
             if (connected)
             {
-                await Shell.Current.GoToAsync("//main");
+                Observable.Return(Unit.Default).InvokeCommand(LoadAccounts);  
+                
+                //await Shell.Current.GoToAsync("//main");
             }
 
             return connected;

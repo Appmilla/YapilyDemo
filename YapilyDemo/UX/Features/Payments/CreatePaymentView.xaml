@@ -45,6 +45,7 @@
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="1"/>
                     <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
                 </Grid.RowDefinitions>
                 
                 <Grid.ColumnDefinitions>
@@ -65,7 +66,6 @@
                        HorizontalOptions="End"
                        VerticalOptions="Center"
                        Text="{Binding Amount}"
-                       FontAttributes="Bold"
                        FontSize="18" />
                 <BoxView Grid.Column="0"
                          Grid.ColumnSpan="2"
@@ -87,7 +87,6 @@
                        HorizontalOptions="End"
                        VerticalOptions="Center"
                        Text="{Binding Currency}"
-                       FontAttributes="Bold"
                        FontSize="18" />
                 <BoxView Grid.Column="0"
                          Grid.ColumnSpan="2"
@@ -109,7 +108,6 @@
                        HorizontalOptions="End"
                        VerticalOptions="Center"
                        Text="{Binding Recipient}"
-                       FontAttributes="Bold"
                        FontSize="18" />
                 <BoxView Grid.Column="0"
                          Grid.ColumnSpan="2"
@@ -131,7 +129,6 @@
                        HorizontalOptions="End"
                        VerticalOptions="Center"
                        Text="{Binding SortCode}"
-                       FontAttributes="Bold"
                        FontSize="18" />
                 <BoxView Grid.Column="0"
                          Grid.ColumnSpan="2"
@@ -153,7 +150,6 @@
                        HorizontalOptions="End"
                        VerticalOptions="Center"
                        Text="{Binding AccountNumber}"
-                       FontAttributes="Bold"
                        FontSize="18" />
                 <BoxView Grid.Column="0"
                          Grid.ColumnSpan="2"
@@ -175,7 +171,6 @@
                        HorizontalOptions="End"
                        VerticalOptions="Center"
                        Text="{Binding Reference}"
-                       FontAttributes="Bold"
                        FontSize="18" />
                 <BoxView Grid.Column="0"
                          Grid.ColumnSpan="2"
@@ -205,6 +200,60 @@
                         Command="{Binding Continue}"
                         HorizontalOptions="Center"
                         VerticalOptions="Center"/>
+                
+                <Frame Grid.Row="13"
+                       Grid.Column="0"
+                       Grid.ColumnSpan="2"
+                       IsVisible="{Binding ShowStatus}"
+                       Margin="0,5,0,5"
+                       Padding="10,10"
+                       BackgroundColor="White"
+                       CornerRadius="6"
+                       HasShadow="false">
+                       
+                       <Grid>
+                              <Grid.RowDefinitions>
+                                     <RowDefinition Height="Auto"/>
+                                     <RowDefinition Height="Auto"/>
+                              </Grid.RowDefinitions>
+                
+                              <Grid.ColumnDefinitions>
+                                     <ColumnDefinition Width="Auto"/>
+                                     <ColumnDefinition Width="*"/>
+                              </Grid.ColumnDefinitions>
+                              
+                              <Label Grid.Row="0"
+                                     Grid.Column="0"
+                                     Grid.ColumnSpan="2"
+                                     Margin="0"
+                                     FontFamily="MediumFontFamily"
+                                     FontSize="15"
+                                     LineHeight="1.2"
+                                     CharacterSpacing="0.0"
+                                     HorizontalTextAlignment="Center"
+                                     HorizontalOptions="Fill"
+                                     Text="Payment Completed"
+                                     TextColor="{StaticResource NormalTextColor}"
+                                     VerticalTextAlignment="Center" />
+                              
+                              <Label Grid.Row="1"
+                                     Grid.Column="0"
+                                     HorizontalOptions="Start"
+                                     VerticalOptions="Center"
+                                     Text="Payment Status"
+                                     FontAttributes="Bold"
+                                     FontSize="18"
+                                     LineBreakMode="WordWrap" />
+                              <Label Grid.Row="1"
+                                     Grid.Column="1"
+                                     WidthRequest="250"
+                                     HorizontalOptions="End"
+                                     VerticalOptions="End"
+                                     Text="{Binding Status}"
+                                     FontSize="18" />
+                                        
+                       </Grid>
+                </Frame> 
             </Grid>
         </ScrollView>
     </StackLayout>
