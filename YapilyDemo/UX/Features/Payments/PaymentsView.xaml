@@ -21,10 +21,11 @@
                  Padding="10,10,10,10">
         <Frame BackgroundColor="White"
                Padding="24"
-               CornerRadius="6">
+               CornerRadius="6"
+               HasShadow="False">
             <Label Text="{Binding Title}"
-                   HorizontalTextAlignment="Center" 
-                   FontSize="18"
+                   HorizontalTextAlignment="Center"
+                   FontSize="28"
                    FontFamily="MediumFontFamily"/>
         </Frame>  
         <ScrollView>
