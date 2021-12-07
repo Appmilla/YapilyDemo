@@ -1,4 +1,5 @@
-﻿using Refit;
+﻿using System.ComponentModel.DataAnnotations;
+using Refit;
 
 namespace Appmilla.Yapily.Refit.Models
 {
@@ -17,8 +18,8 @@ namespace Appmilla.Yapily.Refit.Models
 
         /// <summary>
         /// ISO 4217 currency code
-        /// </summary>        //[Required(AllowEmptyStrings = true)]
-
+        /// </summary>
+        [Required(AllowEmptyStrings = true)]
         [AliasAs("currency")]
         public string Currency { get; set; }
 

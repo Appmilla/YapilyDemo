@@ -1,4 +1,5 @@
-﻿using Refit;
+﻿using System.ComponentModel.DataAnnotations;
+using Refit;
 
 namespace Appmilla.Yapily.Refit.Models
 {
@@ -11,8 +12,7 @@ namespace Appmilla.Yapily.Refit.Models
         /// <summary>
         /// AuthCode
         /// </summary> 
-        //[Required(AllowEmptyStrings = true)]
-
+        [Required(AllowEmptyStrings = true)]
         [AliasAs("authCode")]
         public string AuthCode { get; set; }
 
@@ -20,8 +20,7 @@ namespace Appmilla.Yapily.Refit.Models
         /// <summary>
         /// AuthState
         /// </summary> 
-        //[Required(AllowEmptyStrings = true)]
-
+        [Required(AllowEmptyStrings = true)]
         [AliasAs("authState")]
         public string AuthState { get; set; }
 

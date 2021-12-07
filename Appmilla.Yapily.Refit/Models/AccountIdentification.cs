@@ -1,4 +1,5 @@
-﻿using Refit;
+﻿using System.ComponentModel.DataAnnotations;
+using Refit;
 
 namespace Appmilla.Yapily.Refit.Models
 {
@@ -11,8 +12,7 @@ namespace Appmilla.Yapily.Refit.Models
         /// <summary>
         /// Type
         /// </summary> 
-        //[Required(AllowEmptyStrings = true)]
-
+        [Required(AllowEmptyStrings = true)]
         [AliasAs("type")]
         public AccountIdentificationType Type { get; set; }
 
@@ -20,8 +20,7 @@ namespace Appmilla.Yapily.Refit.Models
         /// <summary>
         /// Identification
         /// </summary> 
-        //[Required(AllowEmptyStrings = true)]
-
+        [Required(AllowEmptyStrings = true)]
         [AliasAs("identification")]
         public string Identification { get; set; }
 

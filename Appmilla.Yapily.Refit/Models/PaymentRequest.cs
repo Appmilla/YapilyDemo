@@ -1,4 +1,5 @@
-﻿using Refit;
+﻿using System.ComponentModel.DataAnnotations;
+using Refit;
 
 namespace Appmilla.Yapily.Refit.Models
 {
@@ -51,8 +52,7 @@ namespace Appmilla.Yapily.Refit.Models
         /// <summary>
         /// Type
         /// </summary> 
-        //[Required(AllowEmptyStrings = true)]
-
+        [Required(AllowEmptyStrings = true)]
         [AliasAs("type")]
         public PaymentRequestType Type { get; set; }
 
@@ -68,8 +68,7 @@ namespace Appmilla.Yapily.Refit.Models
         /// <summary>
         /// Payee
         /// </summary> 
-        //[Required]
-
+        [Required]
         [AliasAs("payee")]
         public Payee Payee { get; set; } = new Payee();
 

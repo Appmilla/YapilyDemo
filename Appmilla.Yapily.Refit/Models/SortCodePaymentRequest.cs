@@ -1,4 +1,5 @@
-﻿using Refit;
+﻿using System.ComponentModel.DataAnnotations;
+using Refit;
 
 namespace Appmilla.Yapily.Refit.Models
 {
@@ -19,8 +20,7 @@ namespace Appmilla.Yapily.Refit.Models
         /// <summary>
         /// Name
         /// </summary> 
-        //[Required(AllowEmptyStrings = true)]
-
+        [Required(AllowEmptyStrings = true)]
         [AliasAs("name")]
         public string Name { get; set; }
 
@@ -36,8 +36,7 @@ namespace Appmilla.Yapily.Refit.Models
         /// <summary>
         /// Currency
         /// </summary> 
-        //[Required(AllowEmptyStrings = true)]
-
+        [Required(AllowEmptyStrings = true)]
         [AliasAs("currency")]
         public string Currency { get; set; }
 
@@ -45,8 +44,7 @@ namespace Appmilla.Yapily.Refit.Models
         /// <summary>
         /// Reference
         /// </summary> 
-        //[Required(AllowEmptyStrings = true)]
-
+        [Required(AllowEmptyStrings = true)]
         [AliasAs("reference")]
         public string Reference { get; set; }
 
@@ -54,8 +52,7 @@ namespace Appmilla.Yapily.Refit.Models
         /// <summary>
         /// Country
         /// </summary> 
-        //[Required(AllowEmptyStrings = true)]
-
+        [Required(AllowEmptyStrings = true)]
         [AliasAs("country")]
         public string Country { get; set; }
 
@@ -71,8 +68,7 @@ namespace Appmilla.Yapily.Refit.Models
         /// <summary>
         /// AccountNumber
         /// </summary> 
-        //[Required(AllowEmptyStrings = true)]
-
+        [Required(AllowEmptyStrings = true)]
         [AliasAs("accountNumber")]
         public string AccountNumber { get; set; }
 
@@ -80,8 +76,7 @@ namespace Appmilla.Yapily.Refit.Models
         /// <summary>
         /// SortCode
         /// </summary> 
-        //[Required(AllowEmptyStrings = true)]
-
+        [Required(AllowEmptyStrings = true)]
         [AliasAs("sortCode")]
         public string SortCode { get; set; }
 

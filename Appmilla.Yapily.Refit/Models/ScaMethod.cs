@@ -1,4 +1,5 @@
-﻿using Refit;
+﻿using System.ComponentModel.DataAnnotations;
+using Refit;
 
 namespace Appmilla.Yapily.Refit.Models
 {
@@ -11,8 +12,7 @@ namespace Appmilla.Yapily.Refit.Models
         /// <summary>
         /// Id
         /// </summary> 
-        //[Required(AllowEmptyStrings = true)]
-
+        [Required(AllowEmptyStrings = true)]
         [AliasAs("id")]
         public string Id { get; set; }
 
