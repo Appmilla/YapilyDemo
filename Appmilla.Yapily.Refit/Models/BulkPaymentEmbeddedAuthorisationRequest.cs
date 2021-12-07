@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using Refit;
 
 namespace Appmilla.Yapily.Refit.Models
@@ -36,8 +37,7 @@ namespace Appmilla.Yapily.Refit.Models
         /// <summary>
         /// InstitutionId
         /// </summary> 
-        //[Required(AllowEmptyStrings = true)]
-
+        [Required(AllowEmptyStrings = true)]
         [AliasAs("institutionId")]
         public string InstitutionId { get; set; }
 
@@ -45,8 +45,7 @@ namespace Appmilla.Yapily.Refit.Models
         /// <summary>
         /// Callback
         /// </summary> 
-        //[Required(AllowEmptyStrings = true)]
-
+        [Required(AllowEmptyStrings = true)]
         [AliasAs("callback")]
         public string Callback { get; set; }
 
@@ -70,8 +69,7 @@ namespace Appmilla.Yapily.Refit.Models
         /// <summary>
         /// PaymentRequest
         /// </summary> 
-        //[Required]
-
+        [Required]
         [AliasAs("paymentRequest")]
         public BulkPaymentRequest PaymentRequest { get; set; } = new BulkPaymentRequest();
 

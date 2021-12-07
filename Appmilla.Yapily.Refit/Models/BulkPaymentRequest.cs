@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using Refit;
 
 namespace Appmilla.Yapily.Refit.Models
@@ -24,8 +25,7 @@ namespace Appmilla.Yapily.Refit.Models
         /// <summary>
         /// Payments
         /// </summary> 
-        //[Required]
-
+        [Required]
         [AliasAs("payments")]
         public List<PaymentRequest> Payments { get; set; } = new List<PaymentRequest>();
 

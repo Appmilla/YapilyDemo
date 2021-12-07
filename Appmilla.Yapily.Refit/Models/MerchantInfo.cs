@@ -1,4 +1,5 @@
-﻿using Refit;
+﻿using System.ComponentModel.DataAnnotations;
+using Refit;
 
 namespace Appmilla.Yapily.Refit.Models
 {
@@ -11,8 +12,7 @@ namespace Appmilla.Yapily.Refit.Models
         /// <summary>
         /// CategoryCode
         /// </summary> 
-        //[Required(AllowEmptyStrings = true)]
-
+        [Required(AllowEmptyStrings = true)]
         [AliasAs("categoryCode")]
         public string CategoryCode { get; set; }
 
@@ -20,8 +20,7 @@ namespace Appmilla.Yapily.Refit.Models
         /// <summary>
         /// CustomerId
         /// </summary> 
-        //[Required(AllowEmptyStrings = true)]
-
+        [Required(AllowEmptyStrings = true)]
         [AliasAs("customerId")]
         public string CustomerId { get; set; }
 
@@ -29,8 +28,7 @@ namespace Appmilla.Yapily.Refit.Models
         /// <summary>
         /// Address
         /// </summary> 
-        //[Required]
-
+        [Required]
         [AliasAs("address")]
         public Address Address { get; set; } = new Address();
 

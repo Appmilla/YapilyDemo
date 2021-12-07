@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using Refit;
 
 namespace Appmilla.Yapily.Refit.Models
@@ -12,8 +13,7 @@ namespace Appmilla.Yapily.Refit.Models
         /// <summary>
         /// Name
         /// </summary> 
-        //[Required(AllowEmptyStrings = true)]
-
+        [Required(AllowEmptyStrings = true)]
         [AliasAs("name")]
         public string Name { get; set; }
 
@@ -29,8 +29,7 @@ namespace Appmilla.Yapily.Refit.Models
         /// <summary>
         /// AccountIdentifications
         /// </summary> 
-        //[Required]
-
+        [Required]
         [AliasAs("accountIdentifications")]
         public List<AccountIdentification> AccountIdentifications { get; set; } = new List<AccountIdentification>();
 
