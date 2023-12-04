@@ -81,7 +81,6 @@ namespace YapilyDemo.Services.Bootstrap
             
             builder.RegisterType<YapilyHttpClientFactory>().As<IYapilyHttpClientFactory>().SingleInstance();
 
-            //builder.RegisterType<ConnectedInstitutionsDb>().As<IConnectedInstitutionsDb>().SingleInstance();
             builder.RegisterType<ConnectedInstitutionsCache>().As<IConnectedInstitutionsCache>().SingleInstance();
 
             var identityConfiguration = new IdentityConfiguration();

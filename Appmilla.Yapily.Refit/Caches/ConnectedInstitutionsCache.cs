@@ -51,7 +51,6 @@ namespace Appmilla.Yapily.Refit.Caches
     public class ConnectedInstitutionsCache : ReactiveObject, IConnectedInstitutionsCache
     {
         readonly ISchedulerProvider _schedulerProvider;
-        //readonly IConnectedInstitutionsDb _connectedInstitutionsDb;
         readonly IConsentsQuery _consentsQuery;
         readonly ISecureStorage _secureStorage;
         
@@ -74,20 +73,12 @@ namespace Appmilla.Yapily.Refit.Caches
         
         public ReactiveCommand<Unit, ApiListResponseOfConsent> Refresh { get; }
         
-        /*
-        public ReactiveCommand<Unit, List<ConnectedInstitution>> Load { get; }
-        
-        public ReactiveCommand<Unit, List<ConnectedInstitution>> Refresh { get; }
-        */
-        
         public ConnectedInstitutionsCache(
             ISchedulerProvider schedulerProvider,
-            //IConnectedInstitutionsDb connectedInstitutionsDb,
             IConsentsQuery consentsQuery,
             ISecureStorage secureStorage)
         {
             _schedulerProvider = schedulerProvider;
-            //_connectedInstitutionsDb = connectedInstitutionsDb;
             _consentsQuery = consentsQuery;
             _secureStorage = secureStorage;
             
@@ -99,18 +90,6 @@ namespace Appmilla.Yapily.Refit.Caches
                 _ => OnLoad(),
                 this.WhenAnyValue(x => x.IsBusy).Select(x => !x),
                 outputScheduler: _schedulerProvider.ThreadPool);
-            
-            /*
-            Load = ReactiveCommand.CreateFromTask(
-                () => _connectedInstitutionsDb.GetInstitutionsAsync(),
-                this.WhenAnyValue(x => x.IsBusy).Select(x => !x),
-                outputScheduler: _schedulerProvider.ThreadPool);
-                
-            Refresh = ReactiveCommand.CreateFromTask(
-                () => _connectedInstitutionsDb.GetInstitutionsAsync(),
-                this.WhenAnyValue(x => x.IsBusy).Select(x => !x),
-                outputScheduler: _schedulerProvider.ThreadPool);
-            */
             
             Load.ThrownExceptions.Subscribe(OnError);
             Load.Subscribe(Load_OnNext);

@@ -16,8 +16,6 @@ namespace YapilyDemo.UX.Features.More
 
         public Task OnViewAppearing()
         {
-            //Observable.Return(Unit.Default).InvokeCommand(Load);
-
             return Task.CompletedTask;
         }
 

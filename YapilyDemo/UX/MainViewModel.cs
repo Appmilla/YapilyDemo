@@ -57,34 +57,11 @@ namespace YapilyDemo.UX
 
         private async Task<bool> OnInstitutions()
         {
-            //var institutions = _instituitionsQuery.GetInstitutions(GetCacheKey("Rich")).Subscribe(OnInstitutionsNext, OnError);
-
             var institutions = await _instituitionsQuery.GetInstitutions(GetCacheKey("institutions")).FirstAsync();
 
             var institutionId = institutions.Data.First().Id;
             var institution = await _instituitionsQuery.GetInstitution(institutionId, GetCacheKey($"institution--{institutionId}")).FirstAsync();
-            
-            /*
-            var authRequest = new AccountAuthorisationRequest()
-            {
-                UserUuid = "f9817f34-6a2e-4186-ba6b-41c71ba0d123",
-                ApplicationUserId = "user-1299560",
-                //ApplicationUserId = "7b67086c-2f2d-4b03-9c4d-96d57bc294ac",
-                InstitutionId = institutionId,
-                Callback = "https://app.walldo.com/callback"
-                //Callback = "https://yapilydemo/callback/"
-            };
-
-            var authResponse = accountsApi.InitiateAccountRequestUsingPOST(
-                authRequest,
-                yapilyApiVersion,
-                string.Empty,
-                string.Empty,
-                string.Empty);
-
-            Debug.WriteLine(authResponse);
-            */
-            
+    
             return true;
         }
 

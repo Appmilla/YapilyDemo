@@ -68,75 +68,6 @@ namespace YapilyDemo.UX.Features.AuthenticateLogin
                 .DisposeMany()                              //automatic disposal
                 .Subscribe();
         }
-
-        /*
-        private async Task<Unit> OnLogin()
-        {
-            var loginResult = await _identityService.Login();
-
-            if (!loginResult.IsError)
-            {
-                try
-                {
-                    // create user name from claims info
-                    var user_email = loginResult.User.Claims.SingleOrDefault(c => c.Type == "email");
-                
-                    //see if user exists inyapily
-                    if (user_email != null)
-                    {
-                        string applicationUserId;
-                        string userUuid;
-
-                        string userId = user_email.Value;
-                        
-                        //userId = "alice-smith-appmilla";
-                        
-                        var filteredUsers = await _usersQuery.GetUsers(new List<string>());
-                        
-                        if (filteredUsers.All(u => u.ApplicationUserId != userId))
-                        {
-                            // create user in yapily
-                            var createUser = await _usersQuery.AddUser(new NewApplicationUser()
-                            {
-                                ApplicationUserId = userId
-                            });
-
-                            applicationUserId = createUser.ApplicationUserId;
-                            userUuid = createUser.Uuid;
-                        }
-                        else
-                        {
-                            var existingUser = filteredUsers.Single(u => u.ApplicationUserId == userId);
-                        
-                            applicationUserId = existingUser.ApplicationUserId;
-                            userUuid = existingUser.Uuid;
-                        }
-
-                        // store yapily username in secure storage
-                        await _secureStorage.SetAsync(StorageKeys.ApplicationUserId, applicationUserId);
-                        await _secureStorage.SetAsync(StorageKeys.UserUuid, userUuid);
-                    }
-
-                }
-                catch (Exception exception)
-                {
-                    Debug.WriteLine($"Error {exception.Message}");
-                    throw;
-                }
-
-                if (Institutions.Count > 0)
-                {
-                    await Shell.Current.GoToAsync("//main");
-                }
-                else
-                {
-                    await Shell.Current.GoToAsync("//chooseBank"); 
-                }
-            }
-
-            return Unit.Default;
-        }
-        */
         
         private async Task<Unit> OnLogin()
         {
@@ -147,8 +78,8 @@ namespace YapilyDemo.UX.Features.AuthenticateLogin
                 try
                 {
                     // store yapily username in secure storage
-                    await _secureStorage.SetAsync(StorageKeys.ApplicationUserId, "user-1299560");
-                    await _secureStorage.SetAsync(StorageKeys.UserUuid, "f9817f34-6a2e-4186-ba6b-41c71ba0d123");
+                    await _secureStorage.SetAsync(StorageKeys.ApplicationUserId, "XXXX");
+                    await _secureStorage.SetAsync(StorageKeys.UserUuid, "XXXX");
                     
                     Observable.Return(Unit.Default).InvokeCommand(_connectedInstitutionsCache.Load);
                 }

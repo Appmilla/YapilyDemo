@@ -94,8 +94,6 @@ namespace Appmilla.Yapily.Refit.Queries
                 IsBusy = false;
             }  
         }
-        
-        //Task<ApiResponseOfPaymentResponse> CreatePaymentUsingPOSTAsync([Body][AliasAs("paymentRequest")] PaymentRequest paymentRequest);
 
     }
 }

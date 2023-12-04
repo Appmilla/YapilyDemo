@@ -30,8 +30,7 @@ namespace Appmilla.Yapily.Refit.Queries
         readonly RefitSettings _refitSettings;
         
         readonly TimeSpan _cacheLifetime = TimeSpan.FromHours(1);
-        //readonly TimeSpan _cacheLifetime = TimeSpan.FromSeconds(10);
-        
+           
         [Reactive] public bool IsBusy { get; set; }
 
         public TransactionsQuery(IBlobCache blobCache,
@@ -51,12 +50,6 @@ namespace Appmilla.Yapily.Refit.Queries
             DateTimeOffset? expiration = DateTimeOffset.Now + _cacheLifetime;
 
             return _blobCache.GetAndFetchLatest(cacheKey, () => FetchTransactions(consentToken, accountId), null, expiration);
-            
-            /*
-            return _blobCache.GetOrFetchObject(cacheKey,
-                () => FetchTransactions(consentToken, accountId),
-                expiration);
-            */
         }
 
         public IObservable<ApiListResponseOfTransaction> RefreshTransactions(string consentToken, string accountId, string cacheKey)

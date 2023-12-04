@@ -174,40 +174,7 @@ namespace YapilyDemo.UX.Features.Home
                 ShowLoading = false;
             });
         }
-        
-        /*
-        private Task OnLoad(bool reset)
-        {
-            var results = _connectedInstitutions.Select(ci => new InstitutionSummaryViewModel(
-                _schedulerProvider,
-                _accountsQuery,
-                _secureStorage,
-                _transactionsQuery)
-            {
-                InstitutionId = ci.InstitutionId,
-                Name = ci.Name,
-                ImageUrl = ci.ImageUrl
-            });
-
-            var institutionSummaryViewModels = results.ToList();
-            foreach (var institutionSummary in institutionSummaryViewModels)
-            {
-                Observable.Return(Unit.Default).InvokeCommand(institutionSummary.LoadAccounts);
-            }
-            
-            _schedulerProvider.MainThread.Schedule(_ =>
-            {
-                if (reset)
-                {
-                    _institutionSummariesCache.Clear();
-                }
-                _institutionSummariesCache.UpdateCache(institutionSummaryViewModels, KeySelector);
-            });
-            
-            return Task.CompletedTask;
-        }
-        */
-        
+                
         private async Task OnRefresh()
         {
             await OnLoad(true);
@@ -215,15 +182,6 @@ namespace YapilyDemo.UX.Features.Home
         
         public Task OnViewAppearing()
         {
-            /*
-            if (!_hasLoaded)
-            {
-                _hasLoaded = true;
-
-                Observable.Return(Unit.Default).InvokeCommand(Load);
-            }
-            */
-            
             return Task.CompletedTask;
         }
 

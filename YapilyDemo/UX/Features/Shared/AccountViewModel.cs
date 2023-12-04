@@ -89,14 +89,6 @@ namespace YapilyDemo.UX.Features.Shared
             var accountDetailsViewModel = ServiceLocator.Current.GetInstance<AccountDetailsViewModel>();
             accountDetailsViewModel.Account = this;
             await Shell.Current.GoToAsync("accountDetails");  
-            
-            /*
-            var consentTokenKey = $"{InstitutionId}-consent-token";
-            var consentToken = await _secureStorage.GetAsync(consentTokenKey);
-
-            var transactionTest =
-                await _transactionsQuery.GetTransactions(consentToken,Id, $"{CacheKey}--transactions");
-                */
         }
         
         void OnError(Exception exception)

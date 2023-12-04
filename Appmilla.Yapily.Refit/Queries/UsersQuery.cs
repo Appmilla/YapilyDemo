@@ -27,8 +27,6 @@ namespace Appmilla.Yapily.Refit.Queries
         readonly ISchedulerProvider _schedulerProvider;
         readonly RefitSettings _refitSettings;
         
-        //readonly TimeSpan _cacheLifetime = TimeSpan.FromSeconds(10);
-        
         [Reactive] public bool IsBusy { get; set; }
         
         public UsersQuery(IBlobCache blobCache,

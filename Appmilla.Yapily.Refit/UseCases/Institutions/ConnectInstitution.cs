@@ -50,17 +50,6 @@ namespace Appmilla.Yapily.Refit.UseCases.Institutions
                     Callback = "com.intuitive.yapilydemo://callback"
                 };
                 
-                /*
-                var authRequest = new AccountAuthorisationRequest()
-                {
-                    UserUuid = "f9817f34-6a2e-4186-ba6b-41c71ba0d123",
-                    ApplicationUserId = "user-1299560",
-                    InstitutionId = institutionViewModel.Id,
-                    //Callback = "https://display-parameters.com/"
-                    Callback = "com.appmilla.yapilydemo://callback"
-                };
-                */
-                
                 var authResponse = await _accountsQuery.InitiateAccountRequest(authRequest);
 
                 Debug.WriteLine(authResponse);

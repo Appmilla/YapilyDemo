@@ -87,7 +87,7 @@ namespace Appmilla.Yapily.Refit.Http
                 if (consentHeaderPresent)
                 {
                     request.Headers.Remove("consent");
-                    request.Headers.Add("consent", "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJJTlNUSVRVVElPTiI6Im1vZGVsby1zYW5kYm94IiwiQ09OU0VOVCI6IjJiNWM0OTMwLTU4ZjItNGY4OS1iOTA0LTgzMmQ3NzliNDkzMCIsIkFQUExJQ0FUSU9OX1VTRVJfSUQiOiJ1c2VyLTEyOTk1NjAiLCJVU0VSIjoiZjk4MTdmMzQtNmEyZS00MTg2LWJhNmItNDFjNzFiYTBkMTIzIn0.0d1GvfT1PApZPS27fm99nWgGUvOuSq8fiZotzeqSc_z4IE2g_gjjuZlJGmWE7fFk7NkfABMWClQZZpiVnw_Jaw");
+                    request.Headers.Add("consent", "XXXXXXX");
                 }
   */
                 return await base.SendAsync(request, cancellationToken).ConfigureAwait(false);

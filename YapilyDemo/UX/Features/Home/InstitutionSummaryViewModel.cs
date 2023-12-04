@@ -57,9 +57,6 @@ namespace YapilyDemo.UX.Features.Home
         [Reactive]
         public string ImageUrl { get; set; }
         
-        //[Reactive]
-        //public InstitutionViewModel Institution { get; set; }
-        
         public ReactiveCommand<Unit, ApiListResponseOfAccount> LoadAccounts { get; }
          
         public ReactiveCommand<Unit, ApiListResponseOfAccount> RefreshAccounts { get; }
@@ -75,10 +72,6 @@ namespace YapilyDemo.UX.Features.Home
         [ObservableAsProperty]
         // ReSharper disable once UnassignedGetOnlyAutoProperty
         public bool ShowAccounts { get; }
-        
-        //[ObservableAsProperty]
-        // ReSharper disable once UnassignedGetOnlyAutoProperty
-        //public bool ShowAccountsError { get; }
         
         [Reactive]
         public bool IsAccountsInError { get; set; }
@@ -108,16 +101,7 @@ namespace YapilyDemo.UX.Features.Home
                 outputScheduler: _schedulerProvider.ThreadPool);
             LoadAccounts.ThrownExceptions.Subscribe(Accounts_OnError);
             LoadAccounts.Subscribe(Accounts_OnNext);
-            
-            /*
-            RefreshAccounts = ReactiveCommand.CreateFromObservable(
-                () => _accountsQuery.RefreshAccounts(GetCacheKey()).TakeUntil(CancelInFlightQueries),
-                this.WhenAnyValue(x => x.IsBusy).Select(x => !x),
-                outputScheduler: _schedulerProvider.ThreadPool);
-            RefreshAccounts.ThrownExceptions.Subscribe(Accounts_OnError);
-            RefreshAccounts.Subscribe(Accounts_OnNext);
-            */
-            
+             
             CancelInFlightQueries = ReactiveCommand.Create(
                 () => { },
                 this.WhenAnyObservable(x => x.LoadAccounts.IsExecuting, y => y.RefreshAccounts.IsExecuting, (x, y) => x || y));
@@ -276,8 +260,6 @@ namespace YapilyDemo.UX.Features.Home
             if (connected)
             {
                 Observable.Return(Unit.Default).InvokeCommand(LoadAccounts);  
-                
-                //await Shell.Current.GoToAsync("//main");
             }
 
             return connected;

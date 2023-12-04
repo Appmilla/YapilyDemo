@@ -35,8 +35,7 @@ namespace Appmilla.Yapily.Refit.Queries
         readonly RefitSettings _refitSettings;
 
         readonly TimeSpan _cacheLifetime = TimeSpan.FromDays(1);
-        //readonly TimeSpan _cacheLifetime = TimeSpan.FromSeconds(10);
-        
+            
         [Reactive] public bool IsBusy { get; set; }
 
         public InstituitionsQuery(IBlobCache blobCache,
@@ -55,12 +54,6 @@ namespace Appmilla.Yapily.Refit.Queries
             DateTimeOffset? expiration = DateTimeOffset.Now + _cacheLifetime;
 
             return _blobCache.GetAndFetchLatest(cacheKey, FetchInstitutions, null, expiration);
-            
-            /*
-            return _blobCache.GetOrFetchObject(cacheKey,
-                () => FetchInstitutions(),
-                expiration);
-            */
         }
 
         public IObservable<ApiListResponseOfInstitution> RefreshInstitutions(string cacheKey)
@@ -103,12 +96,6 @@ namespace Appmilla.Yapily.Refit.Queries
             DateTimeOffset? expiration = DateTimeOffset.Now + _cacheLifetime;
 
             return _blobCache.GetAndFetchLatest(cacheKey, () => FetchInstitution(institutionId), null, expiration);
-            
-            /*
-            return _blobCache.GetOrFetchObject(cacheKey,
-                () => FetchInstitution(institutionId),
-                expiration);
-            */
         }
 
         public IObservable<Institution> RefreshInstitution(string institutionId, string cacheKey)
